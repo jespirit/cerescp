@@ -1,0 +1,190 @@
+/*
+Ceres Control Panel
+
+This is a control pannel program for Athena and Freya
+Copyright (C) 2005 by Beowulf and Nightroad
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+To contact any of the authors about special permissions send
+a mail to cerescp@gmail.com
+*/
+/** CORPO */
+body {
+	font-size: 10px;
+	font-family: verdana,arial;
+	margin-top:0px;
+	margin-bottom:0px;
+	background: url(images/background.jpg);
+}
+/** HEADER */
+#header {
+	width: 780px;
+	height: 180px;
+	background-image: url(images/ceres.jpg);
+	background-repeat: none;
+	margin: 0 auto;
+}
+
+/** MENU */
+#main_menu {
+	width: 780px;
+	height: 25px;
+	line-height: 24px;
+	background: #000;
+	font-family: verdana,arial;
+	font-size: 10px;
+	font-weight: bold;
+	color: #fff;
+	margin: 0 auto;
+}
+
+#sub_menu {
+	width: 780px;
+	height: 25px;
+	line-height: 24px;
+	background: #2C3D50;
+	font-family: verdana,arial;
+	font-size: 10px;
+	font-weight: bold;
+	color: #fff;
+	margin: 0 auto;
+}
+#main_menu span.link, #sub_menu span.link {
+	color: #ffffff;
+}
+#main_menu span.link:hover, #sub_menu span.link:hover {
+	color: #FF3300;
+}
+
+/** CONTENT */
+#main_content {
+	width: 780px;
+	background-color: #fff;
+	overflow: hidden;
+	margin: 0 auto;
+}
+
+#main_div {
+	width: 600px;
+	padding: 10px;
+	float: left;
+}
+
+.maintable {
+	width: 100%;
+	border: none;
+	margin: 5px auto;
+}
+
+/** RIGHT SIDEBAR */
+#sidebar {
+	width: 160px;
+	height: 470px;
+	background-color: #D0D9E0;
+	float: right;
+}
+
+#login_div, #status_div, #selectlang_div, #new_div {
+	padding-left: 6px;
+	padding-right: 5px;
+	padding-top: 5px;
+}
+
+/** FOOTER */
+#footer {
+	width: 780px;
+	height: 35px;
+	padding-top: 5px;
+	background-color: #2C3D50;
+	text-align: center;
+	margin: 0 auto;
+	color: #fff;
+}
+
+/** FORMS INPUT */
+input, select, option, textarea { 
+	font-family: verdana,arial;
+	font-size: 10px;
+	background-color: #D6D3D6;
+	color: #000000;
+	border: solid;
+}
+
+/** TABLE TR, TD */
+tr, td {
+	font-size: 10px;
+	FONT-FAMILY: verdana,arial;
+	color: #000000;
+}
+
+th {
+	font-size: 10px;
+	FONT-FAMILY: verdana,arial;
+	color: #000000;
+	font-weight: bold;
+}
+
+.highlight {
+	font-weight: bold;
+}
+.disabled {
+	color: #AAAAAA;
+}
+
+/** GENERAL */
+.head {
+	font-weight: bold;
+}
+
+.title { 
+	font-family: verdana,arial;
+	font-size: 12px;
+	font-weight: bold;
+	color: #000000;
+	text-align: center;
+}
+
+a, a:visited, a:link {
+	font-size: 8pt;
+	color:#000000; 
+	line-height: 8pt;
+	font-family: arial;
+	font-weight: bold;
+	border-bottom: 0;
+	text-decoration: none;
+}
+a:hover, a:active {
+	color: #FF3300;
+}
+
+.copyright_link {
+	font-size: 8pt;
+	color:#FFFFFF; 
+	line-height: 8pt;
+	font-family: arial;
+	font-weight: bold;
+	border-bottom: 0;
+	text-decoration: none;
+}
+
+span.link {
+	cursor: pointer;
+	color: #000000;
+}
+
+span.link:hover {
+	color: #FF3300;
+}
