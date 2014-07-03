@@ -54,7 +54,7 @@ $submenu[] = array($lang['MENU_RESETPOS'],		'position.php',			$CONFIG_reset_enab
 $submenu[] = array($lang['MENU_RESETLOOK'],		'resetlook.php',		$CONFIG_reset_look?5:-1);
 $submenu[] = array($lang['MENU_LINKS'],			'links.php',			0);
 $submenu[] = array('Atcommand Logs',			'logatcommand.php',		6);
-$submenu[] = array('Cash Logs',					'logcash.php',			$config['servermode']==0?6:-1);
+$submenu[] = array('Cash Logs',					'logcash.php',			6);
 $submenu[] = array('Char Logs',					'logchar.php',			6);
 $submenu[] = array('Dead Branch Logs',			'logbranch.php',		6);
 $submenu[] = array('Item Logs',					'logitems.php',			6);
