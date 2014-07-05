@@ -24,8 +24,7 @@ an e-mail to cerescp@gmail.com
 */
 
 include_once 'config.php'; // loads config variables
-include("./classes/class.phpmailer.php");
-include("./classes/class.smtp.php");
+require_once 'PHPMailer/PHPMailerAutoload.php';
 
 
 function email($contas) {
@@ -46,8 +45,9 @@ $maildef = nl2br($maildef);
 
 $mail=new PHPMailer();
 
-$mail->IsSMTP();
-$mail->SMTPAuth   = true;
+$mail->isSMTP();
+$mail->SMTPAuth = false;
+$mail->SMTPSecure = 'tls';
 
 $mail->Host       = $CONFIG_smtp_server;
 $mail->Port       = $CONFIG_smtp_port;
@@ -62,10 +62,10 @@ $mail->Body       = $maildef;
 
 $mail->WordWrap   = 50;
 
-$mail->AddAddress($contas[0][2],$contas[0][2]);
-$mail->AddReplyTo($CONFIG_smtp_mail,$CONFIG_name);
+$mail->addAddress($contas[0][2],$contas[0][2]);
+$mail->addReplyTo($CONFIG_smtp_mail,$CONFIG_name);
 
-$mail->IsHTML(true);
+$mail->isHTML(true);
 
 if(!$mail->Send()) {
   return $mail->ErrorInfo;
