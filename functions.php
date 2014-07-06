@@ -314,14 +314,23 @@ function petegg($hint) {
 	return forger($hint, 0);
 }
 
-function execute_query($query, $source = 'none.php', $database = 0, $save_report = 1) {
+function prepare_query($query, $database, $types /*, ...*/) {
+	global $mysql;
+	
+	$stmt = call_user_func_array(array($mysql, "Prepare"), func_get_args());
+	return $stmt;
+}
+
+
+function execute_query($stmt, $source = 'none.php', $save_report = 1) {
 	global $mysql;
 
-	$query = str_replace("\r\n", " ", $query);
-	if ($save_report)
-		add_query_entry($source, $query);
+	// TODO: Save report
+	//$query = str_replace("\r\n", " ", $query);
+	//if ($save_report)
+		//add_query_entry($source, $query);
 
-	if ($result = $mysql->Query($query, $database)) {
+	if ($result = $mysql->Query($stmt)) {
 		if (strpos($query,"SELECT") === 0)
 			return $result;
 		return TRUE;

@@ -73,7 +73,7 @@ class QueryClass {
 	var $rag_link;
 	var $cp_link;
 	var $log_link;
-	var $result;
+	var $stmt;
 
 	function QueryClass($rag_addr, $rag_username, $rag_password, $rag_db, $cp_addr, $cp_username, $cp_password, $cp_db, $log_db) {
 		global $lang;
@@ -83,35 +83,43 @@ class QueryClass {
 		$this->log_link = mysqli_connect($rag_addr,$rag_username,$rag_password,$log_db) or die($lang['DB_ERROR']);
 	}
 
-	function Query($query, $table = 0) {
-		global $lang;
-
-		switch ($table) {
-		case 0:
-			$this->result = mysqli_query($this->rag_link, $query);
-			break;
-		case 1:
-			$this->result = mysqli_query($this->cp_link, $query);
-			break;
-		case 2:
-			$this->result = mysqli_query($this->log_link, $query);
-			break;
+	function Prepare($query, $database, $types) {
+		switch ($database) {
+			case 0:
+				$stmt = $rag_link->prepare($query);
+				break;
+			case 1:
+				$stmt = $cp_link->prepare($query);
+				break;
+			case 2:
+				$stmt = $log_link->prepare($query);
+				break;
 		}
+		
+		if ($stmt) {
+			if (func_num_args() >= 4) {  // are there parameters to bind?
+				$params = array_slice(func_get_args(), 4);
+				array_unshift($params, $types);  // preprend $types
+				call_user_func_array(array($stmt, "bind_param"), $params);
+			}
+		}
+		
+		return $stmt;
+	}
+	
+	function Query($stmt) {
+		$this->stmt = $stmt;  // copy or reference?
+		if ($result = $stmt->execute())
+			return $stmt->get_result();  // what is returned on a non-SELECT statement?
 
-		if (strpos($query,"SELECT") === 0)
-			return new ResultClass($this->result);
-
-		if ($this->result === FALSE)
-			return FALSE;
-
-		return TRUE;
+		return $result;  // FALSE because of failure
 	}
 
 	function finish() {
-		if (empty($this->result))
+		if (empty($this->stmt))
 			return;
-		if ($this->result !== TRUE && $this->result !== FALSE)
-			mysqli_free_result($this->result);
+		if ($this->stmt !== TRUE && $this->stmt !== FALSE)
+			$this->stmt->close();
 	}
 }
 

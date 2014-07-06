@@ -38,14 +38,11 @@ if (!empty($GET_opt)) {
 		if ($CONFIG_auth_image && function_exists('gd_info')
 			&& strtoupper($GET_code) != substr(strtoupper(md5('Mytext'.$session['recover'])), 0,6))
 			alert($lang['INCORRECT_CODE']);
+		
+		prepare_query(RECOVER_PASSWORD, 0, 's', $GET_email);
+		$result = execute_query($query);
 
-		if (inject($GET_email)) 
-			alert($lang['INCORRECT_CHARACTER']);
-				
-		$query = sprintf(RECOVER_PASSWORD, $GET_email);
-		$result = execute_query($query, 'recover.php');
-
-		if (!$result->count())
+		if (!$result->$num_rows())
 			alert($lang['UNKNOWN_MAIL']);
 
 		for ($i = 0; $result->fetch_row(); $i++) {
