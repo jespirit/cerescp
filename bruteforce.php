@@ -26,45 +26,46 @@ an e-mail to cerescp@gmail.com
 include_once 'config.php'; // loads config variables
 include_once 'functions.php';
 
-DEFINE('BF_IP', "SELECT `ban`, `user` FROM `cp_bruteforce` WHERE `IP` = '%s' AND (`date` > '%d' OR `ban` > '%d')");
-DEFINE('BF_USER', "SELECT `ban` FROM `cp_bruteforce` WHERE `user` = '%s' AND (`date` > '%d' OR `ban` > '%d')");
-DEFINE('BF_ADD', "INSERT INTO `cp_bruteforce` (`user`, `IP`, `date`, `ban`) VALUES('%s', '%s', '%d', '%d')");
+DEFINE('BF_IP', "SELECT `ban`, `user` FROM `cp_bruteforce` WHERE `IP` = '?' AND (`date` > '?' OR `ban` > '?')");
+DEFINE('BF_USER', "SELECT `ban` FROM `cp_bruteforce` WHERE `user` = '?' AND (`date` > '?' OR `ban` > '?')");
+DEFINE('BF_ADD', "INSERT INTO `cp_bruteforce` (`user`, `IP`, `date`, `ban`) VALUES('?', '?', '?', '?')");
 
 
 function bf_check_user($username) {
 	$log_ip = $_SERVER['REMOTE_ADDR'];
 	$current = time();
 	
-	$query = sprintf(BF_IP, $log_ip, $current - 300, $current);
-	$result = execute_query($query, "check_user", 1, 0);
+	$stmt = prepare_query(BF_IP, 0, 'sii', $log_ip, $current - 300, $current);
+	$result = execute_query($stmt, "check_user", 1, 0);
 	$tentativas = $result->count();
 	while ($line = $result->fetch_row()) {
 		if ($line[0] > $current)
 			return (int)(($line[0] - $current) / 60);
 	}
-	$result->free();
+	$stmt->close();
 
 	if ($tentativas > 9) {
-		$query = sprintf(BF_ADD, "Random Try", $log_ip, $current, $current + 600);
-		$result = execute_query($query, "check_user", 1, 0);
+		$stmt = prepare_query(BF_ADD, 0, 'ssii', "Random Try", $log_ip, $current, $current + 600);
+		$result = execute_query($stmt, "check_user", 1, 0);
+		$stmt->close();
 		return (int)(600 / 60);
 	}
 
 	if (inject($username))
 		return 0;
 
-	$query = sprintf(BF_USER, $username, $current - 300, $current);
-	$result = execute_query($query, "check_user", 1, 0);
+	$stmt = prepare_query(BF_USER, 1, 'sii', $username, $current - 300, $current);
+	$result = execute_query($stmt, "check_user", 0);
 	$tentativas = $result->count();
 	while ($line = $result->fetch_row()) {
-		if ($line[0] > $current)
-			return (int)(($line[0] - $current) / 60);
+		if ($line[0] > $current)  // still banned?
+			return (int)(($line[0] - $current) / 60);  // return how much time until ban is lifted
 	}
-	$result->free();
 
-	if ($tentativas > 2) {
-		$query = sprintf(BF_ADD, $username, $log_ip, $current, $current + 300);
-		$result = execute_query($query, "check_user", 1, 0);
+	if ($tentativas > 2) {  // failed 3 times too many, ban the IP for 5 minutes
+		$stmt = prepare_query(BF_ADD, 1, 'ssii', $username, $log_ip, $current, $current + 300);
+		$result = execute_query($stmt, "check_user", 0);
+		$stmt->close();
 		return (int)(300 / 60);
 	}
 	
@@ -75,8 +76,8 @@ function bf_error($username) {
 	$log_ip = $_SERVER['REMOTE_ADDR'];
 	$current = time();
 
-	$query = sprintf(BF_ADD, $username, $log_ip, $current, 0);
-	$result = execute_query($query, "check_user", 1, 0);
+	$stmt = prepare_query(BF_ADD, 1, 'ssii', $username, $log_ip, $current, 0);
+	$result = execute_query($stmt, "check_user", 0);
 	return 1;
 }
 
