@@ -314,9 +314,10 @@ function petegg($hint) {
 	return forger($hint, 0);
 }
 
-function prepare_query($query, $database, $types /*, ...*/) {
+function prepare_query($query, $database = 0, $types = '' /*, ...*/) {
 	global $mysql;
 	
+	// calls $mysql->Prepare(...[])
 	$stmt = call_user_func_array(array($mysql, "Prepare"), func_get_args());
 	return $stmt;
 }
@@ -325,15 +326,15 @@ function prepare_query($query, $database, $types /*, ...*/) {
 function execute_query($stmt, $source = 'none.php', $save_report = 1) {
 	global $mysql;
 
-	// TODO: Save report
-	//$query = str_replace("\r\n", " ", $query);
-	//if ($save_report)
-		//add_query_entry($source, $query);
+	if ($save_report) {
+		if ($query = $mysql->Interpolate()) {  // get SQL query as string for logging
+			add_query_entry($source, $query);
+		}
+	}
 
+	// TODO: Return TRUE on non-SELECT queries.
 	if ($result = $mysql->Query($stmt)) {
-		if (strpos($query,"SELECT") === 0)
-			return $result;
-		return TRUE;
+		return $result;
 	}
 	return FALSE;
 }

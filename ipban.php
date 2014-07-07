@@ -26,12 +26,16 @@ an e-mail to cerescp@gmail.com
 function ipban() {
 	$p = explode('.', $_SERVER['REMOTE_ADDR']);
 
-	$query = sprintf(CHECK_IPBAN, $p[0], $p[0],$p[1], $p[0],$p[1],$p[2], $p[0],$p[1],$p[2],$p[3]);
-	$result = execute_query($query, 'ipban.php', 0, 0);
+	//$query = sprintf(CHECK_IPBAN, $p[0], $p[0],$p[1], $p[0],$p[1],$p[2], $p[0],$p[1],$p[2],$p[3]);
+	$stmt = prepare_query(CHECK_IPBAN, 0, 's', $_SERVER['REMOTE_ADDR']);
+	$result = execute_query($stmt);
 
-	$result->fetch_row();
-
-	return $result->row[0];
+	if ($result) {
+		$row = $result->fetch_row();
+		return $row[0];
+	}
+	
+	return $result;
 }
 
 ?>

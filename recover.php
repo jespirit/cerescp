@@ -39,16 +39,16 @@ if (!empty($GET_opt)) {
 			&& strtoupper($GET_code) != substr(strtoupper(md5('Mytext'.$session['recover'])), 0,6))
 			alert($lang['INCORRECT_CODE']);
 		
-		prepare_query(RECOVER_PASSWORD, 0, 's', $GET_email);
-		$result = execute_query($query);
+		$stmt = prepare_query(RECOVER_PASSWORD, 0, 's', $GET_email);
+		$result = execute_query($stmt);
 
 		if (!$result->$num_rows())
 			alert($lang['UNKNOWN_MAIL']);
 
-		for ($i = 0; $result->fetch_row(); $i++) {
-			$accounts[$i][0] = $result->row[0];
-			$accounts[$i][1] = $result->row[1];
-			$accounts[$i][2] = $result->row[2];
+		for ($i = 0; $row = $result->fetch_row(); $i++) {
+			$accounts[$i][0] = $row[0];
+			$accounts[$i][1] = $row[1];
+			$accounts[$i][2] = $row[2];
 		}
 
 		$answer=email($accounts);

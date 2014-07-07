@@ -74,6 +74,7 @@ class QueryClass {
 	var $cp_link;
 	var $log_link;
 	var $stmt;
+	var $q, params;
 
 	function QueryClass($rag_addr, $rag_username, $rag_password, $rag_db, $cp_addr, $cp_username, $cp_password, $cp_db, $log_db) {
 		global $lang;
@@ -83,24 +84,28 @@ class QueryClass {
 		$this->log_link = mysqli_connect($rag_addr,$rag_username,$rag_password,$log_db) or die($lang['DB_ERROR']);
 	}
 
-	function Prepare($query, $database, $types) {
+	function Prepare($query, $database) {
 		switch ($database) {
 			case 0:
-				$stmt = $rag_link->prepare($query);
+				$stmt = $this->rag_link->prepare($query);
 				break;
 			case 1:
-				$stmt = $cp_link->prepare($query);
+				$stmt = $this->cp_link->prepare($query);
 				break;
 			case 2:
-				$stmt = $log_link->prepare($query);
+				$stmt = $this->log_link->prepare($query);
 				break;
 		}
 		
+		$q = $query;  // save query
+		
 		if ($stmt) {
+			//var_dump(func_get_args());
 			if (func_num_args() >= 4) {  // are there parameters to bind?
-				$params = array_slice(func_get_args(), 4);
-				array_unshift($params, $types);  // preprend $types
-				call_user_func_array(array($stmt, "bind_param"), $params);
+				$this->params = array_slice(func_get_args(), 2);
+				//array_unshift($params, $types);  // prepend $types
+				//var_dump($params);
+				call_user_func_array(array($stmt, "bind_param"), $this->params);
 			}
 		}
 		
@@ -113,6 +118,37 @@ class QueryClass {
 			return $stmt->get_result();  // what is returned on a non-SELECT statement?
 
 		return $result;  // FALSE because of failure
+	}
+	
+	/**
+	 * Replaces any parameter placeholders in a query with the value of that
+	 * parameter. Useful for debugging. Assumes anonymous parameters from 
+	 * $params are are in the same order as specified in $query
+	 *
+	 * @param string $query The sql query with parameter placeholders
+	 * @param array $params The array of substitution parameters
+	 * @return string The interpolated query
+	 */
+	function Interpolate() {
+		if (!isset($this->q))
+			return FALSE;
+		$keys = array();
+
+		# build a regular expression for each parameter
+		foreach ($this->params as $key => $value) {
+			if (is_string($key)) {
+				$keys[] = '/:'.$key.'/';
+			} else {
+				$keys[] = '/[?]/';
+			}
+		}
+
+		$limit = 1;
+		$query = preg_replace($keys, $this->params, $this->q, $limit, $count);
+
+		#trigger_error('replaced '.$count.' keys');
+
+		return $query;
 	}
 
 	function finish() {
