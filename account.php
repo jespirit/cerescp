@@ -32,8 +32,8 @@ if ($CONFIG_disable_account || check_ban())
 	redir('motd.php', 'main_div', 'Disabled');
 
 if ($CONFIG_max_accounts) {
-	$query = sprintf(MAX_ACCOUNTS);
-	$result = execute_query($query, 'account.php');
+	$stmt = prepare_query(MAX_ACCOUNTS);
+	$result = execute_query($stmt, 'account.php');
 	$maxaccounts = $result->fetch_row();
 	if ($maxaccounts[0] >= $CONFIG_max_accounts)
 		redir('motd.php', 'main_div', $lang['ACCOUNT_MAX_REACHED']);
@@ -72,9 +72,9 @@ if (isset($POST_opt)) {
 			
 		if (strlen($POST_birthdate) < 8 || inject($POST_birthday))
 			alert($lang['INVALID_BIRTHDAY']);
-
-		$query = sprintf(CHECK_USERID, trim($POST_username));
-		$result = execute_query($query, 'account.php');
+			
+		$stmt = prepare_query(CHECK_USERID, 0, 's', trim($POST_username)
+		$result = execute_query($stmt, 'account.php');
 
 		if ($result->count())
 			alert($lang['USERNAME_IN_USE']);
@@ -87,11 +87,12 @@ if (isset($POST_opt)) {
 		if ($CONFIG_md5_pass)
 			$POST_password = md5($POST_password);
 
-		$query = sprintf(INSERT_CHAR, trim($POST_username), trim($POST_password), $POST_sex, $POST_email, $POST_birthdate, $_SERVER['REMOTE_ADDR']);
-		$result = execute_query($query, 'account.php');
+		// date fields can bind to 's'
+		$stmt = prepare_query(INSERT_CHAR, 0, 'ssssss', trim($POST_username), trim($POST_password), $POST_sex, $POST_email, $POST_birthdate, $_SERVER['REMOTE_ADDR']);
+		$result = execute_query($stmt, 'account.php');
 
-		$query = sprintf(CHECK_ACCOUNTID, trim($POST_username), trim($POST_password));
-		$result = execute_query($query, 'account.php');
+		$stmt = prepare_query(CHECK_ACCOUNTID, 0, 'ss', trim($POST_username), trim($POST_password));
+		$result = execute_query($stmt, 'account.php');
 		
 		if ($line = $result->fetch_row()) {
 			erro_de_login(1);
