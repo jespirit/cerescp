@@ -45,13 +45,13 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 				if ($CONFIG_md5_pass)
 					$POST_login_pass = md5($POST_login_pass);
 
-				$query = sprintf(CHANGE_EMAIL, $POST_email, $POST_login_pass, $_SESSION[$CONFIG_name.'account_id']);
-				$result = execute_query($query, 'changemail.php');
+				$stmt = prepare_query(CHANGE_EMAIL, 0, 'ssi', $POST_email, $POST_login_pass, $_SESSION[$CONFIG_name.'account_id']);
+				$result = execute_query($stmt, 'changemail.php');
 			}
 		}
 
-		$query = sprintf(CHECK_EMAIL, $_SESSION[$CONFIG_name.'account_id']);
-		$result = execute_query($query, 'changemail.php');
+		$stmt = prepare_query(CHECK_EMAIL, 0, 'i', $_SESSION[$CONFIG_name.'account_id']);
+		$result = execute_query($stmt, 'changemail.php');
 
 		$cemail = $result->fetch_row();
 		$cemail[0] = htmlformat($cemail[0]);

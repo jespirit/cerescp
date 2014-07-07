@@ -273,28 +273,28 @@ function is_online() {
 
 	$log_account = $_SESSION[$CONFIG_name.'account_id'];
 
-	$query = sprintf(IS_ONLINE, $log_account);
-	$result = execute_query($query, 'is_online');
+	$stmt = prepare_query(IS_ONLINE, 0, 'i', $log_account);
+	$result = execute_query($stmt, 'is_online');
 
-	$result->fetch_row();
+	$row = $result->fetch_row();
 
-	return $result->row[0];
+	return $row[0];
 }
 
 function online_count() {
-	$query = sprintf(GET_ONLINE);
-	$result = execute_query($query, 'online_count', 0, 0);
+	$stmt = prepare_query(GET_ONLINE);
+	$result = execute_query($stmt, 'online_count', 0);
 
-	$result->fetch_row();
+	$row = $result->fetch_row();
 
-	return $result->row[0];
+	return $row[0];
 }
 
 function check_ban() {
-	$query = sprintf(CHECK_BAN, $_SERVER['REMOTE_ADDR']);
-	$result = execute_query($query, 'check_ban', 0, 0);
+	$stmt = prepare_query(CHECK_BAN, 0, 's', $_SERVER['REMOTE_ADDR']);
+	$result = execute_query($stmt, 'check_ban', 1);
 
-	if ($result->count()) {
+	if ($result->num_rows) {
 		while ($line = $result->fetch_row()) {
 			if (($line[2] == 5 || $line[1] > 0) && (time() - $line[0]) < (86400 * 2)) //2 dias
 				return 1;
@@ -347,9 +347,9 @@ function add_query_entry($source, $log_query) {
 		$log_account = 0;
 	$log_ip = $_SERVER['REMOTE_ADDR'];
 	$log_query = addslashes($log_query);
-	$query = sprintf(ADD_QUERY_ENTRY, $log_account, $log_ip, $source, $log_query);
+	$stmt = prepare_query(ADD_QUERY_ENTRY, 1, 'isss', $log_account, $log_ip, $source, $log_query);
 
-	execute_query($query, 'none.php', 1, 0);
+	execute_query($stmt, 'none.php', 0);
 }
 
 // o retorno eh em compara?o binaria
@@ -359,11 +359,11 @@ function add_query_entry($source, $log_query) {
 function server_status() {
 	global $CONFIG_accip,$CONFIG_accport,$CONFIG_charip,$CONFIG_charport,$CONFIG_mapip,$CONFIG_mapport;
 
-	$query = CHECK_STATUS;
-	$result = execute_query($query, 'server_status', 1, 0);
+	$stmt = prepare_query(CHECK_STATUS, 1);
+	$result = execute_query($stmt, 'server_status', 0);
 	if (!($line = $result->fetch_row())) {
-		$query = INSERT_STATUS;
-		$result = execute_query($query, 'server_status', 1, 0);
+		$stmt = prepare_query(INSERT_STATUS, 1);
+		$result = execute_query($stmt, 'server_status', 0);
 		$line[0] = 0;
 	}
 	$retorno = 0;
@@ -374,8 +374,8 @@ function server_status() {
 		if ($acc > 1) $retorno += 1;
 		if ($char > 1) $retorno += 2;
 		if ($map > 1) $retorno += 4;
-		$query = sprintf(UPDATE_STATUS, $retorno);
-		$result = execute_query($query, "server_status", 1, 0);
+		$stmt = prepare_query(UPDATE_STATUS, 1, 'i', $retorno);
+		$result = execute_query($stmt, "server_status", 0);
 	}
 	else {
 		$retorno = $line[1];
@@ -473,11 +473,11 @@ function print_items($result) {
 		';
 
 		if ($item[2] == 254) {
-			$query2 = sprintf(GET_CHARNAME, forger($item[4], $item[5]));
-			$result2 = execute_query($query2, 'admincharinfo.php');
+			$stmt = prepare_query(GET_CHARNAME, 0, 'si', forger($item[4], $item[5]));
+			$result2 = execute_query($stmt, 'admincharinfo.php');
 			$result2->fetch_row();
 
-			if ($result2->count())
+			if ($result2->num_rows)
 				$chname = htmlformat($result2->row(0));
 			else
 				$chname = '<i class="disabled">Unknown</i>';
@@ -489,11 +489,11 @@ function print_items($result) {
 				<td align="center"></td>';
 		}
 		else if ($item[2] == 255) {
-			$query2 = sprintf(GET_CHARNAME, forger($item[4], $item[5]));
-			$result2 = execute_query($query2, 'admincharinfo.php');
+			$stmt = prepare_query(GET_CHARNAME, 0, 'si', forger($item[4], $item[5]));
+			$result2 = execute_query($stmt, 'admincharinfo.php');
 			$result2->fetch_row();
 
-			if ($result2->count())
+			if ($result2->num_rows)
 				$chname = htmlformat($result2->row(0));
 			else
 				$chname = '<i class="disabled">Unknown</i>';
@@ -505,12 +505,12 @@ function print_items($result) {
 				<td align="center"></td>';
 		}
 		else if ($item[2] == -256) {
-			$query2 = sprintf(GET_PETNAME, petegg($item[3]));
-			$result2 = execute_query($query2, 'admincharinfo.php');
-			$result2->fetch_row();
+			$stmt = prepare_query(GET_PETNAME, 0, 'i', petegg($item[3]));
+			$result2 = execute_query($stmt, 'admincharinfo.php');
+			$row = $result2->fetch_row();
 			
-			if ($result2->count())
-				$petname = htmlformat($result2->row(0));
+			if ($result2->num_rows)
+				$petname = htmlformat($row[0]);
 			else
 				$petname = '<i class="disabled">Unknown</i>';
 			echo '

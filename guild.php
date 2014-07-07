@@ -31,8 +31,8 @@ include_once 'functions.php';
 
 //if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 //	if ($_SESSION[$CONFIG_name.'account_id'] > 0) {
-		$query = sprintf(GUILD_LADDER);
-		$result = execute_query($query, "guild.php");
+		$stmt = prepare_query(GUILD_LADDER);
+		$result = execute_query($stmt, "guild.php");
 
 		caption($lang['GUILD_TOP50']);
 		echo '
@@ -79,8 +79,8 @@ include_once 'functions.php';
 			caption($lang['WOE_TIME']);
 		} else {
 
-			$query = sprintf(GUILD_CASTLE);
-			$result = execute_query($query, "guild.php");
+			$stmt = prepare_query(GUILD_CASTLE);
+			$result = execute_query($stmt, "guild.php");
 			caption($lang['GUILD_GCASTLES']);
 			$castles = $_SESSION[$CONFIG_name.'castles'];
 			echo '
