@@ -28,8 +28,8 @@ include_once 'config.php'; // loads config variables
 include_once 'query.php'; // imports queries
 include_once 'functions.php';
 
-$query = sprintf(GET_LINKS);
-$result = execute_query($query, 'links.php', 1, 0);
+$stmt = prepare_query(GET_LINKS, 1);
+$result = execute_query($stmt, 'links.php', 0);
 
 
 caption($lang['LINKS_LINKS']);

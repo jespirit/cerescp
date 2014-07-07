@@ -40,27 +40,27 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 					alert($lang['INCORRECT_CHARACTER']);
 				
 				if (isset($GET_divorce) && $GET_divorce > 0) {
-					$query = sprintf(PARTNER_ONLINE, $GET_GID2);
-					$result = execute_query($query, 'marriage.php');
+					$stmt = prepare_query(PARTNER_ONLINE, 0, 'i', $GET_GID2);
+					$result = execute_query($stmt, 'marriage.php');
 
 					if ($result->fetch_row())
 						alert($lang['MARRIAGE_COUPLE_OFF']);
 		
-					$query = sprintf(PARTNER_NULL, $GET_GID1);
-					$result = execute_query($query, 'marriage.php');
+					$stmt = prepare_query(PARTNER_NULL, 0, 'i', $GET_GID1);
+					$result = execute_query($stmt, 'marriage.php');
 					
-					$query = sprintf(PARTNER_NULL, $GET_GID2);
-					$result = execute_query($query, 'marriage.php');
+					$stmt = prepare_query(PARTNER_NULL, 0, 'i', $GET_GID2);
+					$result = execute_query($stmt, 'marriage.php');
 
-					$query = sprintf(PARTNER_RING, $GET_GID1);
-					$result = execute_query($query, 'marriage.php');
+					$stmt = prepare_query(PARTNER_RING, 0, 'i', $GET_GID1);
+					$result = execute_query($stmt, 'marriage.php');
 
-					$query = sprintf(PARTNER_RING, $GET_GID2);
-					$result = execute_query($query, 'marriage.php');
+					$stmt = prepare_query(PARTNER_RING, 0, 'i', $GET_GID2);
+					$result = execute_query($stmt, 'marriage.php');
 
 					$ban_length = 2 * 60; // 2 minutos pra fazer efeito //testando vicous pucca
-					$query = sprintf(PARTNER_BAN, $ban_length, $_SESSION[$CONFIG_name.'account_id']);
-					$result = execute_query($query, 'marriage.php');
+					$stmt = prepare_query(PARTNER_BAN, 0, 'ii', $ban_length, $_SESSION[$CONFIG_name.'account_id']);
+					$result = execute_query($stmt, 'marriage.php');
 
 					redir('marriage.php', 'main_div', $lang['MARRIAGE_DIVORCE_OK']);
 				}
@@ -69,10 +69,10 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 			}
 		}
 
-		$query = sprintf(PARTNER_GET, $_SESSION[$CONFIG_name.'account_id']);
-		$result = execute_query($query, 'marriage.php');
+		$stmt = prepare_query(PARTNER_GET, 0, 'i', $_SESSION[$CONFIG_name.'account_id']);
+		$result = execute_query($stmt, 'marriage.php');
 
-		if ($result->count() < 1)
+		if ($result->num_rows < 1)
 			redir('motd.php', 'main_div', $lang['ONE_CHAR']);
 
 		caption($lang['MARRIAGE']);

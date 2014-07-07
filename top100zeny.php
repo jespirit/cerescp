@@ -30,8 +30,8 @@ include_once 'functions.php';
 
 $jobs = $_SESSION[$CONFIG_name.'jobs'];
 
-$query = sprintf(TOP100ZENY);
-$result = execute_query($query, "top100zeny.php");
+$stmt = prepare_query(TOP100ZENY);
+$result = execute_query($stmt, "top100zeny.php");
 
 caption($lang['TOP100ZENY_TOP100ZENY']);
 echo '

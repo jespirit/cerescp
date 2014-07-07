@@ -40,29 +40,29 @@ if (!empty($_SESSION[$CONFIG_name.'account_id']) && $CONFIG_reset_enable) {
 					alert($lang['RESETLOOK_RESET_LOOK']);
 				
 				if (isset($GET_equip) && $GET_equip > 0) {
-					$query = sprintf(LOOK_EQUIP, $GET_GID1, $_SESSION[$CONFIG_name.'account_id']);
-					$result = execute_query($query, "resetlook.php");
+					$stmt = prepare_query(LOOK_EQUIP, 0, 'ii', $GET_GID1, $_SESSION[$CONFIG_name.'account_id']);
+					$result = execute_query($stmt, "resetlook.php");
 		
-					$query = sprintf(LOOK_INVENTORY, $GET_GID1);
-					$result = execute_query($query, "resetlook.php");
+					$stmt = prepare_query(LOOK_INVENTORY, 0, 'i', $GET_GID1);
+					$result = execute_query($stmt, "resetlook.php");
 					alert($lang['RESETLOOK_EQUIP_OK']);
 				}
 
 				if (isset($GET_hair_color) && $GET_hair_color > 0) {
-					$query = sprintf(LOOK_HAIR_COLOR, $GET_GID1, $_SESSION[$CONFIG_name.'account_id']);
-					$result = execute_query($query, "resetlook.php");
+					$stmt = prepare_query(LOOK_HAIR_COLOR, 0, 'ii', $GET_GID1, $_SESSION[$CONFIG_name.'account_id']);
+					$result = execute_query($stmt, "resetlook.php");
 					alert($lang['RESETLOOK_HAIRC_OK']);
 				}
 
 				if (isset($GET_hair_style) && $GET_hair_style > 0) {
-					$query = sprintf(LOOK_HAIR_STYLE, $GET_GID1, $_SESSION[$CONFIG_name.'account_id']);
-					$result = execute_query($query, "resetlook.php");
+					$stmt = prepare_query(LOOK_HAIR_STYLE, 0, 'ii', $GET_GID1, $_SESSION[$CONFIG_name.'account_id']);
+					$result = execute_stmt($stmt, "resetlook.php");
 					alert($lang['RESETLOOK_HAIRS_OK']);
 				}
 
 				if (isset($GET_clothes_color) && $GET_clothes_color > 0) {
-					$query = sprintf(LOOK_CLOTHES_COLOR, $GET_GID1, $_SESSION[$CONFIG_name.'account_id']);
-					$result = execute_query($query, "resetlook.php");
+					$stmt = prepare_query(LOOK_CLOTHES_COLOR, 0, 'ii', $GET_GID1, $_SESSION[$CONFIG_name.'account_id']);
+					$result = execute_stmt($stmt, "resetlook.php");
 					alert($lang['RESETLOOK_CLOTHESC_OK']);
 				}
 
@@ -70,8 +70,8 @@ if (!empty($_SESSION[$CONFIG_name.'account_id']) && $CONFIG_reset_enable) {
 			}
 		}
 
-		$query = sprintf(LOOK_GET_CHARS, $_SESSION[$CONFIG_name.'account_id']);
-		$result = execute_query($query, "resetlook.php");
+		$stmt = prepare_query(LOOK_GET_CHARS, 0, 'i', $_SESSION[$CONFIG_name.'account_id']);
+		$result = execute_stmt($stmt, "resetlook.php");
 
 		if ($result->count() < 1)
 			redir('motd.php', 'main_div', $lang['ONE_CHAR']);

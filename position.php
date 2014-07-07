@@ -39,9 +39,9 @@ if (!empty($_SESSION[$CONFIG_name.'account_id']) && $CONFIG_reset_enable) {
 				if (inject($GET_GID1)) 
 					alert($lang['POSITION_RESET']);
 
-				$query = sprintf(GET_SAVE_POSITION, $GET_GID1, $GET_GID1);
-				$result = execute_query($query, "position.php");
-				if ($result->count() < 1) alert($lang['POSITION_JAIL']);
+				$stmt = prepare_query(GET_SAVE_POSITION, 0, 'ii', $GET_GID1, $GET_GID1);
+				$result = execute_query($stmt, "position.php");
+				if ($result->num_rows < 1) alert($lang['POSITION_JAIL']);
 				$line = $result->fetch_row();
 				$last_map = $line[1];
 				$last_x = $line[2];
@@ -50,14 +50,14 @@ if (!empty($_SESSION[$CONFIG_name.'account_id']) && $CONFIG_reset_enable) {
 				if ($zeny < $CONFIG_reset_cost)
 					alert($lang['POSITION_NO_ZENY']);
 				$zeny = $zeny - $CONFIG_reset_cost;
-				$query = sprintf(FINAL_POSITION, $last_map, $last_x, $last_y, $zeny, $GET_GID1);
-				$result = execute_query($query, "position.php");
+				$stmt = prepare_query(FINAL_POSITION, 0 ,'siiii', $last_map, $last_x, $last_y, $zeny, $GET_GID1);
+				$result = execute_query($stmt, "position.php");
 				redir("position.php", "main_div", $lang['POSITION_OK']);
 			}
 		}
 
-		$query = sprintf(CHAR_GET_CHARS, $_SESSION[$CONFIG_name.'account_id'], $_SESSION[$CONFIG_name.'account_id']);
-		$result = execute_query($query, "position.php");
+		$stmt = prepare_query(CHAR_GET_CHARS, 0, 'ii', $_SESSION[$CONFIG_name.'account_id'], $_SESSION[$CONFIG_name.'account_id']);
+		$result = execute_query($stmt, "position.php");
 
 		if ($result->count() < 1)
 			redir('motd.php', 'main_div', $lang['ONE_CHAR']);

@@ -33,8 +33,8 @@ $jobs = $_SESSION[$CONFIG_name.'jobs'];
 if (is_woe())
 	redir('motd.php', 'main_div', $lang['WOE_TIME']);
 
-$query = sprintf(WHOISONLINE);
-$result = execute_query($query, "whoisonline.php");
+$stmt = prepare_query(WHOISONLINE);
+$result = execute_query($stmt, "whoisonline.php");
 
 caption($lang['WHOISONLINE_WHOISONLINE']);
 echo '

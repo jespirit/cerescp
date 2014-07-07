@@ -45,22 +45,24 @@ if (!empty($_SESSION[$CONFIG_name.'account_id']) && $CONFIG_set_slot) {
 				if ($GET_newslot < 0 || $GET_newslot > 8 || $GET_slot < 0 ||  $GET_slot > 8)
 					alert($lang['SLOT_WRONG_NUMBER']);
 				
-				$query = sprintf(CHECK_SLOT, $GET_newslot, $_SESSION[$CONFIG_name.'account_id']);
-				$result = execute_query($query, "slot.php");
+				// Is there a character occupying the new slot?
+				$stmt = prepare_query(CHECK_SLOT, 0, 'ii', $GET_newslot, $_SESSION[$CONFIG_name.'account_id']);
+				$result = execute_query($stmt, "slot.php");
 
+				// Yes, so swap the slots.
 				if ($line = $result->fetch_row()) {
-					$query = sprintf(CHANGE_SLOT, $GET_slot, $line[0], $_SESSION[$CONFIG_name.'account_id']);
-					$result = execute_query($query, "slot.php");
+					$stmt = prepare_query(CHANGE_SLOT, 0, 'iii', $GET_slot, $line[0], $_SESSION[$CONFIG_name.'account_id']);
+					$result = execute_query($stmt, "slot.php");
 				}
 
-				$query = sprintf(CHANGE_SLOT, $GET_newslot, $GET_char_id, $_SESSION[$CONFIG_name.'account_id']);
-				$result = execute_query($query, "slot.php");
+				$stmt = prepare_query(CHANGE_SLOT, 0, 'iii', $GET_newslot, $GET_char_id, $_SESSION[$CONFIG_name.'account_id']);
+				$result = execute_query($stmt, "slot.php");
 			}
 		}
-		$query = sprintf(GET_SLOT, $_SESSION[$CONFIG_name.'account_id']);
-		$result = execute_query($query, "slot.php");
+		$stmt = prepare_query(GET_SLOT, 0, 'i', $_SESSION[$CONFIG_name.'account_id']);
+		$result = execute_query($stmt, "slot.php");
 
-		if ($result->count() < 1)
+		if ($result->num_rows < 1)
 			redir("slot.php", "main_div", $lang['ONE_CHAR']);
 
 		caption($lang['SLOT_CHANGE_SLOT']);

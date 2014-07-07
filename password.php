@@ -56,14 +56,14 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 					$POST_newpass = md5($POST_newpass);
 				}
 
-				$query = sprintf(CHECK_PASSWORD, trim($POST_login_pass), $_SESSION[$CONFIG_name.'account_id']);
-				$result = execute_query($query, 'password.php');
+				$stmt = prepare_query(CHECK_PASSWORD, 0, 'si', trim($POST_login_pass), $_SESSION[$CONFIG_name.'account_id']);
+				$result = execute_query($stmt, 'password.php');
 
 				if (!$result->fetch_row())
 					alert($lang['INCORRECT_PASSWORD']);
 
-				$query = sprintf(CHANGE_PASSWORD, trim($POST_newpass), $_SESSION[$CONFIG_name.'account_id']);
-				$result = execute_query($query, 'password.php');
+				$stmt = prepare_query(CHANGE_PASSWORD, 0, 'si', trim($POST_newpass), $_SESSION[$CONFIG_name.'account_id']);
+				$result = execute_query($stmt, 'password.php');
 
 				redir("password.php", "main_div", $lang['PASSWORD_CHANGED']);
 			}

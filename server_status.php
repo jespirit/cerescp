@@ -34,11 +34,11 @@ $quantos = moneyformat(online_count());
 //Dynamic Info Check [ABOUT_RATES|RATES_AGIT]
 if ($CONFIG_dynamic_info || $CONFIG_agit_check) {
 	if ($CONFIG_agit_check)
-		$query = sprintf(RATES_AGIT,$CONFIG_dynamic_name);
+		$stmt = prepare_query(RATES_AGIT, 0, 's', $CONFIG_dynamic_name);
 	else
-		$query = sprintf(ABOUT_RATES,$CONFIG_dynamic_name);
+		$stmt = prepare_query(ABOUT_RATES, 0, 's', $CONFIG_dynamic_name);
 
-	$result = execute_query($query, 'server_status.php');
+	$result = execute_query($stmt, 'server_status.php');
 	$line = $result->fetch_row();
 	$rate_base = moneyformat($line[0] / 100);
 	$rate_job = moneyformat($line[1] / 100);

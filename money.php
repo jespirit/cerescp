@@ -42,13 +42,13 @@ if (!empty($_SESSION[$CONFIG_name.'account_id']) && $CONFIG_money_transfer) {
 				if ($GET_GID1 == $GET_GID2 || $GET_zeny < 0)
 					redir('motd.php', 'main_div', $lang['MONEY_CHEAT_DETECTED']);
 
-				$query = sprintf(CHECK_ZENY, $GET_GID1, $_SESSION[$CONFIG_name.'account_id']);
-				$result = execute_query($query, 'money.php');
+				$stmt = prepare_query(CHECK_ZENY, 0, 'ii', $GET_GID1, $_SESSION[$CONFIG_name.'account_id']);
+				$result = execute_query($stmt, 'money.php');
 				$line = $result->fetch_row();
 				$zeny1 = $line[0];
 
-				$query = sprintf(CHECK_ZENY, $GET_GID2, $_SESSION[$CONFIG_name.'account_id']);
-				$result = execute_query($query, 'money.php');
+				$stmt = prepare_query(CHECK_ZENY, 0, 'ii', $GET_GID2, $_SESSION[$CONFIG_name.'account_id']);
+				$result = execute_query($stmt, 'money.php');
 				$line = $result->fetch_row();
 				$zeny2 = $line[0];
 
@@ -62,21 +62,21 @@ if (!empty($_SESSION[$CONFIG_name.'account_id']) && $CONFIG_money_transfer) {
 				if ($more > 999999999)
 					redir('motd.php', 'main_div', $lang['MONEY_OPER_IMPOSSIBLE']);
 
-				$query = sprintf(SET_ZENY, $less, $GET_GID1, $_SESSION[$CONFIG_name.'account_id']);
-				$result = execute_query($query, 'money.php');
-				$query = sprintf(SET_ZENY, $more, $GET_GID2, $_SESSION[$CONFIG_name.'account_id']);
-				$result = execute_query($query, 'money.php');
+				$stmt = prepare_query(SET_ZENY, 0, 'iii', $less, $GET_GID1, $_SESSION[$CONFIG_name.'account_id']);
+				$result = execute_stmt($stmt, 'money.php');
+				$stmt = prepare_query(SET_ZENY, 0, 'iii', $more, $GET_GID2, $_SESSION[$CONFIG_name.'account_id']);
+				$result = execute_stmt($stmt, 'money.php');
 
 				$ban_length = 2 * 60; // 2 minutos pra fazer efeito //testando vicous pucca
-				$query = sprintf(PARTNER_BAN, $ban_length, $_SESSION[$CONFIG_name.'account_id']);
-				$result = execute_query($query, 'money.php');
+				$stmt = prepare_query(PARTNER_BAN, $ban_length, $_SESSION[$CONFIG_name.'account_id']);
+				$result = execute_stmt($stmt, 'money.php');
 
 				
 				if (is_online()) {
-					$query = sprintf(SET_ZENY, $zeny1, $GET_GID1, $_SESSION[$CONFIG_name.'account_id']);
-					$result = execute_query($query, 'money.php');
-					$query = sprintf(SET_ZENY, $zeny2, $GET_GID2, $_SESSION[$CONFIG_name.'account_id']);
-					$result = execute_query($query, 'money.php');
+					$stmt = prepare_query(SET_ZENY, 0, 'iii', $zeny1, $GET_GID1, $_SESSION[$CONFIG_name.'account_id']);
+					$result = execute_stmt($stmt, 'money.php');
+					$stmt = prepare_query(SET_ZENY, 0, 'iii', $zeny2, $GET_GID2, $_SESSION[$CONFIG_name.'account_id']);
+					$result = execute_stmt($stmt, 'money.php');
 					redir('motd.php', 'main_div', $lang['NEED_TO_LOGOUT_F']);
 				}
 				redir('money.php', "main_div", $lang['MONEY_OK']);
@@ -116,10 +116,10 @@ if (!empty($_SESSION[$CONFIG_name.'account_id']) && $CONFIG_money_transfer) {
 				fim();
 			}
 			if ($GET_opt == 1) {
-				$query = sprintf(GET_ZENY, $_SESSION[$CONFIG_name.'account_id']);
-				$result = execute_query($query, 'money.php');
+				$stmt = prepare_query(GET_ZENY, 0, 'i', $_SESSION[$CONFIG_name.'account_id']);
+				$result = execute_query($stmt, 'money.php');
 
-				if ($result->count() < 2)
+				if ($result->num_rows < 2)
 					redir('motd.php', 'main_div', $lang['MONEY_TWO_CHAR']);
 
 				caption($lang['MONEY_TRANSFER_TO']);
@@ -175,8 +175,8 @@ if (!empty($_SESSION[$CONFIG_name.'account_id']) && $CONFIG_money_transfer) {
 				fim();
 			}
 		}
-		$query = sprintf(GET_ZENY, $_SESSION[$CONFIG_name.'account_id']);
-		$result = execute_query($query, 'money.php');
+		$stmt = prepare_query(GET_ZENY, 0, 'i', $_SESSION[$CONFIG_name.'account_id']);
+		$result = execute_query($stmt, 'money.php');
 
 		if ($result->count() < 2)
 			redir('motd.php', 'main_div', $lang['MONEY_TWO_CHAR']);
