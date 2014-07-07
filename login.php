@@ -36,8 +36,8 @@ if (!isset($_SESSION[$CONFIG_name.'account_id']) && isset($_COOKIE['login_pass']
 			setcookie('login_pass', '', time() - 3600);
 			setcookie('userid', '', time() - 3600);
 		} else {
-			$query = sprintf(LOGIN_USER, trim($_COOKIE['userid']));
-			$result = execute_query($query, 'index.php');
+			$stmt = prepare_query(LOGIN_USER, 0, 'i', trim($_COOKIE['userid']));
+			$result = execute_query($stmt, 'index.php');
 
 			if($result->count() == 1 && $line = $result->fetch_row()) {
 				if (md5($CONFIG_name.$line[3]) == $_COOKIE['login_pass']) {
@@ -106,8 +106,8 @@ if (!empty($POST_opt)) {
 			alert($lang['PASSWORD_LENGTH_OLD']);
 		}
 
-		$query = sprintf(LOGIN_USER, trim($POST_username));
-		$result = execute_query($query, 'index.php');
+		$stmt = prepare_query(LOGIN_USER, 0, 's', trim($POST_username));
+		$result = execute_query($stmt, 'index.php');
 
 		if($result->count() == 1 && $line = $result->fetch_row()) {
 			if ($CONFIG_md5_pass)

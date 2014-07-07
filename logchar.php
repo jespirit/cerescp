@@ -46,12 +46,13 @@ $inicio = $GET_page * $lpp;
 $back = "page=".$GET_page;
 
 
-$query = sprintf(LOGS_CHAR, $_SESSION[$CONFIG_name.'level'], $inicio, $lpp);
-$result = execute_query($query, 'logchar.php', 0);
+$stmt = prepare_query(LOGS_CHAR, 0, 'iii', $_SESSION[$CONFIG_name.'level'], $inicio, $lpp);
+$result = execute_query($stmt, 'logchar.php', 0);
 
-$result2 = execute_query(FOUND_ROWS, 'logchar.php', 2);
-$result2->fetch_row();
-$num = $result2->row(0);
+$stmt = prepare_query(FOUND_ROWS, 2);
+$result2 = execute_query($stmt, 'logchar.php', 2);
+$row = $result2->fetch_row();
+$num = $row[0];
 $pages = (int)(($num-1)/$lpp);
 
 $pagestring = '';

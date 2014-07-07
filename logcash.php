@@ -49,12 +49,13 @@ $inicio = $GET_page * $lpp;
 $back = "page=".$GET_page;
 
 
-$query = sprintf(LOGS_CASH, $inicio, $lpp);
-$result = execute_query($query, 'logcash.php', 2);
+$stmt = prepare_query(LOGS_CASH, 2, 'ii', $inicio, $lpp);
+$result = execute_query($stmt, 'logcash.php');
 
-$result2 = execute_query(FOUND_ROWS, 'logcash.php', 2);
-$result2->fetch_row();
-$num = $result2->row(0);
+$stmt = prepare_query(FOUND_ROWS, 2);
+$result2 = execute_query($stmt, 'logcash.php');
+$row = $result2->fetch_row();
+$num = $row[0];
 $pages = (int)(($num-1)/$lpp);
 
 $pagestring = '';

@@ -46,12 +46,13 @@ $inicio = $GET_page * $lpp;
 $back = "page=".$GET_page;
 
 
-$query = sprintf(LOGS_ZENY, $inicio, $lpp);
-$result = execute_query($query, 'logzeny.php', 2);
+$stmt = prepare_query(LOGS_ZENY, 2, 'ii', $inicio, $lpp);
+$result = execute_query($stmt, 'logzeny.php');
 
-$result2 = execute_query(FOUND_ROWS, 'logzeny.php', 2);
-$result2->fetch_row();
-$num = $result2->row(0);
+$stmt = prepare_query(FOUND_ROWS, 2);
+$result2 = execute_query($stmt, 'logzeny.php');
+$row = $result2->fetch_row();
+$num = $row[0];
 $pages = (int)(($num-1)/$lpp);
 
 $pagestring = '';

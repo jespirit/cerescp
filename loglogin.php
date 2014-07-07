@@ -46,12 +46,13 @@ $inicio = $GET_page * $lpp;
 $back = "page=".$GET_page;
 
 
-$query = sprintf(LOGS_LOGIN, $inicio, $lpp);
-$result = execute_query($query, 'loglogin.php', 2);
+$stmt = prepare_query(LOGS_LOGIN, 2, 'ii', $inicio, $lpp);
+$result = execute_query($stmt, 'loglogin.php');
 
-$result2 = execute_query(FOUND_ROWS, 'loglogin.php', 2);
-$result2->fetch_row();
-$num = $result2->row(0);
+$stmt = prepare_query(FOUND_ROWS, 2);
+$result2 = execute_query(stmt, 'loglogin.php');
+$row = $result2->fetch_row();
+$num = $row[0];
 $pages = (int)(($num-1)/$lpp);
 
 $pagestring = '';

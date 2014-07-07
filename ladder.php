@@ -70,70 +70,71 @@ include_once 'functions.php';
 		if (notnumber($GET_opt))
 			alert($lang['INCORRECT_CHARACTER']);
 
-		$query = sprintf(LADDER_ALL);
+		$stmt = prepare_query(LADDER_ALL);
 		$string = 'All';
 
+		// TODO: Bind $GET_opt, alts[] to LADDER_LKPA query
 		if ($GET_opt > 0) {
 			switch ($GET_opt) {
 				case 7:
-					$query = sprintf(LADDER_LKPA, $GET_opt, 13);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $GET_opt, 13);
 					break;
 				case 14:
-					$query = sprintf(LADDER_LKPA, $GET_opt, 21);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $GET_opt, 21);
 					break;
 				case 4008:
-					$query = sprintf(LADDER_LKPA, $GET_opt, 4014);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $GET_opt, 4014);
 					break;
 				case 4015:
-					$query = sprintf(LADDER_LKPA, $GET_opt, 4022);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $GET_opt, 4022);
 					break;
 				case 4030:
-					$query = sprintf(LADDER_LKPA, $GET_opt, 4036);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $GET_opt, 4036);
 					break;
 				case 4037:
-					$query = sprintf(LADDER_LKPA, $GET_opt, 4044);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $GET_opt, 4044);
 					break;
 				case 4047:
-					$query = sprintf(LADDER_LKPA, $GET_opt, 4048);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $GET_opt, 4048);
 					break;
 				case 4056:
-					$query = sprintf(LADDER_LKPA, $_GET_opt, 4084);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $_GET_opt, 4084);
 					break;
 				case 4054:
-					$query = sprintf(LADDER_LKPA, $_GET_opt, 4080);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $_GET_opt, 4080);
 					break;
 				case 4058:
-					$query = sprintf(LADDER_LKPA, $_GET_opt, 4086);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $_GET_opt, 4086);
 					break;
 				case 4060:
-					$query = sprintf(LADDER_LKPA, $_GET_opt, 4081);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $_GET_opt, 4081);
 					break;
 				case 4062:
-					$query = sprintf(LADDER_LKPA, $_GET_opt, 4085);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $_GET_opt, 4085);
 					break;
 				case 4064:
-					$query = sprintf(LADDER_LKPA, $_GET_opt, 4087);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $_GET_opt, 4087);
 					break;
 				case 4066:
-					$query = sprintf(LADDER_LKPA, $_GET_opt, 4082);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $_GET_opt, 4082);
 					break;
 				case 4073:
-					$query = sprintf(LADDER_LKPA, $_GET_opt, 4083);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $_GET_opt, 4083);
 					break;
 				case 4096:
-					$query = sprintf(LADDER_LKPA, $_GET_opt, 4109);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $_GET_opt, 4109);
 					break;
 				case 4098:
-					$query = sprintf(LADDER_LKPA, $_GET_opt, 4111);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $_GET_opt, 4111);
 					break;
 				case 4100:
-					$query = sprintf(LADDER_LKPA, $_GET_opt, 4112);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $_GET_opt, 4112);
 					break;
 				case 4102:
-					$query = sprintf(LADDER_LKPA, $_GET_opt, 4110);
+					$stmt = prepare_query(LADDER_LKPA, 0, 'ii', $_GET_opt, 4110);
 					break;
 				default:
-					$query = sprintf(LADDER_JOB, $GET_opt);
+					$stmt = prepare_query(LADDER_JOB, 0, 'i', $GET_opt);
 					break;
 			}
 			$string = 'unknown';
@@ -141,7 +142,7 @@ include_once 'functions.php';
 				$string = $jobs[$GET_opt];
 		}
 
-		$result = execute_query($query, 'ladder.php');
+		$result = execute_query($stmt, 'ladder.php');
 		echo '
 		<table class="maintable">
 		<tr>

@@ -48,12 +48,13 @@ $inicio = $GET_page * $lpp;
 $back = "page=".$GET_page;
 
 
-$query = sprintf(LOGS_ITEMS, $CONFIG_rag_db, $CONFIG_rag_db, $_SESSION[$CONFIG_name.'level'], $inicio, $lpp);
-$result = execute_query($query, 'logitems.php', 2);
+$stmt = prepare_query(LOGS_ITEMS, 2, 'ssiii', $CONFIG_rag_db, $CONFIG_rag_db, $_SESSION[$CONFIG_name.'level'], $inicio, $lpp);
+$result = execute_query($stmt, 'logitems.php');
 
-$result2 = execute_query(FOUND_ROWS, 'logitems.php', 2);
-$result2->fetch_row();
-$num = $result2->row(0);
+$stmt = prepare_query(FOUND_ROWS, 2);
+$result2 = execute_query($stmt, 'logitems.php');
+$row = $result2->fetch_row();
+$num = $row[0];
 $pages = (int)(($num-1)/$lpp);
 
 $pagestring = '';
