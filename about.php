@@ -30,24 +30,27 @@ include_once 'functions.php';
 
 $jobs = $_SESSION[$CONFIG_name.'jobs'];
 
-$query = sprintf(TOTALACCOUNTS);
-$result = execute_query($query, 'about.php');
-$result->fetch_row();
-$accounts = moneyformat($result->row(0));
+$stmt = prepare_query(TOTALACCOUNTS);
+$result = execute_query($stmt, 'about.php');
+$row = $result->fetch_row();
+$accounts = moneyformat($row[0]);
 
-$query = sprintf(TOTALZENY);
-$result = execute_query($query, 'about.php');
-$result->fetch_row();
-if (!($zeny = $result->row(0)))
+$stmt = prepare_query(TOTALZENY);
+$result = execute_query($stmt, 'about.php');
+$row = $result->fetch_row();
+
+if (!($zeny = $row[0]))
 	$zeny = 0;
 $zeny = moneyformat($zeny);
 
 if ($CONFIG_dynamic_info || $CONFIG_agit_check) {
-	if ($CONFIG_agit_check)
-		$query = sprintf(RATES_AGIT, $CONFIG_dynamic_name);
-	else
-		$query = sprintf(ABOUT_RATES, $CONFIG_dynamic_name);
-	$result = execute_query($query, 'about.php');
+	if ($CONFIG_agit_check) {
+		$stmt = prepare_query(RATES_AGIT, 0, 's', $CONFIG_dynamic_name);
+	}
+	else {
+		$stmt = prepare_query(ABOUT_RATES, 0, 's', $CONFIG_dynamic_name);
+	}
+	$result = execute_query($stmt, 'about.php');
 	$line = $result->fetch_row();
 	$rate_base = $line[0] / 100;
 	$rate_job = $line[1] / 100;
@@ -57,15 +60,14 @@ if ($CONFIG_dynamic_info || $CONFIG_agit_check) {
 
 }
 
-$query = sprintf(TOTALCHARS);
-$result = execute_query($query, 'about.php');
-
-$result->fetch_row();
-$chars = moneyformat($result->row(0));
+$stmt = prepare_query(TOTALCHARS);
+$result = execute_query($stmt, 'about.php');
+$row = $result->fetch_row();
+$chars = moneyformat($row[0]);
 
 if ($CONFIG_classlist_show) {
-	$query = sprintf(TOTALCLASSES);
-	$result = execute_query($query, 'about.php');
+	$stmt = prepare_query(ABOUT_RATES);
+	$result = execute_query($stmt, 'about.php');
 	while ($line = $result->fetch_row()) {
 		$class[$line[0]] = $line[1];
 	}
