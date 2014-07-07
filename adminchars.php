@@ -64,13 +64,13 @@ if (isset($GET_tipo)) {
 
 	switch($GET_tipo) {
 		case 1:
-			$query = sprintf(CHARS_SEARCH_ACCOUNT_ID, trim($GET_termo));
+			$stmt = prepare_query(CHARS_SEARCH_ACCOUNT_ID, 0, 's', trim($GET_termo));
 			break;
 		case 2:
-			$query = sprintf(CHARS_SEARCH_CHAR_ID, trim($GET_termo));
+			$stmt = prepare_query(CHARS_SEARCH_CHAR_ID, 0, 's', trim($GET_termo));
 			break;
 		default:
-			$query = sprintf(CHARS_SEARCH_NAME, trim($GET_termo));
+			$stmt = prepare_query(CHARS_SEARCH_NAME, 0, 's', trim($GET_termo));
 			break;
 	}
 	$pages = 0;
@@ -82,19 +82,19 @@ if (isset($GET_tipo)) {
 		alert($lang['INCORRECT_CHARACTER']);
 
 
-	$query = sprintf(CHARS_TOTAL);
-	$result = execute_query($query, 'adminchars.php');
-	$result->fetch_row();
-	$pages = (int)($result->row(0) / 100);
+	$stmt = prepare_query(CHARS_TOTAL);
+	$result = execute_query($stmt, 'adminchars.php');
+	$row = $result->fetch_row();
+	$pages = (int)($row[0] / 100);
 	
 	$inicio = $GET_page * 100;
-	$query = sprintf(CHARS_BROWSE, $inicio);
+	$stmt = prepare_query(CHARS_BROWSE, 0, 'i', $inicio);
 
 	$back = 'page='.$GET_page;
 }
 
 $back = base64_encode($back);
-$result = execute_query($query, 'adminchars.php');
+$result = execute_query($stmt, 'adminchars.php');
 
 echo '
 <table class="maintable">

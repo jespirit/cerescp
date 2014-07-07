@@ -53,8 +53,8 @@ caption("Char Detail");
 if (isset($GET_id) && !notnumber($GET_id)) {
 	$jobs = $_SESSION[$CONFIG_name.'jobs'];
 
-	$query = sprintf(CHARINFO_CHAR, trim($GET_id));
-	$answere = execute_query($query, 'admincharinfo.php');
+	$stmt = prepare_query(CHARINFO_CHAR, 0, 'i', trim($GET_id));
+	$answere = execute_query($stmt, 'admincharinfo.php');
 	echo '
 		<table class="maintable" style="width: 500px">
 	';
@@ -98,13 +98,13 @@ if (isset($GET_id) && !notnumber($GET_id)) {
 			</table>
 		';
 	}
-	$query = sprintf(CHARINFO_INVENTORY, trim($GET_id));
-	$answere = execute_query($query, 'admincharinfo.php');
+	$stmt = prepare_query(CHARINFO_INVENTORY, 0, 'i', trim($GET_id));
+	$answere = execute_query($stmt, 'admincharinfo.php');
 	caption('INVENTORY');
 	print_items($answere);
 
-	$query = sprintf(CHARINFO_STORAGE, trim($acc_id));
-	$answere = execute_query($query, 'admincharinfo.php');
+	$stmt = prepare_query(CHARINFO_STORAGE, 0, 'i', trim($acc_id));
+	$answere = execute_query($stmt, 'admincharinfo.php');
 	caption('STORAGE');
 	print_items($answere);
 
@@ -118,8 +118,8 @@ if (isset($GET_id) && !notnumber($GET_id)) {
 		case 4028:
 		case 4033:
 		case 4041:
-			$query = sprintf(CHARINFO_CART, trim($GET_id));
-			$answere = execute_query($query, 'admincharinfo.php');
+			$stmt = prepare_query(CHARINFO_CART, 0, 'i', trim($GET_id));
+			$answere = execute_query($stmt, 'admincharinfo.php');
 			caption('CART');
 			print_items($answere);
 	}

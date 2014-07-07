@@ -43,8 +43,8 @@ if (isset($GET_id)) {
 	
 	$jobs = $_SESSION[$CONFIG_name.'jobs'];
 
-	$query = sprintf(ACCCHARS_ID, trim($GET_id));
-	$result = execute_query($query, 'adminaccchars.php');
+	$stmt = prepare_query(ACCCHARS_ID, 0, 'i', trim($GET_id));
+	$result = execute_query($stmt, 'adminaccchars.php');
 
 	echo '
 	<table class="maintable">

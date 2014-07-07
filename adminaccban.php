@@ -33,8 +33,8 @@ if (!isset($_SESSION[$CONFIG_name.'level']) || $_SESSION[$CONFIG_name.'level'] <
 	die ('Not Authorized');
 
 if (isset($GET_frm_name) && isset($GET_id)) {
-	$query = sprintf(ACCOUNTS_SEARCH_ACCOUNT_ID, trim($GET_id));
-	$result = execute_query($query, 'adminaccban.php');
+	$stmt = prepare_query(ACCOUNTS_SEARCH_ACCOUNT_ID, 0, 'i', trim($GET_id));
+	$result = execute_query($stmt, 'adminaccban.php');
 	if ($line = $result->fetch_row()) {
 		$today = getdate();
 		
@@ -56,8 +56,8 @@ if (isset($GET_frm_name) && isset($GET_id)) {
 			alert('Unable to update account.');
 		}
 
-		$query = sprintf(ACCBAN_UPDATE, $ban, $GET_block, trim($GET_id));
-		$result = execute_query($query, 'adminaccban.php');
+		$stmt = prepare_query(ACCBAN_UPDATE, 0, 'iii', $ban, $GET_block, trim($GET_id));
+		$result = execute_query($stmt, 'adminaccban.php');
 
 		alert('Account Updated');
 	}
@@ -75,8 +75,8 @@ if (isset($GET_id)) {
 	if (notnumber($GET_id))
 		alert($lang['INCORRECT_CHARACTER']);
 
-	$query = sprintf(ACCOUNTS_SEARCH_ACCOUNT_ID, trim($GET_id));
-	$result = execute_query($query, 'adminaccban.php');
+	$stmt = prepare_query(ACCOUNTS_SEARCH_ACCOUNT_ID, 0, 'i', trim($GET_id));
+	$result = execute_query($stmt, 'adminaccban.php');
 	if ($line = $result->fetch_row()) {
 		echo '
 		<form id="accban" onSubmit="return GET_ajax(\'adminaccban.php\',\'accounts_div\',\'accban\');">

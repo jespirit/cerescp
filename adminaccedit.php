@@ -36,8 +36,8 @@ if (isset($GET_frm_name) && isset($GET_id)) {
 	if (notnumber($GET_id) || inject($GET_login) || inject($GET_password) || inject($GET_email))
 		alert($lang['INCORRECT_CHARACTER']);
 
-	$query = sprintf(ACCOUNTS_SEARCH_ACCOUNT_ID, trim($GET_id));
-	$result = execute_query($query, 'adminaccedit.php');
+	$stmt = prepare_query(ACCOUNTS_SEARCH_ACCOUNT_ID, 0, 'i', trim($GET_id));
+	$result = execute_query($stmt, 'adminaccedit.php');
 	if ($line = $result->fetch_row()) {
 		if ($GET_sex != 'M' && $GET_sex != 'F')
 			$GET_sex = $line[2];
@@ -54,8 +54,8 @@ if (isset($GET_frm_name) && isset($GET_id)) {
 		if (strlen($GET_birthdate) < 10)
 			$GET_birthdate = $line[10];
 			
-		$query = sprintf(ACCEDIT_UPDATE, $GET_login, $GET_password, $GET_sex, $GET_email, $GET_level, $GET_birthdate, trim($GET_id));
-		$result = execute_query($query, 'adminaccedit.php');
+		$stmt = prepare_query(ACCEDIT_UPDATE, 0, 'ssssisi', $GET_login, $GET_password, $GET_sex, $GET_email, $GET_level, $GET_birthdate, trim($GET_id));
+		$result = execute_query($stmt, 'adminaccedit.php');
 
 		alert('Account Updated');
 	}
@@ -68,8 +68,8 @@ if (isset($GET_back)) {
 }
 
 if (isset($GET_id)) {
-	$query = sprintf(ACCOUNTS_SEARCH_ACCOUNT_ID, trim($GET_id));
-	$result = execute_query($query, 'adminaccedit.php');
+	$stmt = prepare_query(ACCOUNTS_SEARCH_ACCOUNT_ID, 0, 'i', trim($GET_id));
+	$result = execute_query($stmt, 'adminaccedit.php');
 	if ($line = $result->fetch_row()) {
 		$sex = $line[2];
 		echo '
