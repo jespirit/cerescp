@@ -68,8 +68,7 @@ if (!isset($_SESSION[$CONFIG_name.'account_id']) && isset($_COOKIE['login_pass']
 if (!empty($POST_opt)) {
 	if ($POST_opt == 1 && isset($POST_frm_name) && !strcmp($POST_frm_name, 'login')) {
 
-		//$bf_check = bf_check_user(trim($POST_username));
-		$bf_check = 0;
+		$bf_check = bf_check_user(trim($POST_username));
 		if ($bf_check > 0) {
 			$msg = sprintf($lang['BLOCKED'], $bf_check);
 			erro_de_login();

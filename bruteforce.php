@@ -35,8 +35,8 @@ function bf_check_user($username) {
 	$log_ip = $_SERVER['REMOTE_ADDR'];
 	$current = time();
 	
-	$stmt = prepare_query(BF_IP, 0, 'sii', $log_ip, $current - 300, $current);
-	$result = execute_query($stmt, "check_user", 1, 0);
+	$stmt = prepare_query(BF_IP, 1, 'sii', $log_ip, $current - 300, $current);
+	$result = execute_query($stmt, "check_user", 0);
 	$tentativas = $result->num_rows;
 	while ($line = $result->fetch_row()) {
 		if ($line[0] > $current)
@@ -56,7 +56,7 @@ function bf_check_user($username) {
 
 	$stmt = prepare_query(BF_USER, 1, 'sii', $username, $current - 300, $current);
 	$result = execute_query($stmt, "check_user", 0);
-	$tentativas = $result->count();
+	$tentativas = $result->num_rows;
 	while ($line = $result->fetch_row()) {
 		if ($line[0] > $current)  // still banned?
 			return (int)(($line[0] - $current) / 60);  // return how much time until ban is lifted
