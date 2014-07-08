@@ -100,7 +100,7 @@ echo '
 while ($line = $result->fetch_assoc()) {
 	echo '<tr>
 		  <td style="white-space: nowrap;">'.$line['time'].'</td>
-		  <td style="white-space: nowrap;">'.$line['account_id'].' ('.$line['group_id'].')</td>
+		  <td style="white-space: nowrap;">'.$line['account_id'].' ('.($config['servermode'] == 0 ? $line['group_id'] : $line['level']).')</td>
 		  <td style="white-space: nowrap; text-align: right;">'.$line['char_num'].'</td>
 		  <td style="white-space: nowrap;">'.htmlformat($line['name']).'</td>
 		  <td style="white-space: nowrap; text-align: right;">'.$line['str'].'</td>

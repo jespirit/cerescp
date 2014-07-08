@@ -61,7 +61,7 @@ if (isset($GET_id) && !notnumber($GET_id)) {
 	if ($result = $answere->fetch_row()) {
 		$acc_id = $result[1];
 		$class = $result[4];
-		$gname = htmlformat($result[54]);
+		$gname = htmlformat($result[52]);
 		echo '
 			<tr>
 				<th align="right">Name:</th><td align="left">'.htmlformat($result[3]).'</td>
@@ -73,7 +73,7 @@ if (isset($GET_id) && !notnumber($GET_id)) {
 			echo 'unknown';
 		echo '<th align="right">'.$lang['LADDER_GUILD'].':&nbsp;</th><td align="left">';
 
-		$_SESSION[$CONFIG_name.'emblems'][$result[26]] = $result[55];
+		$_SESSION[$CONFIG_name.'emblems'][$result[26]] = $result[53];
 
 		if ($result[26] > 0)
 			echo '<img src="emblema.php?data='.$result[26].'" alt="'.$gname.'" style="vertical-align: middle;" /> '.$gname.'';

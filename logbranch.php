@@ -46,11 +46,11 @@ $inicio = $GET_page * $lpp;
 $back = "page=".$GET_page;
 
 $query = sprintf(LOGS_BRANCH, $CONFIG_rag_db);
-$stmt = prepare_query($query, 2, 'ii', $, $inicio, $lpp);
+$stmt = prepare_query($query, 2, 'ii', $inicio, $lpp);
 $result = execute_query($stmt, 'logbranch.php');
 
 $stmt = prepare_query(FOUND_ROWS, 2);
-$result2 = execute_query(stmt, 'logbranch.php');
+$result2 = execute_query($stmt, 'logbranch.php');
 $row = $result2->fetch_row();
 $num = $row[0];
 $pages = (int)(($num-1)/$lpp);

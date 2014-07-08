@@ -88,8 +88,8 @@ if (isset($GET_tipo)) {
 
 	$stmt = prepare_query(TOTALACCOUNTS);
 	$result = execute_query($stmt, 'adminaccounts.php');
-	$result->fetch_row();
-	$pages = (int)($result->row(0) / 100);
+	$row = $result->fetch_row();
+	$pages = (int)($row[0] / 100);
 	
 	$inicio = $GET_page * 100;
 	$stmt = prepare_query(ACCOUNTS_BROWSE, 0, 'i', $inicio);

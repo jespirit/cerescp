@@ -50,7 +50,7 @@ $stmt = prepare_query(LOGS_LOGIN, 2, 'ii', $inicio, $lpp);
 $result = execute_query($stmt, 'loglogin.php');
 
 $stmt = prepare_query(FOUND_ROWS, 2);
-$result2 = execute_query(stmt, 'loglogin.php');
+$result2 = execute_query($stmt, 'loglogin.php');
 $row = $result2->fetch_row();
 $num = $row[0];
 $pages = (int)(($num-1)/$lpp);

@@ -47,8 +47,8 @@ $lpp = 30;
 $inicio = $GET_page * $lpp;
 $back = "page=".$GET_page;
 
-
-$stmt = prepare_query(LOGS_ITEMS, 2, 'ssiii', $CONFIG_rag_db, $CONFIG_rag_db, $_SESSION[$CONFIG_name.'level'], $inicio, $lpp);
+$query = sprintf(LOGS_ITEMS, $CONFIG_rag_db, $CONFIG_rag_db);
+$stmt = prepare_query($query, 2, 'iii', $_SESSION[$CONFIG_name.'level'], $inicio, $lpp);
 $result = execute_query($stmt, 'logitems.php');
 
 $stmt = prepare_query(FOUND_ROWS, 2);
@@ -97,7 +97,7 @@ echo '
 while ($line = $result->fetch_assoc()) {
 	echo '<tr>
 		  <td style="white-space: nowrap;">'.$line['time'].'</td>
-		  <td style="white-space: nowrap;">'.$line['account_id'].' ('.$line['group_id'].')</td>
+		  <td style="white-space: nowrap;">'.$line['account_id'].' ('.($config['servermode'] == 0 ? $line['group_id'] : $line['level']).')</td>
 		  <td style="white-space: nowrap;">'.$line['char_id'].'</td>
 		  <td style="white-space: nowrap;">'.$line['type'].'</td>
 		  <td style="white-space: nowrap;">'.htmlformat($line['char_name']).'</td>

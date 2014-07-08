@@ -28,7 +28,7 @@ $revision = 0;
 //adminaccounts
 if ($config['servermode'] == 0){
 DEFINE('ACCOUNTS_SEARCH_ACCOUNT_ID', "SELECT `account_id`, `userid`, `sex`, `email`, `group_id`, `last_ip`, `unban_time`, `state`, 
-`user_pass`, `lastlogin`, `birthdate` FROM `login` WHERE `account_id` = '?'");
+`user_pass`, `lastlogin`, `birthdate` FROM `login` WHERE `account_id` = ?");
 DEFINE('ACCOUNTS_SEARCH_EMAIL', "SELECT `account_id`, `userid`, `sex`, `email`, `group_id`, `last_ip`, `unban_time`, `state`, `user_pass`
 FROM `login` WHERE `email` LIKE '%%?%%'");
 DEFINE('ACCOUNTS_SEARCH_IP', "SELECT `account_id`, `userid`, `sex`, `email`, `group_id`, `last_ip`, `unban_time`, `state`, `user_pass`
@@ -39,7 +39,7 @@ DEFINE('ACCOUNTS_BROWSE', "SELECT `account_id`, `userid`, `sex`, `email`, `group
 FROM `login` ORDER BY `account_id` LIMIT ?, 100");
 }elseif ($config['servermode'] == 1){
 DEFINE('ACCOUNTS_SEARCH_ACCOUNT_ID', "SELECT `account_id`, `userid`, `sex`, `email`, `level`, `last_ip`, `unban_time`, `state`, 
-`user_pass`, `lastlogin`, `birthdate` FROM `login` WHERE `account_id` = '?'");
+`user_pass`, `lastlogin`, `birthdate` FROM `login` WHERE `account_id` = ?");
 DEFINE('ACCOUNTS_SEARCH_EMAIL', "SELECT `account_id`, `userid`, `sex`, `email`, `level`, `last_ip`, `unban_time`, `state`, `user_pass`
 FROM `login` WHERE `email` LIKE '%%?%%'");
 DEFINE('ACCOUNTS_SEARCH_IP', "SELECT `account_id`, `userid`, `sex`, `email`, `level`, `last_ip`, `unban_time`, `state`, `user_pass`
@@ -51,39 +51,39 @@ FROM `login` ORDER BY `account_id` LIMIT ?, 100");
 }
 //adminaccedit
 if ($config['servermode'] == 0){
-DEFINE('ACCEDIT_UPDATE', "UPDATE `login` SET `userid` = '?', `user_pass` = '?', `sex` = '?', `email` = '?', `group_id` = '?', `birthdate` = '?'
-WHERE `account_id` = '?'
+DEFINE('ACCEDIT_UPDATE', "UPDATE `login` SET `userid` = ?, `user_pass` = ?, `sex` = ?, `email` = ?, `group_id` = ?, `birthdate` = ?
+WHERE `account_id` = ?
 ");
 }elseif ($config['servermode'] == 1){
-DEFINE('ACCEDIT_UPDATE', "UPDATE `login` SET `userid` = '?', `user_pass` = '?', `sex` = '?', `email` = '?', `level` = '?', `birthdate` = '?'
-WHERE `account_id` = '?'
+DEFINE('ACCEDIT_UPDATE', "UPDATE `login` SET `userid` = ?, `user_pass` = ?, `sex` = ?, `email` = ?, `level` = ?, `birthdate` = ?
+WHERE `account_id` = ?
 ");
 }
 //adminaccchars
 DEFINE('ACCCHARS_ID', "SELECT `char_id`, `char_num`, `name`, `class`, `base_level`, `job_level`, `online`, `last_map`, `last_x`, `last_y`
-FROM `char` WHERE `account_id` = '?' ORDER BY `char_num`
+FROM `char` WHERE `account_id` = ? ORDER BY `char_num`
 ");
 
 //admincharinfo
-DEFINE('CHARINFO_CHAR', "SELECT `char`.*, `guild`.`name`, `guild`.`emblem_data` FROM `char` LEFT JOIN `guild` USING (`guild_id`) WHERE `char`.`char_id` = '?'");
+DEFINE('CHARINFO_CHAR', "SELECT `char`.*, `guild`.`name`, `guild`.`emblem_data` FROM `char` LEFT JOIN `guild` USING (`guild_id`) WHERE `char`.`char_id` = ?");
 DEFINE('CHARINFO_INVENTORY', "SELECT `nameid`, `amount`, `card0`, `card1`, `card2`, `card3`, `refine`, `equip` FROM `inventory`
-WHERE `char_id` = '?'
+WHERE `char_id` = ?
 ");
 DEFINE('CHARINFO_STORAGE', "SELECT `nameid`, `amount`, `card0`, `card1`, `card2`, `card3`, `refine`, `equip` FROM `storage`
-WHERE `account_id` = '?'
+WHERE `account_id` = ?
 ");
 DEFINE('CHARINFO_CART',"SELECT `nameid`, `amount`, `card0`, `card1`, `card2`, `card3`, `refine`, `equip` FROM `cart_inventory`
-WHERE char_id = '?'
+WHERE char_id = ?
 ");
 
 //adminaccban
-DEFINE('ACCBAN_UPDATE', "UPDATE `login` SET `unban_time` = '?', `state` = '?' WHERE `account_id` = '?'");
+DEFINE('ACCBAN_UPDATE', "UPDATE `login` SET `unban_time` = ?, `state` = ? WHERE `account_id` = ?");
 
 //adminchars
 DEFINE('CHARS_SEARCH_ACCOUNT_ID', "SELECT `account_id`, `char_id`, `name`, `class`, `base_level`, `job_level`, `online`
-FROM `char` WHERE `account_id` = '?' ORDER BY `account_id`");
+FROM `char` WHERE `account_id` = ? ORDER BY `account_id`");
 DEFINE('CHARS_SEARCH_CHAR_ID', "SELECT `account_id`, `char_id`, `name`, `class`, `base_level`, `job_level`, `online`
-FROM `char` WHERE `char_id` = '?' ORDER BY `account_id`");
+FROM `char` WHERE `char_id` = ? ORDER BY `account_id`");
 DEFINE('CHARS_SEARCH_NAME', "SELECT `account_id`, `char_id`, `name`, `class`, `base_level`, `job_level`, `online`
 FROM `char` WHERE `name` LIKE '%%?%%' ORDER BY `account_id`");
 DEFINE('CHARS_BROWSE', "SELECT `account_id`, `char_id`, `name`, `class`, `base_level`, `job_level`, `online`
