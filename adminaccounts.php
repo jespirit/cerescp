@@ -92,7 +92,7 @@ if (isset($GET_tipo)) {
 	$pages = (int)($result->row(0) / 100);
 	
 	$inicio = $GET_page * 100;
-	$stmt = prepare_query(ACCOUNTS_BROWSE, $inicio);
+	$stmt = prepare_query(ACCOUNTS_BROWSE, 0, 'i', $inicio);
 
 	$back = 'page='.$GET_page;
 }

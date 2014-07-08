@@ -66,7 +66,7 @@ $row = $result->fetch_row();
 $chars = moneyformat($row[0]);
 
 if ($CONFIG_classlist_show) {
-	$stmt = prepare_query(ABOUT_RATES);
+	$stmt = prepare_query(TOTALCLASSES);
 	$result = execute_query($stmt, 'about.php');
 	while ($line = $result->fetch_row()) {
 		$class[$line[0]] = $line[1];

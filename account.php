@@ -73,7 +73,7 @@ if (isset($POST_opt)) {
 		if (strlen($POST_birthdate) < 8 || inject($POST_birthday))
 			alert($lang['INVALID_BIRTHDAY']);
 			
-		$stmt = prepare_query(CHECK_USERID, 0, 's', trim($POST_username)
+		$stmt = prepare_query(CHECK_USERID, 0, 's', trim($POST_username));
 		$result = execute_query($stmt, 'account.php');
 
 		if ($result->count())

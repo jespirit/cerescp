@@ -68,7 +68,8 @@ if (!isset($_SESSION[$CONFIG_name.'account_id']) && isset($_COOKIE['login_pass']
 if (!empty($POST_opt)) {
 	if ($POST_opt == 1 && isset($POST_frm_name) && !strcmp($POST_frm_name, 'login')) {
 
-		$bf_check = bf_check_user(trim($POST_username));
+		//$bf_check = bf_check_user(trim($POST_username));
+		$bf_check = 0;
 		if ($bf_check > 0) {
 			$msg = sprintf($lang['BLOCKED'], $bf_check);
 			erro_de_login();
@@ -109,7 +110,7 @@ if (!empty($POST_opt)) {
 		$stmt = prepare_query(LOGIN_USER, 0, 's', trim($POST_username));
 		$result = execute_query($stmt, 'index.php');
 
-		if($result->num_rows() == 1 && $line = $result->fetch_row()) {
+		if($result->num_rows == 1 && $line = $result->fetch_row()) {
 			if ($CONFIG_md5_pass)
 				$POST_login_pass = md5($POST_login_pass);
 

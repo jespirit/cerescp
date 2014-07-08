@@ -42,7 +42,7 @@ if (!empty($GET_opt)) {
 		$stmt = prepare_query(RECOVER_PASSWORD, 0, 's', $GET_email);
 		$result = execute_query($stmt);
 
-		if (!$result->$num_rows)
+		if (!$result->num_rows)
 			alert($lang['UNKNOWN_MAIL']);
 
 		for ($i = 0; $row = $result->fetch_row(); $i++) {

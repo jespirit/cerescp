@@ -37,7 +37,7 @@ function bf_check_user($username) {
 	
 	$stmt = prepare_query(BF_IP, 0, 'sii', $log_ip, $current - 300, $current);
 	$result = execute_query($stmt, "check_user", 1, 0);
-	$tentativas = $result->count();
+	$tentativas = $result->num_rows;
 	while ($line = $result->fetch_row()) {
 		if ($line[0] > $current)
 			return (int)(($line[0] - $current) / 60);
