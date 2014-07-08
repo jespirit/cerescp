@@ -59,7 +59,7 @@ if (!empty($_SESSION[$CONFIG_name.'account_id']) && $CONFIG_reset_enable) {
 		$stmt = prepare_query(CHAR_GET_CHARS, 0, 'ii', $_SESSION[$CONFIG_name.'account_id'], $_SESSION[$CONFIG_name.'account_id']);
 		$result = execute_query($stmt, "position.php");
 
-		if ($result->count() < 1)
+		if ($result->num_rows < 1)
 			redir('motd.php', 'main_div', $lang['ONE_CHAR']);
 
 		caption($lang['POSITION_TITLE']);

@@ -71,9 +71,9 @@ if (!empty($_SESSION[$CONFIG_name.'account_id']) && $CONFIG_reset_enable) {
 		}
 
 		$stmt = prepare_query(LOOK_GET_CHARS, 0, 'i', $_SESSION[$CONFIG_name.'account_id']);
-		$result = execute_stmt($stmt, "resetlook.php");
+		$result = execute_query($stmt, "resetlook.php");
 
-		if ($result->count() < 1)
+		if ($result->num_rows < 1)
 			redir('motd.php', 'main_div', $lang['ONE_CHAR']);
 
 		caption($lang['RESETLOOK_RESETLOOK']);
