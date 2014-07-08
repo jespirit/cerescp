@@ -45,8 +45,8 @@ $lpp = 30;
 $inicio = $GET_page * $lpp;
 $back = "page=".$GET_page;
 
-
-$stmt = prepare_query(LOGS_BRANCH, 2, 'sii', $CONFIG_rag_db, $inicio, $lpp);
+$query = sprintf(LOGS_BRANCH, $CONFIG_rag_db);
+$stmt = prepare_query($query, 2, 'ii', $, $inicio, $lpp);
 $result = execute_query($stmt, 'logbranch.php');
 
 $stmt = prepare_query(FOUND_ROWS, 2);

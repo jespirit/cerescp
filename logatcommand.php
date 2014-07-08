@@ -45,8 +45,8 @@ $lpp = 30;
 $inicio = $GET_page * $lpp;
 $back = "page=".$GET_page;
 
-
-$stmt = prepare_query(LOGS_ATCOMMAND, 2, 'siii', $CONFIG_rag_db, $_SESSION[$CONFIG_name.'level'], $inicio, $lpp);
+$query = sprintf(LOGS_ATCOMMAND, $CONFIG_rag_db);
+$stmt = prepare_query(LOGS_ATCOMMAND, 2, 'iii', $_SESSION[$CONFIG_name.'level'], $inicio, $lpp);
 $result = execute_query($stmt, 'logatcommand.php');
 
 $stmt = prepare_query(FOUND_ROWS, 2);

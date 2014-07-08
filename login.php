@@ -109,7 +109,7 @@ if (!empty($POST_opt)) {
 		$stmt = prepare_query(LOGIN_USER, 0, 's', trim($POST_username));
 		$result = execute_query($stmt, 'index.php');
 
-		if($result->count() == 1 && $line = $result->fetch_row()) {
+		if($result->num_rows() == 1 && $line = $result->fetch_row()) {
 			if ($CONFIG_md5_pass)
 				$POST_login_pass = md5($POST_login_pass);
 
