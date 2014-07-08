@@ -294,7 +294,7 @@ function check_ban() {
 	$stmt = prepare_query(CHECK_BAN, 0, 's', $_SERVER['REMOTE_ADDR']);
 	$result = execute_query($stmt, 'check_ban', 1);
 
-	if ($result->num_rows) {
+	if ($result !== FALSE && $result->num_rows) {
 		while ($line = $result->fetch_row()) {
 			if (($line[2] == 5 || $line[1] > 0) && (time() - $line[0]) < (86400 * 2)) //2 dias
 				return 1;
@@ -314,11 +314,35 @@ function petegg($hint) {
 	return forger($hint, 0);
 }
 
+
+/**
+ * Returns an array of references in $arr.
+ * Necessary for when calling some methods, such as mysqli_bind_param which
+ * requires references to be passed.
+ *
+ * @arr array The array of elements to be passed
+ */
+function refValues($arr){
+    if (strnatcmp(phpversion(),'5.3') >= 0) //Reference is required for PHP 5.3+
+    {
+        $refs = array();
+        foreach($arr as $key => $value)
+            $refs[$key] = &$arr[$key];
+        return $refs;
+    }
+    return $arr;
+}
+
 function prepare_query($query, $database = 0, $types = '' /*, ...*/) {
 	global $mysql;
 	
+	if (func_num_args() == 1)  // only $query passed
+		$arr = [$query, 0];
+	else
+		$arr = func_get_args();
+
 	// calls $mysql->Prepare(...[])
-	$stmt = call_user_func_array(array($mysql, "Prepare"), func_get_args());
+	$stmt = call_user_func_array(array($mysql, "Prepare"), $arr);
 	return $stmt;
 }
 

@@ -23,6 +23,8 @@ To contact any of the authors about special permissions send
 an e-mail to cerescp@gmail.com
 */
 
+include_once 'functions.php';
+
 class ResultClass {
 	var $result;
 	var $row;
@@ -74,7 +76,7 @@ class QueryClass {
 	var $cp_link;
 	var $log_link;
 	var $stmt;
-	var $q, params;
+	var $q, $params;
 
 	function QueryClass($rag_addr, $rag_username, $rag_password, $rag_db, $cp_addr, $cp_username, $cp_password, $cp_db, $log_db) {
 		global $lang;
@@ -84,37 +86,36 @@ class QueryClass {
 		$this->log_link = mysqli_connect($rag_addr,$rag_username,$rag_password,$log_db) or die($lang['DB_ERROR']);
 	}
 
-	function Prepare($query, $database) {
+	function Prepare($query, $database /*, $types, ... */) {
 		switch ($database) {
 			case 0:
-				$stmt = $this->rag_link->prepare($query);
+				$this->stmt = $this->rag_link->prepare($query);
 				break;
 			case 1:
-				$stmt = $this->cp_link->prepare($query);
+				$this->stmt = $this->cp_link->prepare($query);
 				break;
 			case 2:
-				$stmt = $this->log_link->prepare($query);
+				$this->stmt = $this->log_link->prepare($query);
 				break;
 		}
 		
 		$q = $query;  // save query
 		
-		if ($stmt) {
-			//var_dump(func_get_args());
+		if ($this->stmt) {
 			if (func_num_args() >= 4) {  // are there parameters to bind?
 				$this->params = array_slice(func_get_args(), 2);
-				//array_unshift($params, $types);  // prepend $types
-				//var_dump($params);
-				call_user_func_array(array($stmt, "bind_param"), $this->params);
+				call_user_func_array(array($this->stmt, "bind_param"), refValues($this->params));
 			}
 		}
+		else
+			trigger_error('invalid prepared statement');
 		
-		return $stmt;
+		return $this->stmt;
 	}
 	
 	function Query($stmt) {
-		$this->stmt = $stmt;  // copy or reference?
-		if ($result = $stmt->execute())
+		$result = $stmt;  // $stmt can be false
+		if ($stmt && $result = $stmt->execute())
 			return $stmt->get_result();  // what is returned on a non-SELECT statement?
 
 		return $result;  // FALSE because of failure
