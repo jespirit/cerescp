@@ -39,7 +39,7 @@ if (!isset($_SESSION[$CONFIG_name.'account_id']) && isset($_COOKIE['login_pass']
 			$stmt = prepare_query(LOGIN_USER, 0, 'i', trim($_COOKIE['userid']));
 			$result = execute_query($stmt, 'index.php');
 
-			if($result->count() == 1 && $line = $result->fetch_row()) {
+			if($result->num_rows == 1 && $line = $result->fetch_row()) {
 				if (md5($CONFIG_name.$line[3]) == $_COOKIE['login_pass']) {
 					$_SESSION[$CONFIG_name.'account_id'] = $line[0];
 					$_SESSION[$CONFIG_name.'userid'] = $line[1];
