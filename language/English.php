@@ -85,6 +85,10 @@ $lang['LEVEL'] = 'Level';
 $lang['GMLEVEL'] = 'GM Level';
 $lang['SHOW_ALL'] = 'Show All';
 
+$lang['ABOUT_ME'] = 'About Me';
+$lang['ABOUT_NO_TEXT'] = 'Please enter information about yourself';
+$lang['IP_ADDRESS'] = 'IP Address';
+
 //menu.php
 $lang['MENU_HOME'] = 'Home';
 $lang['MENU_MYACCOUNT'] = 'My Account';

@@ -70,13 +70,16 @@ if (isset($POST_opt)) {
 		if (strlen($POST_email) < 7 || !strstr($POST_email, '@') || !strstr($POST_email, '.'))
 			alert($lang['EMAIL_NEEDED']);
 			
-		if (strlen($POST_birthdate) < 8 || inject($POST_birthday))
+		if (strlen($POST_birthdate) < 8 || inject($POST_birthdate))
 			alert($lang['INVALID_BIRTHDAY']);
 			
+		if (strlen($POST_aboutme) < 1)
+			alert($lang['ABOUT_NO_TEXT']);
+
 		$stmt = prepare_query(CHECK_USERID, 0, 's', trim($POST_username));
 		$result = execute_query($stmt, 'account.php');
 
-		if ($result->count())
+		if ($result->num_rows)
 			alert($lang['USERNAME_IN_USE']);
 
 		if ($POST_sex) 
@@ -87,14 +90,19 @@ if (isset($POST_opt)) {
 		if ($CONFIG_md5_pass)
 			$POST_password = md5($POST_password);
 
+		$state = 5;
+
 		// date fields can bind to 's'
-		$stmt = prepare_query(INSERT_CHAR, 0, 'ssssss', trim($POST_username), trim($POST_password), $POST_sex, $POST_email, $POST_birthdate, $_SERVER['REMOTE_ADDR']);
+		$stmt = prepare_query(INSERT_CHAR, 0, 'ssssssi', trim($POST_username), trim($POST_password), $POST_sex, $POST_email, $POST_birthdate, $_SERVER['REMOTE_ADDR'], $state);
 		$result = execute_query($stmt, 'account.php');
 
 		$stmt = prepare_query(CHECK_ACCOUNTID, 0, 'ss', trim($POST_username), trim($POST_password));
 		$result = execute_query($stmt, 'account.php');
 		
 		if ($line = $result->fetch_row()) {
+			$stmt = prepare_query(NEW_APPLICATION, 0, 'iss', $line[0], $_SERVER['REMOTE_ADDR'], $POST_aboutme);
+			$result = execute_query($stmt, 'account.php');
+
 			erro_de_login(1);
 			redir('motd.php', 'main_div', $lang['ACCOUNT_CREATED']);
 		} else {
@@ -144,6 +152,13 @@ $var = rand(10, 9999999);
 		<td align="right">'.$lang['BIRTHDAY'].':</td>
 		<td align="left">
 			<input type="text" name="birthdate" maxlength="8" size="8" onKeyPress="return force(this.name,this.form.id,event);">
+		</td>
+	</tr>
+	<tr>
+		<td align="right">'.$lang['ABOUT_ME'].':</td>
+		<td align="left">
+			<textarea name="aboutme" maxlength="500" rows="10" cols="50" onKeyPress="return force(this.name,this.form.id,event);">
+			</textarea>
 		</td>
 	</tr>';
 	if ($CONFIG_auth_image && function_exists("gd_info")) { 
