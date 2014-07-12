@@ -24,8 +24,79 @@ an e-mail to cerescp@gmail.com
 */
 
 include_once 'config.php'; // loads config variables
+include_once 'functions.php';
 require_once 'PHPMailer/PHPMailerAutoload.php';
 
+function confirm_account($username, $email) {
+	global $CONFIG_smtp_server, $CONFIG_smtp_port, $CONFIG_smtp_username, $CONFIG_smtp_password, $CONFIG_smtp_mail, $CONFIG_name;
+
+$mensagem = "----------------------------\n";
+if (isset($username))
+	$mensagem.= "Username: ".$username;
+$mensagem.= "\n----------------------------\n";
+
+$maildef = read_maildef("confirm_account");
+$maildef = str_ireplace("#account_info#",$mensagem,$maildef);
+$maildef = str_ireplace("#server_name#",$CONFIG_name,$maildef);
+$maildef = str_ireplace("#support_mail#",$CONFIG_smtp_mail,$maildef);
+$maildef = nl2br($maildef);
+
+send_email($email, "Account Registration Confirmation", $maildef);
+
+}
+
+function deny_account($username, $email) {
+	global $CONFIG_smtp_server, $CONFIG_smtp_port, $CONFIG_smtp_username, $CONFIG_smtp_password, $CONFIG_smtp_mail, $CONFIG_name;
+
+$mensagem = "----------------------------\n";
+if (isset($username))
+	$mensagem.= "Username: ".$username;
+$mensagem.= "\n----------------------------\n";
+
+$maildef = read_maildef("deny_account");
+$maildef = str_ireplace("#account_info#",$mensagem,$maildef);
+$maildef = str_ireplace("#server_name#",$CONFIG_name,$maildef);
+$maildef = str_ireplace("#support_mail#",$CONFIG_smtp_mail,$maildef);
+$maildef = nl2br($maildef);
+
+send_email($email, "Account Registration Denied", $maildef);
+
+}
+
+function send_email($receiver, $subject, $body) {
+	global $CONFIG_smtp_server, $CONFIG_smtp_port, $CONFIG_smtp_username, $CONFIG_smtp_password, $CONFIG_smtp_mail, $CONFIG_name;
+
+$mail=new PHPMailer();
+
+$mail->IsSMTP();
+$mail->SMTPAuth = false;
+$mail->SMTPSecure = 'tls';
+
+$mail->Host       = $CONFIG_smtp_server;
+$mail->Port       = $CONFIG_smtp_port;
+
+$mail->Username   = $CONFIG_smtp_username;
+$mail->Password   = $CONFIG_smtp_password;
+
+$mail->From       = $CONFIG_smtp_mail;
+$mail->FromName   = $CONFIG_name;
+$mail->Subject    = $subject;
+$mail->Body       = $body;
+
+$mail->WordWrap   = 50;
+
+$mail->AddAddress($receiver, $receiver);
+$mail->AddReplyTo($CONFIG_smtp_mail,$CONFIG_name);
+
+$mail->IsHTML(true);
+
+if(!$mail->Send()) {
+  return $mail->ErrorInfo;
+} else {
+  return "Message has been sent";
+}
+
+}
 
 function email($contas) {
 	global $CONFIG_smtp_server, $CONFIG_smtp_port, $CONFIG_smtp_username, $CONFIG_smtp_password, $CONFIG_smtp_mail, $CONFIG_name;
@@ -74,4 +145,8 @@ if(!$mail->Send()) {
 }
 
 }
+
+echo confirm_account("jeff45", "jeff_eathena@outlook.com");
+echo deny_account("jeff46", "jeff_eathena@outlook.com");
+
 ?>
