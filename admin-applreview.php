@@ -13,17 +13,36 @@ if (isset($GET_frm_name) && isset($GET_id)) {
 	if (notnumber($GET_id))
 		alert($lang['INCORRECT_CHARACTER']);
 
+	if (strcmp($GET_decide, "accept") != 0 && strcmp($GET_decide, "decline"))
+		alert('Invalid option for \'decide\' field');
+
 	$stmt = prepare_query(GET_APPLICATION, 0, 'i', trim($GET_id));
 	$result = execute_query($stmt, 'admin-applreview.php');
 	if ($line = $result->fetch_row()) {
-		$stmt = prepare_query(ACCEPT_APPLICATION, 0, 'i', trim($GET_id));
-		$result = execute_query($stmt, 'admin-applreview.php');
-		
-		$stmt = prepare_query(REMOVE_APPLICATION, 0, 'i', trim($GET_id));
-		$result = execute_query($stmt, 'admin-applreview.php');
+		var_dump($GET_decide);
 
-		// Send email
-		alert('Application Accpeted');
+		if (!strcasecmp($GET_decide, "accept")) {
+			$stmt = prepare_query(ACCEPT_APPLICATION, 0, 'i', trim($line[0]));
+			$result = execute_query($stmt, 'admin-applreview.php');
+
+			$stmt = prepare_query(REMOVE_APPLICATION, 0, 'i', trim($line[0]));
+			$result = execute_query($stmt, 'admin-applreview.php');
+
+			// Send email
+			alert('Application Accepted');
+		}
+		else if (!strcmp($GET_decide, "decline")) {
+			$stmt = prepare_query(REMOVE_ACCOUNT_ID, 0, 'i', trim($line[0]));
+			$result = execute_query($stmt, 'admin-applreview.php');
+		
+			$stmt = prepare_query(REMOVE_APPLICATION, 0, 'i', trim($line[0]));
+			$result = execute_query($stmt, 'admin-applreview.php');
+
+			// Send email
+			alert('Application Declined');
+		}
+		else
+			alert('No action, invalid decide value='.$GET_decide);
 	}
 }
 
@@ -51,7 +70,14 @@ if (isset($GET_id)) {
 				</tr><tr>
 					<td align="right">'.$lang['ABOUT_ME'].'</td><td align="left"><textarea name="aboutme" rows="10" cols="50" >'.$line[4].'</textarea></td>
 				</tr><tr>
-					<td>&nbsp;</td><td align="left"><input type="submit" value="Accept">
+					<td align="right">
+						<select name="decide">
+						<option selected="selected" value="accept">Accept</option>
+						<option value="decline">Decline</option>
+						</select>
+					</td>
+				</tr>
+					<td>&nbsp;</td><td align="left"><input type="submit" name="submit" value="Confirm"></td>
 				</tr>
 			</table>
 		</form>

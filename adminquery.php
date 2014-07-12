@@ -99,6 +99,7 @@ FROM `register` LEFT JOIN `login` ON `register`.`account_id` = `login`.`account_
 WHERE `register`.`account_id` = ?");
 DEFINE('ACCEPT_APPLICATION', "UPDATE `login` SET `state` = 0 WHERE `login`.`account_id` = ?");
 DEFINE('REMOVE_APPLICATION', "DELETE FROM `register` WHERE `register`.`account_id` = ?");
+DEFINE('REMOVE_ACCOUNT_ID', "DELETE FROM `login` WHERE `login`.`account_id` = ?");
 
 //logs
 if ($config['servermode'] == 0){
