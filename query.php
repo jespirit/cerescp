@@ -69,10 +69,12 @@ AND `online` = '0'
 ");
 
 //account.php - Account Creation
-DEFINE('INSERT_CHAR', "INSERT INTO `login` (`userid`, `user_pass`, `sex`, `email`, `birthdate`, `last_ip`) VALUES (?, ?, ?, ?, ?, ?)");
+DEFINE('INSERT_CHAR', "INSERT INTO `login` (`userid`, `user_pass`, `sex`, `email`, `birthdate`, `last_ip`, `state`) VALUES (?, ?, ?, ?, ?, ?, ?)");
 DEFINE('CHECK_USERID', "SELECT `userid` FROM `login` WHERE userid = ?");
 DEFINE('CHECK_ACCOUNTID', "SELECT `account_id` FROM `login` WHERE `userid` = ? AND `user_pass` = ?");
 DEFINE('MAX_ACCOUNTS', "SELECT COUNT(`account_id`) FROM `login` WHERE `sex` != 'S'");
+DEFINE('NEW_APPLICATION', "INSERT INTO `register` (`account_id`, `ip`, `data`) VALUES (?, ?, ?)");
+DEFINE('TOTAL_APPLICATIONS', "SELECT COUNT(1) FROM `register`");
 
 //recover.php - Recover Password
 DEFINE('RECOVER_PASSWORD', "SELECT `userid`, `user_pass`, `email` FROM `login` WHERE `email` = ? AND state != '5'");

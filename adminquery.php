@@ -90,6 +90,16 @@ DEFINE('CHARS_BROWSE', "SELECT `account_id`, `char_id`, `name`, `class`, `base_l
 FROM `char` ORDER BY `account_id` LIMIT ?, 100");
 DEFINE('CHARS_TOTAL', "SELECT COUNT(1) FROM `char` WHERE `account_id` > '0'");
 
+//admin-application
+DEFINE('BROWSE_APPLICATIONS', "SELECT `register`.`account_id`, `login`.`userid`, `register`.`ip`, `login`.`email`, `register`.`data`
+FROM `register` LEFT JOIN `login` ON `register`.`account_id` = `login`.`account_id`
+ORDER BY `register`.`ip` LIMIT ?, 100");
+DEFINE('GET_APPLICATION', "SELECT `register`.`account_id`, `login`.`userid`, `register`.`ip`, `login`.`email`, `register`.`data`
+FROM `register` LEFT JOIN `login` ON `register`.`account_id` = `login`.`account_id`
+WHERE `register`.`account_id` = ?");
+DEFINE('ACCEPT_APPLICATION', "UPDATE `login` SET `state` = 0 WHERE `login`.`account_id` = ?");
+DEFINE('REMOVE_APPLICATION', "DELETE FROM `register` WHERE `register`.`account_id` = ?");
+
 //logs
 if ($config['servermode'] == 0){
 DEFINE('LOGS_ATCOMMAND', "SELECT SQL_CALC_FOUND_ROWS `atcommandlog`.*, `login`.`group_id` FROM `atcommandlog` JOIN `%s`.`login` USING (`account_id`) WHERE `login`.`group_id`<=? ORDER BY `atcommand_date` ASC LIMIT ?, ?");

@@ -65,6 +65,7 @@ $submenu[] = array('Zeny Logs',					'logzeny.php',			6);
 $submenu[] = array('Accounts',					'adminaccounts.php',	7);
 $submenu[] = array('Chars',						'adminchars.php',		7);
 //$submenu[] = array('Bans/Blocks',				'',						7);
+$submenu[] = array('Applications',				'admin-application.php',	7);
 
 
 $pos = 0;
