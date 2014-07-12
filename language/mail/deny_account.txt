@@ -1,0 +1,14 @@
+#server_name# Account Info
+
+This email is to notify you that your application has been denied.
+
+You did not provide the required credentials or do not meet the requirements in order to sign up.
+
+Your account information is as follows:
+
+#account_info#
+
+Thank you for playing in and support our server
+In case of doubt or problem send a mail to #support_mail# for support.
+If you didn't request account information, ignore this message and nothing will happen.
+DO NOT REPLY TO THIS MESSAGE
