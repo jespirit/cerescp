@@ -115,8 +115,12 @@ class QueryClass {
 	
 	function Query($stmt) {
 		$result = $stmt;  // $stmt can be false
-		if ($stmt && $result = $stmt->execute())
-			return $stmt->get_result();  // what is returned on a non-SELECT statement?
+		if ($stmt && $result = $stmt->execute()) {
+			if ($result)  // what is returned on a non-SELECT statement? false
+				return $stmt->get_result();
+			else
+				return !$result;
+		}
 
 		return $result;  // FALSE because of failure
 	}
