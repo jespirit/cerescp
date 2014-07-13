@@ -5,6 +5,7 @@ include_once 'config.php'; // loads config variables
 include_once 'query.php'; // imports queries
 include_once 'adminquery.php';
 include_once 'functions.php';
+include_once 'mail.php';
 
 if (!isset($_SESSION[$CONFIG_name.'level']) || $_SESSION[$CONFIG_name.'level'] < $CONFIG['cp_admin'])
 	die ('Not Authorized');
@@ -29,6 +30,7 @@ if (isset($GET_frm_name) && isset($GET_id)) {
 			$result = execute_query($stmt, 'admin-applreview.php');
 
 			// Send email
+			confirm_account($line[1], $line[3]);
 			alert('Application Accepted');
 		}
 		else if (!strcmp($GET_decide, "decline")) {
@@ -39,6 +41,7 @@ if (isset($GET_frm_name) && isset($GET_id)) {
 			$result = execute_query($stmt, 'admin-applreview.php');
 
 			// Send email
+			deny_account($line[1], $line[3]);
 			alert('Application Declined');
 		}
 		else

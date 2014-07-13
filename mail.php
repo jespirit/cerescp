@@ -146,7 +146,4 @@ if(!$mail->Send()) {
 
 }
 
-echo confirm_account("jeff45", "jeff_eathena@outlook.com");
-echo deny_account("jeff46", "jeff_eathena@outlook.com");
-
 ?>
