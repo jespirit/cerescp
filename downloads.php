@@ -15,6 +15,18 @@ echo '<table class="maintable">
 			<td>Data folder</td>
 			<td><a href="/data/data-min.rar">Minimum Data folder</a></td>
 		</tr>
+		<tr>
+			<td>How to install</td>
+			<td>
+				<ol>
+					<li>Make a copy of your RO folder</li>
+					<li>Delete the data folder</li>
+					<li>Delete the existing DATA.ini file (if any) and rename the talo.nro to data.ini</li>
+					<li>Download the client and data minimum folder from above</li>
+					<li>Copy the client to your RO folder</li>
+					<li>Extract the data folder to your RO folder</li>
+					<li>That\'s it! Enjoy!</li>
+				<ol>
 	  </table>';
 fim();
 

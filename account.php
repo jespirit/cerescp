@@ -176,6 +176,15 @@ $var = rand(10, 9999999);
 
 	echo '
 	<tr>
+		<td align=right>Warning</td>
+		<td><span class="warning">Use at your own risk. The site does NOT use SSL or any other type of encryption for server-client communication.
+		That means all the data sent from your browser will be unencrypted, easily visible in plain text for anybody with the right tools to extract.<br /><br />
+		
+		In addition, passwords are not encrypted in the database either, that means the System Administrator will know exactly what the passwords are.<br /><br />
+		
+		If you choose to make an account, I suggest you NOT use any of your passwords that you use for your email account, bank account, or any other
+		account with confidential and/or sensitive information.</span></td>
+	<tr>
 		<td>&nbsp;</td>
 		<td><input type="submit" name="create" value="'.$lang['CREATE'].'"></td>
 	</tr>

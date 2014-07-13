@@ -188,3 +188,7 @@ span.link {
 span.link:hover {
 	color: #FF3300;
 }
+
+span.warning {
+	color: #FF0000;
+}
