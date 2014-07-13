@@ -91,9 +91,10 @@ if (isset($POST_opt)) {
 			$POST_password = md5($POST_password);
 
 		$state = 5;
+		$level = 1;
 
 		// date fields can bind to 's'
-		$stmt = prepare_query(INSERT_CHAR, 0, 'ssssssi', trim($POST_username), trim($POST_password), $POST_sex, $POST_email, $POST_birthdate, $_SERVER['REMOTE_ADDR'], $state);
+		$stmt = prepare_query(INSERT_CHAR, 0, 'ssssssii', trim($POST_username), trim($POST_password), $POST_sex, $POST_email, $POST_birthdate, $_SERVER['REMOTE_ADDR'], $state, $level);
 		$result = execute_query($stmt, 'account.php');
 
 		$stmt = prepare_query(CHECK_ACCOUNTID, 0, 'ss', trim($POST_username), trim($POST_password));

@@ -69,7 +69,7 @@ AND `online` = '0'
 ");
 
 //account.php - Account Creation
-DEFINE('INSERT_CHAR', "INSERT INTO `login` (`userid`, `user_pass`, `sex`, `email`, `birthdate`, `last_ip`, `state`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+DEFINE('INSERT_CHAR', "INSERT INTO `login` (`userid`, `user_pass`, `sex`, `email`, `birthdate`, `last_ip`, `state`, `level`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 DEFINE('CHECK_USERID', "SELECT `userid` FROM `login` WHERE userid = ?");
 DEFINE('CHECK_ACCOUNTID', "SELECT `account_id` FROM `login` WHERE `userid` = ? AND `user_pass` = ?");
 DEFINE('MAX_ACCOUNTS', "SELECT COUNT(`account_id`) FROM `login` WHERE `sex` != 'S'");
