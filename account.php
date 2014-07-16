@@ -72,9 +72,14 @@ if (isset($POST_opt)) {
 			
 		if (strlen($POST_birthdate) < 8 || inject($POST_birthdate))
 			alert($lang['INVALID_BIRTHDAY']);
-			
-		if (strlen($POST_aboutme) < 1)
+
+		if (strlen(trim($POST_aboutme)) < 1)
 			alert($lang['ABOUT_NO_TEXT']);
+
+		if (!$POST_agree) {
+			echo '<script type="text/javascript">alert("You must check the \'I have read the warning ...\' checkbox\'");</script>';
+			redir('motd.php', 'main_div', 'You did not wish to register an account');
+		}
 
 		$stmt = prepare_query(CHECK_USERID, 0, 's', trim($POST_username));
 		$result = execute_query($stmt, 'account.php');
@@ -178,7 +183,7 @@ $var = rand(10, 9999999);
 	echo '
 	<tr>
 		<td>&nbsp;</td>
-		<td><h1>Warning</h1><span class="warning">Use at your own risk. The site does NOT use SSL or any other type of encryption for server-client communication.
+		<td><h1>Warning</h1><span class="warning">Register an account at your own risk. The site does NOT use SSL or any other type of encryption for server-client communication.
 		That means all the data sent from your browser will be unencrypted, easily visible in plain text for anybody with the right tools to extract.<br /><br />
 		
 		In addition, passwords are not encrypted in the database either, that means the System Administrator will know exactly what the passwords are.<br /><br />
@@ -186,8 +191,12 @@ $var = rand(10, 9999999);
 		If you choose to make an account, I suggest you NOT use any of your passwords that you use for your email account, bank account, or any other
 		account with confidential and/or sensitive information.</span></td>
 	<tr>
+	<tr>
 		<td>&nbsp;</td>
-		<td><input type="submit" name="create" value="'.$lang['CREATE'].'"></td>
+		<td><input type="checkbox" name="agree"><span id="warning-chk">I have read the warning and I still wish to register for an account.</span></td>
+	<tr>
+		<td>&nbsp;</td>
+		<td><input type="submit" id="register" name="register" value="'.$lang['REGISTER'].'"></td>
 	</tr>
 	</table>
 	<input type="hidden" name="opt" value="1">
