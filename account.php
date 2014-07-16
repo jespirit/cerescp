@@ -160,8 +160,7 @@ $var = rand(10, 9999999);
 	<tr>
 		<td align="right">'.$lang['ABOUT_ME'].':</td>
 		<td align="left">
-			<textarea name="aboutme" maxlength="500" rows="10" cols="50" onKeyPress="return force(this.name,this.form.id,event);">
-			</textarea>
+			<textarea name="aboutme" maxlength="500" rows="10" cols="50" onKeyPress="return force(this.name,this.form.id,event);"></textarea>
 		</td>
 	</tr>';
 	if ($CONFIG_auth_image && function_exists("gd_info")) { 
