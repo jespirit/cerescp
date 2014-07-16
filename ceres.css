@@ -105,7 +105,7 @@ body {
 
 /** FOOTER */
 #footer {
-	width: 780px;
+	width: 900px;
 	height: 35px;
 	padding-top: 5px;
 	background-color: #2C3D50;
@@ -196,4 +196,13 @@ span.link:hover {
 span.warning {
 	color: #FF0000;
 	font-size: 16pt;
+}
+
+span#warning-chk {
+	font-size: 12pt;
+	font-weight: bold;
+}
+
+input#register {
+	font-size: 12pt;
 }

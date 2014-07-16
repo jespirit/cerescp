@@ -43,7 +43,7 @@ $_SESSION[$CONFIG_name.'jobs'] = readjobs();
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 		<title>
-			<?php echo htmlformat($CONFIG_name); ?> - Ceres Control Panel (SVN)
+			<?php echo htmlformat($CONFIG_name); ?> - Control Panel
 		</title>
 		<link rel="stylesheet" type="text/css" href="./ceres.css">
 

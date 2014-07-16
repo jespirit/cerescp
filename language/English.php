@@ -66,6 +66,7 @@ $lang['NOVEMBER'] = 'November';
 $lang['DECEMBER'] = 'December';
 $lang['MAIL'] = 'E-Mail';
 $lang['CREATE'] = 'Create';
+$lang['REGISTER'] = 'Register';
 $lang['NEED_TO_LOGIN'] = 'You need to be logged on to use this page.';
 $lang['NEED_TO_LOGIN_F'] = 'You must be logged on to use this function.';
 $lang['DB_ERROR'] = 'Sorry! DB error found, please try again later.';
@@ -86,7 +87,7 @@ $lang['GMLEVEL'] = 'GM Level';
 $lang['SHOW_ALL'] = 'Show All';
 
 $lang['ABOUT_ME'] = 'About Me';
-$lang['ABOUT_NO_TEXT'] = 'Please enter information about yourself';
+$lang['ABOUT_NO_TEXT'] = 'Please enter your identifying information in the About Me box.';
 $lang['IP_ADDRESS'] = 'IP Address';
 
 //menu.php
