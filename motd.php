@@ -30,11 +30,13 @@ include_once 'functions.php';
 
 caption($lang['NEWS_MESSAGE']);
 ?>
-<table class="maintable">
-	<tr>
-		<td>Welcome to Ceres Control Panel</td>
-	</tr>
-</table>
+<div>
+	<p>Welcome to TestRO Control Panel</p>
+	
+	<p>You may register an account by clicking here: <span title="Register" class="link active" onClick="return LINK_ajax('account.php', 'main_div');">Register New Account</span></p>
+	
+	<p>To start playing please go here and download the necessary files: <span title="Download" class="link active" onClick="return LINK_ajax('downloads.php', 'main_div');">Downloads</span></p>
+</div>
 <?php
 fim();
 ?>

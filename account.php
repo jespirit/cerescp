@@ -105,7 +105,9 @@ if (isset($POST_opt)) {
 			$result = execute_query($stmt, 'account.php');
 
 			erro_de_login(1);
-			redir('motd.php', 'main_div', $lang['ACCOUNT_CREATED']);
+			redir('motd.php', 'main_div', 
+			'Thanks for applying to TestRO.<br/><br/>Your application is being considered and 
+			you will receive an email whether your application has been accepted.');
 		} else {
 			erro_de_login(1);
 			redir('motd.php', 'main_div', $lang['ACCOUNT_PROBLEM']);
@@ -176,8 +178,8 @@ $var = rand(10, 9999999);
 
 	echo '
 	<tr>
-		<td align=right>Warning</td>
-		<td><span class="warning">Use at your own risk. The site does NOT use SSL or any other type of encryption for server-client communication.
+		<td>&nbsp;</td>
+		<td><h1>Warning</h1><span class="warning">Use at your own risk. The site does NOT use SSL or any other type of encryption for server-client communication.
 		That means all the data sent from your browser will be unencrypted, easily visible in plain text for anybody with the right tools to extract.<br /><br />
 		
 		In addition, passwords are not encrypted in the database either, that means the System Administrator will know exactly what the passwords are.<br /><br />
