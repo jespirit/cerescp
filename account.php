@@ -70,7 +70,7 @@ if (isset($POST_opt)) {
 		if (strlen($POST_email) < 7 || !strstr($POST_email, '@') || !strstr($POST_email, '.'))
 			alert($lang['EMAIL_NEEDED']);
 			
-		if (strlen($POST_birthdate) < 8 || inject($POST_birthdate))
+		if (strlen($POST_birthdate) < 8 || notnumber($POST_birthdate))
 			alert($lang['INVALID_BIRTHDAY']);
 
 		if (strlen(trim($POST_aboutme)) < 1)
@@ -81,10 +81,20 @@ if (isset($POST_opt)) {
 			redir('motd.php', 'main_div', 'You did not wish to register an account');
 		}
 
+		// Check if the Username exists in either the `login` or `register` table.
+		
 		$stmt = prepare_query(CHECK_USERID, 0, 's', trim($POST_username));
 		$result = execute_query($stmt, 'account.php');
+		
+		$checkuser = 0;
+		$checkuser += $result->num_rows;
+		
+		$stmt = prepare_query(CHECK_USERID2, 0, 's', trim($POST_username));
+		$result = execute_query($stmt, 'account.php');
+		
+		$checkuser += $result->num_rows;
 
-		if ($result->num_rows)
+		if ($checkuser)
 			alert($lang['USERNAME_IN_USE']);
 
 		if ($POST_sex) 
@@ -95,28 +105,16 @@ if (isset($POST_opt)) {
 		if ($CONFIG_md5_pass)
 			$POST_password = md5($POST_password);
 
-		$state = 5;
-		$level = 1;
+		$level = 1;  // Level 1 by default
 
 		// date fields can bind to 's'
-		$stmt = prepare_query(INSERT_CHAR, 0, 'ssssssii', trim($POST_username), trim($POST_password), $POST_sex, $POST_email, $POST_birthdate, $_SERVER['REMOTE_ADDR'], $state, $level);
+		$stmt = prepare_query(NEW_APPLICATION, 0, 'ssssisss', trim($POST_username), trim($POST_password),
+			$POST_sex, $POST_email, $level, $POST_birthdate, $_SERVER['REMOTE_ADDR'], $POST_aboutme);
 		$result = execute_query($stmt, 'account.php');
 
-		$stmt = prepare_query(CHECK_ACCOUNTID, 0, 'ss', trim($POST_username), trim($POST_password));
-		$result = execute_query($stmt, 'account.php');
-		
-		if ($line = $result->fetch_row()) {
-			$stmt = prepare_query(NEW_APPLICATION, 0, 'iss', $line[0], $_SERVER['REMOTE_ADDR'], $POST_aboutme);
-			$result = execute_query($stmt, 'account.php');
-
-			erro_de_login(1);
-			redir('motd.php', 'main_div', 
-			'Thanks for applying to TestRO.<br/><br/>Your application is being considered and 
-			you will receive an email whether your application has been accepted.');
-		} else {
-			erro_de_login(1);
-			redir('motd.php', 'main_div', $lang['ACCOUNT_PROBLEM']);
-		}
+		redir('motd.php', 'main_div',
+		'Thanks for applying to TestRO.<br/><br/>Your application is being considered and
+		you will receive an email whether your application has been accepted.');
 
 	}
 }
@@ -165,7 +163,7 @@ $var = rand(10, 9999999);
 	<tr>
 		<td align="right">'.$lang['ABOUT_ME'].':</td>
 		<td align="left">
-			<textarea name="aboutme" maxlength="500" rows="10" cols="50" onKeyPress="return force(this.name,this.form.id,event);"></textarea>
+			<textarea name="aboutme" maxlength="250" rows="10" cols="50"></textarea>
 		</td>
 	</tr>';
 	if ($CONFIG_auth_image && function_exists("gd_info")) { 

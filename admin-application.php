@@ -19,23 +19,26 @@ else if (notnumber($GET_page))
 $stmt = prepare_query(TOTAL_APPLICATIONS);
 $result = execute_query($stmt, 'admin-application.php');
 $row = $result->fetch_row();
-$pages = (int)($row[0] / 100);
+$pages = (int)(($row[0]-1) / 100);
 
 $offset = $GET_page * 100;  // 100 per page
-$stmt = prepare_query(BROWSE_APPLICATIONS, 0, 'i', $offset);
-
 $back = 'page='.$GET_page;
-
 $back = base64_encode($back);
+
+$stmt = prepare_query(BROWSE_APPLICATIONS, 0, 'i', $offset);
 $result = execute_query($stmt, 'admin-application.php');
 
 echo '
-<table class="maintable">
+<table id="application" class="maintable">
 	<tr>
-		<th>Account Id</th>
-		<th>'.$lang['USERNAME'].'</th>
+		<th>Id</th>
+		<th>Time</th>
 		<th>'.$lang['IP_ADDRESS'].'</th>
+		<th>'.$lang['USERNAME'].'</th>
+		<th>'.$lang['SEX'].'</th>
 		<th>'.$lang['MAIL'].'</th>
+		<th>'.$lang['LEVEL'].'</th>
+		<th>'.$lang['BIRTHDAY'].'</th>
 	</tr>';
 	
 while ($line = $result->fetch_row()) {
@@ -44,9 +47,12 @@ while ($line = $result->fetch_row()) {
 		  <td>'.$line[1].'</td>
 		  <td>'.$line[2].'</td>
 		  <td>'.$line[3].'</td>
+		  <td>'.$line[4].'</td>
+		  <td>'.$line[5].'</td>
+		  <td>'.$line[6].'</td>
+		  <td>'.$line[7].'</td>
 		  <td align="center">
 		  <span title="Review" class="link" onClick="return LINK_ajax(\'admin-applreview.php?id='.$line[0].'&back='.$back.'\',\'main_div\');">Review</span></td>
-		
 		  </tr>';
 }
 echo '</table>';

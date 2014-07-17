@@ -91,15 +91,15 @@ FROM `char` ORDER BY `account_id` LIMIT ?, 100");
 DEFINE('CHARS_TOTAL', "SELECT COUNT(1) FROM `char` WHERE `account_id` > '0'");
 
 //admin-application
-DEFINE('BROWSE_APPLICATIONS', "SELECT `register`.`account_id`, `login`.`userid`, `register`.`ip`, `login`.`email`, `register`.`data`
-FROM `register` LEFT JOIN `login` ON `register`.`account_id` = `login`.`account_id`
-ORDER BY `register`.`ip` LIMIT ?, 100");
-DEFINE('GET_APPLICATION', "SELECT `register`.`account_id`, `login`.`userid`, `register`.`ip`, `login`.`email`, `register`.`data`
-FROM `register` LEFT JOIN `login` ON `register`.`account_id` = `login`.`account_id`
-WHERE `register`.`account_id` = ?");
-DEFINE('ACCEPT_APPLICATION', "UPDATE `login` SET `state` = 0 WHERE `login`.`account_id` = ?");
-DEFINE('REMOVE_APPLICATION', "DELETE FROM `register` WHERE `register`.`account_id` = ?");
-DEFINE('REMOVE_ACCOUNT_ID', "DELETE FROM `login` WHERE `login`.`account_id` = ?");
+DEFINE('BROWSE_APPLICATIONS', "SELECT `register`.`id`, `register`.`time`, `register`.`ip`, `register`.`userid`,
+`register`.`sex`, `register`.`email`, `register`.`level`, `register`.`birthdate` FROM `register`
+ORDER BY `register`.`time` ASC LIMIT ?, 100");
+DEFINE('GET_APPLICATION', "SELECT `register`.`id`, `register`.`time`, `register`.`ip`, `register`.`userid`, `register`.`user_pass`,
+`register`.`sex`, `register`.`email`, `register`.`level`, `register`.`birthdate`, `register`.`data` FROM `register`
+WHERE `register`.`id` = ?");
+DEFINE('INSERT_NEWACCOUNT', "INSERT INTO `login` (`userid`, `user_pass`, `sex`, `email`, `birthdate`, `level`, `state`, `last_ip`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+DEFINE('REMOVE_APPLICATION', "DELETE FROM `register` WHERE `register`.`id` = ?");
+//DEFINE('REMOVE_ACCOUNT_ID', "DELETE FROM `login` WHERE `login`.`account_id` = ?");
 
 //logs
 if ($config['servermode'] == 0){

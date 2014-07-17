@@ -19,24 +19,28 @@ if (isset($GET_frm_name) && isset($GET_id)) {
 
 	$stmt = prepare_query(GET_APPLICATION, 0, 'i', trim($GET_id));
 	$result = execute_query($stmt, 'admin-applreview.php');
+	
+	$state = 1;
+	
 	if ($line = $result->fetch_row()) {
-		var_dump($GET_decide);
-
 		if (!strcasecmp($GET_decide, "accept")) {
-			$stmt = prepare_query(ACCEPT_APPLICATION, 0, 'i', trim($line[0]));
+			var_dump($line);
+			$stmt = prepare_query(INSERT_NEWACCOUNT, 0, 'sssssiis', trim($line[3]), trim($line[4]),
+				$line[5], $line[6], $line[8], $line[7], $state, $line[2]);
 			$result = execute_query($stmt, 'admin-applreview.php');
+			
+			if ($result) {
+				$stmt = prepare_query(REMOVE_APPLICATION, 0, 'i', trim($line[0]));
+				$result = execute_query($stmt, 'admin-applreview.php');
 
-			$stmt = prepare_query(REMOVE_APPLICATION, 0, 'i', trim($line[0]));
-			$result = execute_query($stmt, 'admin-applreview.php');
-
-			// Send email
-			confirm_account($line[1], $line[3]);
-			alert('Application Accepted');
+				// Send confirmation email
+				confirm_account($line[1], $line[3]);
+				alert('Application Accepted');
+			}
+			else
+				trigger_error('Error: Could not insert new account');
 		}
 		else if (!strcmp($GET_decide, "decline")) {
-			$stmt = prepare_query(REMOVE_ACCOUNT_ID, 0, 'i', trim($line[0]));
-			$result = execute_query($stmt, 'admin-applreview.php');
-		
 			$stmt = prepare_query(REMOVE_APPLICATION, 0, 'i', trim($line[0]));
 			$result = execute_query($stmt, 'admin-applreview.php');
 
@@ -63,17 +67,26 @@ if (isset($GET_id)) {
 		<form id="appreview" onSubmit="return GET_ajax(\'admin-applreview.php\',\'main_div\',\'appreview\');">
 			<table class="maintable">
 				<tr>
-					<td align="right">Account_id</td><td align="left">'.$line[0].'<input type="hidden" name="id" value="'.$line[0].'"></td>
+					<td align="right">Id</td><td align="left">'.$line[0].'<input type="hidden" name="id" value="'.$line[0].'"></td>
 				</tr><tr>
-					<td align="right">'.$lang['USERNAME'].'</td><td align="left"><input type="input" name="login" value="'.htmlformat($line[1]).'" maxlength="23" size="23"></td>
+					<td align="right">Time</td><td align="left"><input type="input" name="time" value="'.htmlformat($line[1]).'" maxlength="23" size="23"></td>
 				</tr><tr>
-					<td align="right">'.$lang['IP_ADDRESS'].'</td><td align="left"><input type="input" name="ipaddress" value="'.htmlformat($line[2]).'" maxlength="32" size="23"></td>
+					<td align="right">'.$lang['IP_ADDRESS'].'</td><td align="left"><input type="input" name="ipaddress" value="'.htmlformat($line[2]).'" maxlength="23" size="23"></td>
 				</tr><tr>
-					<td align="right">'.$lang['MAIL'].'</td><td align="left"><input type="input" name="email" value="'.htmlformat($line[3]).'" maxlength="60" size="23"></td>
+					<td align="right">'.$lang['USERNAME'].'</td><td align="left"><input type="input" name="login" value="'.htmlformat($line[3]).'" maxlength="23" size="23"></td>
 				</tr><tr>
-					<td align="right">'.$lang['ABOUT_ME'].'</td><td align="left"><textarea name="aboutme" rows="10" cols="50" >'.$line[4].'</textarea></td>
+					<td align="right">Sex</td><td align="left"><input type="input" name="sex" value="'.htmlformat($line[5]).'" maxlength="60" size="23"></td>
 				</tr><tr>
-					<td align="right">
+					<td align="right">'.$lang['MAIL'].'</td><td align="left"><input type="input" name="email" value="'.htmlformat($line[6]).'" maxlength="40" size="40"></td>
+				</tr><tr>
+					<td align="right">'.$lang['LEVEL'].'</td><td align="left"><input type="input" name="level" value="'.$line[7].'" maxlength="5" size="6"></td>
+				</tr><tr>
+					<td align="right">'.$lang['BIRTHDAY'].'</td><td align="left"><input type="input" name="birthdate" value="'.htmlformat($line[8]).'" maxlength="8" size="8"></td>
+				</tr><tr>
+					<td align="right">'.$lang['ABOUT_ME'].'</td><td align="left"><textarea name="aboutme" rows="10" cols="50" >'.$line[9].'</textarea></td>
+				</tr><tr>
+					<td>&nbsp;</td>
+					<td align="left">
 						<select name="decide">
 						<option selected="selected" value="accept">Accept</option>
 						<option value="decline">Decline</option>
