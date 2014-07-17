@@ -108,21 +108,22 @@ class QueryClass {
 			}
 		}
 		else
-			trigger_error('invalid prepared statement');
+			trigger_error('Failed to prepare statement for ' . $query);
 		
 		return $this->stmt;
 	}
 	
 	function Query($stmt) {
-		$result = $stmt;  // $stmt can be false
-		if ($stmt && $result = $stmt->execute()) {
-			if ($result)  // what is returned on a non-SELECT statement? false
-				return $stmt->get_result();
+		$ret = $stmt->execute();
+		if ($ret) {
+			$result = $stmt->get_result();
+			if ($result)
+				return $result;
 			else
-				return !$result;
+				return TRUE;  // Non-SELECT statement
 		}
 
-		return $result;  // FALSE because of failure
+		return FALSE;  // FALSE because of failure
 	}
 	
 	/**
