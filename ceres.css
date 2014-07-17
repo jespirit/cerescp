@@ -137,6 +137,10 @@ th {
 	font-weight: bold;
 }
 
+table#application td {
+	text-align: center;
+}
+
 .highlight {
 	font-weight: bold;
 }
@@ -157,9 +161,9 @@ th {
 	text-align: center;
 }
 
-a, a:visited, a:link {
+a:visited, a:link {
 	font-size: 8pt;
-	color:#000000; 
+	color:#000000;
 	line-height: 8pt;
 	font-family: arial;
 	font-weight: bold;
@@ -168,6 +172,10 @@ a, a:visited, a:link {
 }
 a:hover, a:active {
 	color: #FF3300;
+}
+
+a#download {
+	font-size: 11pt;
 }
 
 .copyright_link {
@@ -205,4 +213,18 @@ span#warning-chk {
 
 input#register {
 	font-size: 12pt;
+}
+
+p {
+	font-family: Arial;
+	font-size: 11pt;
+}
+
+p.warning {
+	color: #FF0000;
+}
+
+span.file-underline {
+	color: #000000;
+	text-decoration: underline;
 }
