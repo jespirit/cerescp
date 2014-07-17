@@ -68,7 +68,7 @@ function send_email($receiver, $subject, $body) {
 
 $mail=new PHPMailer();
 
-$mail->IsSMTP();
+$mail->isSMTP();
 $mail->SMTPAuth = false;
 $mail->SMTPSecure = 'tls';
 

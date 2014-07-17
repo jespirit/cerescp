@@ -20,7 +20,7 @@ if (isset($GET_frm_name) && isset($GET_id)) {
 	$stmt = prepare_query(GET_APPLICATION, 0, 'i', trim($GET_id));
 	$result = execute_query($stmt, 'admin-applreview.php');
 	
-	$state = 1;
+	$state = 0;
 	
 	if ($line = $result->fetch_row()) {
 		if (!strcasecmp($GET_decide, "accept")) {
@@ -34,7 +34,7 @@ if (isset($GET_frm_name) && isset($GET_id)) {
 				$result = execute_query($stmt, 'admin-applreview.php');
 
 				// Send confirmation email
-				confirm_account($line[1], $line[3]);
+				confirm_account($line[3], $line[6]);
 				alert('Application Accepted');
 			}
 			else
@@ -45,7 +45,7 @@ if (isset($GET_frm_name) && isset($GET_id)) {
 			$result = execute_query($stmt, 'admin-applreview.php');
 
 			// Send email
-			deny_account($line[1], $line[3]);
+			confirm_account($line[3], $line[6]);
 			alert('Application Declined');
 		}
 		else
