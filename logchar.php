@@ -49,7 +49,7 @@ $back = "page=".$GET_page;
 $stmt = prepare_query(LOGS_CHAR, 0, 'iii', $_SESSION[$CONFIG_name.'level'], $inicio, $lpp);
 $result = execute_query($stmt, 'logchar.php', 0);
 
-$stmt = prepare_query(FOUND_ROWS, 2);
+$stmt = prepare_query(FOUND_ROWS, 0);
 $result2 = execute_query($stmt, 'logchar.php', 2);
 $row = $result2->fetch_row();
 $num = $row[0];
