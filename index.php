@@ -51,6 +51,7 @@ $_SESSION[$CONFIG_name.'jobs'] = readjobs();
 	</head>
 
 	<body>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	
 	<!-- CeresCP Header -->
 	<div id="header"></div>

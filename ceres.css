@@ -23,7 +23,7 @@ a mail to cerescp@gmail.com
 */
 /** CORPO */
 body {
-	font-size: 11px;
+	font-size: 62.5%;
 	font-family: verdana,arial;
 	margin-top:0px;
 	margin-bottom:0px;
@@ -45,7 +45,7 @@ body {
 	line-height: 24px;
 	background: #000;
 	font-family: verdana,arial;
-	font-size: 10px;
+	font-size: 1em;
 	font-weight: bold;
 	color: #fff;
 	margin: 0 auto;
@@ -57,7 +57,7 @@ body {
 	line-height: 24px;
 	background: #2C3D50;
 	font-family: verdana,arial;
-	font-size: 10px;
+	font-size: 1em;
 	font-weight: bold;
 	color: #fff;
 	margin: 0 auto;
@@ -117,7 +117,7 @@ body {
 /** FORMS INPUT */
 input, select, option, textarea { 
 	font-family: verdana,arial;
-	font-size: 10px;
+	font-size: 1em;
 	background-color: #D6D3D6;
 	color: #000000;
 	border: solid;
@@ -125,13 +125,13 @@ input, select, option, textarea {
 
 /** TABLE TR, TD */
 tr, td {
-	font-size: 10px;
+	font-size: 1em;
 	FONT-FAMILY: verdana,arial;
 	color: #000000;
 }
 
 th {
-	font-size: 10px;
+	font-size: 1em;
 	FONT-FAMILY: verdana,arial;
 	color: #000000;
 	font-weight: bold;
@@ -155,14 +155,14 @@ table#application td {
 
 .title { 
 	font-family: verdana,arial;
-	font-size: 12px;
+	font-size: 1.2em;
 	font-weight: bold;
 	color: #000000;
 	text-align: center;
 }
 
 a:visited, a:link {
-	font-size: 8pt;
+	font-size: 0.8em;
 	color:#000000;
 	line-height: 8pt;
 	font-family: arial;
@@ -175,11 +175,11 @@ a:hover, a:active {
 }
 
 a#download {
-	font-size: 11pt;
+	font-size: 1.1em;
 }
 
 .copyright_link {
-	font-size: 8pt;
+	font-size: 0.8em;
 	color:#FFFFFF; 
 	line-height: 8pt;
 	font-family: arial;
@@ -203,21 +203,21 @@ span.link:hover {
 
 span.warning {
 	color: #FF0000;
-	font-size: 16pt;
+	font-size: 1.6em;
 }
 
 span#warning-chk {
-	font-size: 12pt;
+	font-size: 1.2em;
 	font-weight: bold;
 }
 
 input#register {
-	font-size: 12pt;
+	font-size: 1.2em;
 }
 
 p {
 	font-family: Arial;
-	font-size: 11pt;
+	font-size: 1.2em;
 }
 
 p.warning {
@@ -227,4 +227,56 @@ p.warning {
 span.file-underline {
 	color: #000000;
 	text-decoration: underline;
+}
+
+div#update {
+	height: 470px;
+	width: 700px;
+	max-width: 700px;
+	overflow: auto;
+}
+
+div.entry {
+	font-size: 1.1em;
+}
+
+div#update span.date {
+	font-size: 0.6em;
+	color: #00f;
+}
+
+li {
+	font-size: 1.2em;
+}
+
+span.code {
+	font-family: Courier New;
+	font-size: 1.1em;
+	background-color: #d1e1ef;
+	/* #bcccff; */
+}
+
+span.newitem {
+	color: #ff0000;
+}
+
+span.hide {
+	visibility: hidden;
+}
+
+div.item {
+}
+
+table.item {
+	font-family: Tahoma;
+	font-size: 1em;
+	border-style: dotted;
+	border-width: 1px;
+	width: 100%;
+}
+
+table.item td {
+	border-style: dotted;
+	border-width: 1px;
+	min-width: 40px;
 }

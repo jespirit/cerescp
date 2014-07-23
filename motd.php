@@ -37,6 +37,38 @@ caption($lang['NEWS_MESSAGE']);
 	
 	<p>To start playing please go here and download the necessary files: <span title="Download" class="link active" onClick="return LINK_ajax('downloads.php', 'main_div');">Downloads</span></p>
 </div>
+<div id="update">
+	<div class="entry">
+		<h1>Updates <span class="date">7/20/2014</span></h1>
+		<h2>New Items</h2>
+		<ul>
+			<li>Added Elven Bow[1]</li>
+			<li>Elven Arrow/Quiver</li>
+			<li>Added Deviruchi Headphones[1]</li>
+		</ul>
+		
+		<h2>New NPCs</h2>
+		<ul>
+			<li>Soul Linker NPC</li>
+			<li>Remove Buffs NPC</li>
+		</ul>
+		
+		<h2>Skill Changes</h2>
+		<ul>
+			<li>Asura Strike now has a 15 second unique cooldown</li>
+			<li>Increased Finger Offensive's delay from 0.5s to 0.75s</li>
+		</ul>
+		
+		<h2>Other changes</h2>
+		<ul>
+			<li>Split the Middle Headgears NPC to slotted and non-slotted versions</li>
+			<li>Only level 99 GMs can refine Middle, Lower headgears and Accessories via @refine</li>
+			<li>Adding/removing a SQI bonus via @sqibonus unequips the SQI</li>
+			<li>Removed @allskill GM command for normal players</li>
+			<li>Adjusted @jobchange to give out correct number of skill points when changing jobs</li>
+		</ul>
+	</div>
+</div>
 <?php
 fim();
 ?>
