@@ -126,13 +126,13 @@ input, select, option, textarea {
 /** TABLE TR, TD */
 tr, td {
 	font-size: 1em;
-	FONT-FAMILY: verdana,arial;
+	font-family: verdana,arial;
 	color: #000000;
 }
 
 th {
 	font-size: 1em;
-	FONT-FAMILY: verdana,arial;
+	font-family: verdana,arial;
 	color: #000000;
 	font-weight: bold;
 }
@@ -216,7 +216,6 @@ input#register {
 }
 
 p {
-	font-family: Arial;
 	font-size: 1.2em;
 }
 
@@ -238,6 +237,14 @@ div#update {
 
 div.entry {
 	font-size: 1.1em;
+	border-bottom-style: dashed;
+	border-bottom-width: 1px;
+}
+
+div.entry h1 {
+	color: #ff9c54;
+	border-bottom-style: dotted;
+	border-bottom-width: 1px;
 }
 
 div#update span.date {
@@ -265,18 +272,36 @@ span.hide {
 }
 
 div.item {
+	margin-top: 10px;
 }
 
 table.item {
-	font-family: Tahoma;
+	font-family: Tahoma, Arial, Sans-serif;
 	font-size: 1em;
 	border-style: dotted;
 	border-width: 1px;
 	width: 100%;
 }
 
+table.item td.top {
+	background-color: #cccccc;
+	color: #ffffff;
+	font-size: 14px;  /* nested in a <li> causes undesired scaling */
+	font-weight: bold;
+	text-shadow: 1px 1px 0px #999;
+	padding: 5px 10px; /* [top, bottom], [left,right] */
+}
+
 table.item td {
+	font-family: Tahoma, Arial, Sans-serif;
 	border-style: dotted;
 	border-width: 1px;
 	min-width: 40px;
+	padding: 5px;
+}
+
+table.item td.attribute {
+	color: #000;
+	font-weight; bold;
+	background-color: #f7f7f7;
 }
