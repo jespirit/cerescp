@@ -90,6 +90,7 @@ echo '
 		<th style="text-align: center; width:  50px;">Type</th>
 		<th style="text-align: center; width:  50px;">Name</th>
 		<th style="text-align: center; width:  50px;">Amount</th>
+		<th style="text-align: center; width:  50px;">Refine</th>
 		<th style="text-align: center; width: 100%;">Item</th>
 		<th style="text-align: center; width:  50px;">Map</th>
 	</tr>';
@@ -102,6 +103,7 @@ while ($line = $result->fetch_assoc()) {
 		  <td style="white-space: nowrap;">'.$line['type'].'</td>
 		  <td style="white-space: nowrap;">'.htmlformat($line['char_name']).'</td>
 		  <td style="white-space: nowrap; text-align: right;">'.$line['amount'].'</td>
+		  <td style="white-space: nowrap; text-align: right;">'.$line['refine'].'</td>
 		  <td style="white-space: nowrap;">'.(isset($items[$line['nameid']])?$items[$line['nameid']]:$line['nameid']).'</td>
 		  <td style="white-space: nowrap;">'.$line['map'].'</td>
 		 </tr>';
