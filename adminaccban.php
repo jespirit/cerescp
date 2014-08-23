@@ -52,7 +52,7 @@ if (isset($GET_frm_name) && isset($GET_id)) {
 		if ($GET_block == 5)
 			$ban = 0;
 
-		if ($_SESSION[$CONFIG_name.'level'] <= $line[4] || ($line[4] >= $_SESSION[$CONFIG_name.'level'] && $_SESSION[$CONFIG_name.'level'] != 99)) {
+		if ($_SESSION[$CONFIG_name.'level'] < $line[4] || ($line[4] >= $_SESSION[$CONFIG_name.'level'] && $_SESSION[$CONFIG_name.'level'] != 99)) {
 			alert('Unable to update account.');
 		}
 
