@@ -39,21 +39,71 @@ caption($lang['NEWS_MESSAGE']);
 </div>
 <div id="update">
 	<div class="entry">
-		<h1>Updates <span class="date">8/23/2014</span></h1>
-		<p>I've added few new things that I hope you will find useful.</p>
+		<h1>Updates <span class="date">9/8/2014</span></h1>
+		<p>
+		I've added some new additions some of you may find useful.
+
 		<h2>Monster Room</h2>
-		<p>Instanced dungeon room where you can spawn monsters with <span class="rocmd">@monster</span> and kill them with <span class="rocmd">@killmonster</span>.
-		Since it is an instanced map, only you and your party members have access to the map.</p>
-		<h2>Consistent Damage Output</h2>
-		<p>It can be difficult to compare different builds and equipment when the damage output varies, in particular with
-		duel-wielding/Katar SinXs, Star Glad's Warmth, and pretty much any non-crit builds.</p>
-		<p>So I've added 3 new commands <span class="rocmd">@minatk</span>, <span class="rocmd">@avgatk</span>, and <span class="rocmd">@maxatk</span> that will give you consistent damage no matter what build or equipment you're using.</p>
-		<p>You can also return your damage output back to normal with the <span class="rocmd">@atkoff</span> command.</p>
-		<h2>Additional Commands</h2>
+
+		<p>You can spawn any monster you wish with <span class="rocmd">@monster</span>
+		and kill them with <span class="rocmd">@killmonster</span>. It's also an instance map
+		so only you and your party members will have access.</p>
+
+		<h2>Always Consistent Damage</h2>
+
+		<p>Have you always wanted clear results to test out the difference between
+		a +9 Mes[3] and a +10 Mes[3]? How about one-shotting a Mavka when your
+		damage always varies between Bowling Bashes? What about the difference
+		between a +8 or +9 Book of Blazing Sun[3] in Dimensional Gorge?</p>
+
+		<p>With the new commands <span class="rocmd">@minatk</span>, <span class="rocmd">@avgatk</span>,
+		and <span class="rocmd">@maxatk</span>, you will always have consistent damage
+		so that you can clearly see the difference between builds and equipment.</p>
+
+		<p>To restore your damage calculations back to normal use <span class="rocmd">@atkoff</span>.</p>
+
+		<p>This also works for magic damage too!</p>
+
+		<p><span class="warning">Note:</span> I removed the random component in SOFT DEF damage reduction.
+		Equation 1 is player SOFT DEF reduction, while equation 2 is for monsters.</p>
+
+		<p>
+		Old equations:
 		<ul>
-			<li><span class="rocmd">@streset and <span class="rocmd">@skreset</span></li>
-			<li><span class="rocmd">@useskill</span></li>
-			<li><span class="rocmd">@miracle</span></li>
+			<li>(1) [VIT*0.5] + rnd([VIT*0.3], max([VIT*0.3],[VIT^2/150]-1))</li>
+			<li>(2) VIT + rnd(0,[VIT/20]^2-1)</li>
+		</ul>
+		</p>
+
+		<p>
+		New equations:
+
+		<ul>
+			<li>(1) [VIT*0.5]</li>
+			<li>(2) VIT</li>
+		</ul>
+		
+		</p>
+
+		<h2>Additional commands:</h2>
+
+		<p>Reset your stats and skills with <span class="rocmd">@streset</span>
+		and <span class="rocmd">@skreset</span>.</p>
+
+		<p>Toggle Miracle on/off for your Star Glad with <span class="rocmd">@miracle</span>. Works on any map!</p>
+
+		<p>Cast any skill you want with <span class="rocmd">@useskill</span> such as Fire endow, Kaahi,
+		Kaizel, Blessing, Increase Agility, etc...</p>
+		
+		<p><span class="warning">Note:</span> You must skill IDs</p>
+		
+		<h2>Other Updates</h2>
+		<ul>
+			<li>Updated Assassin Cross Eremes card is now compounded to armor.</li>
+			<li>Added Splash Hat[1]</li>
+			<li>Miracle cannot be dispelled by use of Dispel skill</li>
+			<li>Stat Food cannot be dispelled on death</li>
+			<li>Added Scaraba and Gold Scaraba cards</li>
 		</ul>
 	</div>
 	<div class="entry">

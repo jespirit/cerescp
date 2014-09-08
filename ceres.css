@@ -203,6 +203,10 @@ span.link:hover {
 
 span.warning {
 	color: #FF0000;
+}
+
+span#warning-register {
+	color: #FF0000;
 	font-size: 1.6em;
 }
 

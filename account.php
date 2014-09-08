@@ -181,7 +181,7 @@ $var = rand(10, 9999999);
 	echo '
 	<tr>
 		<td>&nbsp;</td>
-		<td><h1>Warning</h1><span class="warning">Register an account at your own risk. The site does NOT use SSL or any other type of encryption for server-client communication.
+		<td><h1>Warning</h1><span id="warning-register">Register an account at your own risk. The site does NOT use SSL or any other type of encryption for server-client communication.
 		That means all the data sent from your browser will be unencrypted, easily visible in plain text for anybody with the right tools to extract.<br /><br />
 		
 		In addition, passwords are not encrypted in the database either, that means the System Administrator will know exactly what the passwords are.<br /><br />
