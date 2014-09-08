@@ -256,6 +256,11 @@ li {
 	font-size: 1.2em;
 }
 
+.rocmd {
+	/* color: #33ccff; */
+	color: #3366ff;
+}
+
 span.code {
 	font-family: Courier New;
 	font-size: 1.1em;

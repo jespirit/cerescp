@@ -39,6 +39,24 @@ caption($lang['NEWS_MESSAGE']);
 </div>
 <div id="update">
 	<div class="entry">
+		<h1>Updates <span class="date">8/23/2014</span></h1>
+		<p>I've added few new things that I hope you will find useful.</p>
+		<h2>Monster Room</h2>
+		<p>Instanced dungeon room where you can spawn monsters with <span class="rocmd">@monster</span> and kill them with <span class="rocmd">@killmonster</span>.
+		Since it is an instanced map, only you and your party members have access to the map.</p>
+		<h2>Consistent Damage Output</h2>
+		<p>It can be difficult to compare different builds and equipment when the damage output varies, in particular with
+		duel-wielding/Katar SinXs, Star Glad's Warmth, and pretty much any non-crit builds.</p>
+		<p>So I've added 3 new commands <span class="rocmd">@minatk</span>, <span class="rocmd">@avgatk</span>, and <span class="rocmd">@maxatk</span> that will give you consistent damage no matter what build or equipment you're using.</p>
+		<p>You can also return your damage output back to normal with the <span class="rocmd">@atkoff</span> command.</p>
+		<h2>Additional Commands</h2>
+		<ul>
+			<li><span class="rocmd">@streset and <span class="rocmd">@skreset</span></li>
+			<li><span class="rocmd">@useskill</span></li>
+			<li><span class="rocmd">@miracle</span></li>
+		</ul>
+	</div>
+	<div class="entry">
 		<h1>Updates <span class="date">7/20/2014</span></h1>
 		<h2>New Items</h2>
 		<ul>
