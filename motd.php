@@ -39,6 +39,26 @@ caption($lang['NEWS_MESSAGE']);
 </div>
 <div id="update">
 	<div class="entry">
+		<h1>Updates <span class="date">10/5/2014</span></h1>
+		
+		<h2>Battlegrounds</h2>
+		<p>Most of the Battlegrounds equipment had remained the same with no modifications except
+		for a few weapons that were affected while wearing the Aegis shield.
+		You can find all the BG related equipment from the new Battlegrounds Gear NPC
+		in the Izlude Marketplace.</p>
+		
+		<h2>Monster Room Spawn Limit</h2>
+		<p>I've restricted the maximum number of monsters that can be spawned in the Monster Room to 10.</p>
+		
+		<h2>Other Updates</h2>
+		<ul>
+			<li>Added Cat Ear Beret[1]</li>
+			<li>Fixed Bone Plate[1] armor to be wearable by the classes listed.</li>
+			<li>Fixed defense and level requirements for Silver Guard[1], Round Buckler[1], and Rosa Shield[1]</li>
+			<li>Changed level requirement for Carga Mace[2] to 90.</li>
+		</ul>
+	</div>
+	<div class="entry">
 		<h1>Updates <span class="date">9/8/2014</span></h1>
 		<p>
 		I've added some new additions some of you may find useful.
@@ -47,8 +67,15 @@ caption($lang['NEWS_MESSAGE']);
 
 		<p>You can spawn any monster you wish with <span class="rocmd">@monster</span>
 		and kill them with <span class="rocmd">@killmonster</span>. It's also an instance map
-		so only you and your party members will have access.</p>
-
+		so only you and your party members will have access.</img>
+		
+		<br><br>
+		The Monster Room NPC is located in Prontera.
+		</p>
+		
+		
+		<div style="float:clear;"></div>
+		
 		<h2>Always Consistent Damage</h2>
 
 		<p>Have you always wanted clear results to test out the difference between
