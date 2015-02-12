@@ -100,6 +100,7 @@ $lang['MENU_PROBLEMS'] = 'Problems';
 $lang['MENU_MESSAGE'] = 'Message';
 $lang['MENU_CHANGEPASS'] = 'Change Password';
 $lang['MENU_CHANGEMAIL'] = 'Change e-mail';
+$lang['MENU_VIEWACCOUNT'] = 'View Accounts';
 $lang['MENU_TRANFMONEY'] = 'Transfer Money';
 $lang['MENU_CHANGESLOT'] = 'Change Slot';
 $lang['MENU_MARRIAGE'] = 'Marriage';

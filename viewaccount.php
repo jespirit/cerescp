@@ -139,6 +139,8 @@ while ($line = $result->fetch_row()) {
 }
 echo '</table>';
 
+echo '<span title="0" class="link" onClick="return LINK_ajax(\'addaccount.php\',\'main_div\');">Add Account</span>';
+
 if ($pages) {
 	echo '
 	<table class="maintable">

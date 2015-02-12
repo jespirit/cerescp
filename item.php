@@ -16,7 +16,7 @@ $NAME = file_get_contents($name_file);
 
 $desc = "";
 $matches = array();
-$desc_re = "/$GET_id#(.*?)\b[a-zA-Z ]+\s*:/s";
+$desc_re = "/$GET_id#(.*?)\b[a-zA-Z]+\s*:/s";
 
 $item_types = array("Healing", "Unknown", "Usable", "ETC", "Weapon", 
 					"Armor", "Card", "Pet Egg", "Pet Armor", "Unknown2",

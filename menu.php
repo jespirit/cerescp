@@ -42,6 +42,7 @@ $mainmenu[7] = array('Administration',			$CONFIG['cp_admin']);
 $submenu[] = array($lang['MENU_MESSAGE'],		'motd.php',				0);
 $submenu[] = array($lang['MENU_CHANGEPASS'],	'password.php',			1);
 $submenu[] = array($lang['MENU_CHANGEMAIL'],	'changemail.php',		1);
+$submenu[] = array($lang['MENU_VIEWACCOUNT'],	'viewaccount.php',		1);
 $submenu[] = array($lang['MENU_TRANFMONEY'],	'money.php',			$CONFIG_money_transfer?2:-1);
 $submenu[] = array($lang['MENU_CHANGESLOT'],	'slot.php',				$CONFIG_set_slot?2:-1);
 $submenu[] = array($lang['MENU_MARRIAGE'],		'marriage.php',			2);

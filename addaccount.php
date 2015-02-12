@@ -73,14 +73,6 @@ if (isset($POST_opt)) {
 		if (strlen($POST_birthdate) < 8 || notnumber($POST_birthdate))
 			alert($lang['INVALID_BIRTHDAY']);
 
-		if (strlen(trim($POST_aboutme)) < 1)
-			alert($lang['ABOUT_NO_TEXT']);
-
-		if (!$POST_agree) {
-			echo '<script type="text/javascript">alert("You must check the \'I have read the warning ...\' checkbox\'");</script>';
-			redir('motd.php', 'main_div', 'You did not wish to register an account');
-		}
-
 		// Check if the Username exists in either the `login` or `register` table.
 		
 		$stmt = prepare_query(CHECK_USERID, 0, 's', trim($POST_username));
@@ -159,40 +151,9 @@ $var = rand(10, 9999999);
 		<td align="left">
 			<input type="text" name="birthdate" maxlength="8" size="8" onKeyPress="return force(this.name,this.form.id,event);">
 		</td>
-	</tr>
-	<tr>
-		<td align="right">'.$lang['ABOUT_ME'].':</td>
-		<td align="left">
-			<textarea name="aboutme" maxlength="250" rows="10" cols="50"></textarea>
-		</td>
 	</tr>';
-	if ($CONFIG_auth_image && function_exists("gd_info")) { 
-		echo '
-	<tr>
-		<td></td>
-		<td align=left><img src="img.php?img=account&var='.$var.'" alt="'.$lang['SECURITY_CODE'].'"></td>
-	</tr>
-	<tr>
-		<td align=right>'.$lang['CODE'].':</td>
-		<td align="left"><input type="text" name="code" maxlength="6" size="6" onKeyPress="return force(this.name,this.form.id,event);"></td>
-	</tr>';
-	}
 
 	echo '
-	<tr>
-		<td>&nbsp;</td>
-		<td><h1>Warning</h1><span id="warning-register">Register an account at your own risk. The site does NOT use SSL or any other type of encryption for server-client communication.
-		That means all the data sent from your browser will be unencrypted, easily visible in plain text for anybody with the right tools to extract.<br /><br />
-		
-		In addition, passwords are not encrypted in the database either, that means the System Administrator will know exactly what the passwords are.<br /><br />
-		
-		If you choose to make an account, I suggest you NOT use any of your passwords that you use for your email account, bank account, or any other
-		account with confidential and/or sensitive information.</span></td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><input type="checkbox" name="agree"><span id="warning-chk">I have read the warning and I still wish to register for an account.</span></td>
-    </tr>
 	<tr>
 		<td>&nbsp;</td>
 		<td><input type="submit" id="register" name="register" value="'.$lang['REGISTER'].'"></td>
