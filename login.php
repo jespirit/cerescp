@@ -117,6 +117,7 @@ if (!empty($POST_opt)) {
 				$_SESSION[$CONFIG_name.'account_id'] = $line[0];
 				$_SESSION[$CONFIG_name.'userid'] = $line[1];
 				$_SESSION[$CONFIG_name.'level'] = $line[2];
+                $_SESSION[$CONFIG_name.'email'] = $line[4];
 
 				if ($POST_remember_me) {
 					setcookie('login_pass', md5($CONFIG_name.$line[3]), time() + 3600 * 24 * 30);
