@@ -78,6 +78,13 @@ DEFINE('NEW_APPLICATION', "INSERT INTO `register` (`time`, `userid`, `user_pass`
 VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)");
 DEFINE('TOTAL_APPLICATIONS', "SELECT COUNT(1) FROM `register`");
 
+//activate.php - Activate In-game accounts
+DEFINE('ACTIVATE_CHECK_USER', "SELECT `id`, `time`, `account_num`, `userid`, `user_pass`, `sex`, `email`, `level`, `birthdate` FROM `register`
+WHERE `userid` = ?");
+DEFINE('ACTIVATE_INSERT_CHAR', "INSERT INTO `login` (`userid`, `user_pass`, `sex`, `email`, `birthdate`, `last_ip`, `state`, `level`, `account_num`)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+DEFINE('ACTIVATE_REMOVE_CHAR', "DELETE FROM `register` WHERE `id` = ?");
+
 //recover.php - Recover Password
 DEFINE('RECOVER_PASSWORD', "SELECT `userid`, `user_pass`, `email` FROM `login` WHERE `email` = ? AND state != '5'");
 
