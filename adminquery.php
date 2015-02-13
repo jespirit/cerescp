@@ -91,14 +91,10 @@ FROM `char` ORDER BY `account_id` LIMIT ?, 100");
 DEFINE('CHARS_TOTAL', "SELECT COUNT(1) FROM `char` WHERE `account_id` > '0'");
 
 //admin-application
-DEFINE('BROWSE_APPLICATIONS', "SELECT `register`.`id`, `register`.`time`, `register`.`ip`, `register`.`userid`,
-`register`.`sex`, `register`.`email`, `register`.`level`, `register`.`birthdate` FROM `register`
-ORDER BY `register`.`time` ASC LIMIT ?, 100");
-DEFINE('GET_APPLICATION', "SELECT `register`.`id`, `register`.`time`, `register`.`ip`, `register`.`userid`, `register`.`user_pass`,
-`register`.`sex`, `register`.`email`, `register`.`level`, `register`.`birthdate`, `register`.`data` FROM `register`
-WHERE `register`.`id` = ?");
-DEFINE('INSERT_NEWACCOUNT', "INSERT INTO `login` (`userid`, `user_pass`, `sex`, `email`, `birthdate`, `level`, `state`, `last_ip`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-DEFINE('REMOVE_APPLICATION', "DELETE FROM `register` WHERE `register`.`id` = ?");
+DEFINE('BROWSE_APPLICATIONS', "SELECT * FROM `accregister` ORDER BY `accregister`.`time` ASC LIMIT ?, ?");
+DEFINE('GET_APPLICATION', "SELECT * FROM `accregister` WHERE `accregister`.`id` = ?");
+DEFINE('INSERT_NEW_APPLICANT', "INSERT INTO `account` (`account_name`, `account_pass`, `email`, `level`, `state`, `lastlogin`, `birthdate`, `last_ip`) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?)");
+DEFINE('REMOVE_APPLICATION', "DELETE FROM `accregister` WHERE `accregister`.`id` = ?");
 //DEFINE('REMOVE_ACCOUNT_ID', "DELETE FROM `login` WHERE `login`.`account_id` = ?");
 
 //logs

@@ -26,7 +26,7 @@ an e-mail to cerescp@gmail.com
 $revision = 116;
 //functions.php
 //log queries in querylog
-DEFINE('ADD_QUERY_ENTRY', "INSERT INTO `cp_querylog` (`Date`, `User`, `IP`, `page`, `Query`) VALUES(NOW(), ?, ?, ?, ?)");
+DEFINE('ADD_QUERY_ENTRY', "INSERT INTO `cp_querylog` (`Date`, `User`, `IP`, `page`, `query`) VALUES(NOW(), ?, ?, ?, ?)");
 //Server Status
 DEFINE('CHECK_STATUS', "SELECT `last_checked`,`status`,TIMESTAMPDIFF(SECOND,`last_checked`,NOW()) FROM `cp_server_status`");
 DEFINE('UPDATE_STATUS', "UPDATE `cp_server_status` SET last_checked = NOW(), status = ?");
