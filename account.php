@@ -96,13 +96,8 @@ if (isset($POST_opt)) {
             $checkuser += $result->num_rows;
         }
 
-		if ($checkuser)
+		if ($checkuser > 0)
 			alert($lang['USERNAME_IN_USE']);
-
-		if ($POST_sex) 
-			$POST_sex = 'F';
-		else
-			$POST_sex = 'M';
 
 		if ($CONFIG_md5_pass)
 			$POST_password = md5($POST_password);
@@ -110,14 +105,16 @@ if (isset($POST_opt)) {
 		$level = 1;  // Level 1 by default
 
 		// date fields can bind to 's'
-		$stmt = prepare_query(NEW_APPLICATION, 0, 'ssssisss',
+		$stmt = prepare_query(NEW_APPLICATION, 0, 'sssisss',
             trim($POST_username), trim($POST_password),
-			$POST_email, $level, $POST_birthdate, $_SERVER['REMOTE_ADDR']);
-		$result = execute_query($stmt, 'account.php');
-
-		redir('motd.php', 'main_div',
-		'Thanks for applying to TestRO.<br/><br/>Your application is being considered and
-		you will receive an email whether your application has been accepted.');
+			trim($POST_email), $level, $POST_birthdate, $_SERVER['REMOTE_ADDR'], trim($POST_aboutme));
+		$result = execute_query($stmt, 'account.php', 1);
+        if ($result) {
+            redir('motd.php', 'main_div',
+            'Thanks for applying to TestRO.<br/><br/>Your application is being considered and
+            you will receive an email whether your application has been accepted.');
+        } else
+            trigger_error("Failed to insert new application into account table");
 
 	}
 }
