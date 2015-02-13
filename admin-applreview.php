@@ -14,42 +14,52 @@ if (isset($GET_frm_name) && isset($GET_id)) {
 	if (notnumber($GET_id))
 		alert($lang['INCORRECT_CHARACTER']);
 
-	if (strcmp($GET_decide, "accept") != 0 && strcmp($GET_decide, "decline"))
+	if (strcmp($GET_decide, "accept") != 0 && strcmp($GET_decide, "decline") != 0)
 		alert('Invalid option for \'decide\' field');
 
 	$stmt = prepare_query(GET_APPLICATION, 0, 'i', trim($GET_id));
 	$result = execute_query($stmt, 'admin-applreview.php');
 	
 	$state = 0;
+    $remove_appl = false;
 	
-	if ($line = $result->fetch_row()) {
+	if ($line = $result->fetch_array()) {
 		if (!strcasecmp($GET_decide, "accept")) {
 			var_dump($line);
-			$stmt = prepare_query(INSERT_NEWACCOUNT, 0, 'sssssiis', trim($line[3]), trim($line[4]),
-				$line[5], $line[6], $line[8], $line[7], $state, $line[2]);
+			$stmt = prepare_query(INSERT_NEW_APPLICANT, 0, 'sssiiss',
+                $line['account_name'], $line['account_pass'],
+				$line['email'], $line['level'], $state,
+                $line['birthdate'], $line['ip']);
 			$result = execute_query($stmt, 'admin-applreview.php');
 			
 			if ($result) {
-				$stmt = prepare_query(REMOVE_APPLICATION, 0, 'i', trim($line[0]));
-				$result = execute_query($stmt, 'admin-applreview.php');
-
+                $remove_appl = true;
+                
 				// Send confirmation email
 				confirm_account($line[3], $line[6]);
-				alert('Application Accepted');
+				echo '<script type="text/javascript">alert("Application Accepted");</script>';
 			}
 			else
 				trigger_error('Error: Could not insert new account');
 		}
 		else if (!strcmp($GET_decide, "decline")) {
-			$stmt = prepare_query(REMOVE_APPLICATION, 0, 'i', trim($line[0]));
-			$result = execute_query($stmt, 'admin-applreview.php');
-
-			// Send email
-			confirm_account($line[3], $line[6]);
-			alert('Application Declined');
+            $remove_appl = true;
+            
+			// Send denied email
+			deny_account($line[3], $line[6]);
+			echo '<script type="text/javascript">alert("Application Declined");</script>';
 		}
 		else
 			alert('No action, invalid decide value='.$GET_decide);
+            
+        // Remove the application
+        if ($remove_appl) {
+            $stmt = prepare_query(REMOVE_APPLICATION, 0, 'i', trim($line[0]));
+            $result = execute_query($stmt, 'admin-applreview.php');
+            
+            if (!$result)
+                trigger_error('Error: Could not remove application');
+        }
 	}
 }
 
@@ -62,28 +72,26 @@ if (isset($GET_back)) {
 if (isset($GET_id)) {
 	$stmt = prepare_query(GET_APPLICATION, 0, 'i', trim($GET_id));
 	$result = execute_query($stmt, 'admin-applreview.php');
-	if ($line = $result->fetch_row()) {
+	if ($line = $result->fetch_array()) {
 		echo '
 		<form id="appreview" onSubmit="return GET_ajax(\'admin-applreview.php\',\'main_div\',\'appreview\');">
 			<table class="maintable">
 				<tr>
-					<td align="right">Id</td><td align="left">'.$line[0].'<input type="hidden" name="id" value="'.$line[0].'"></td>
+					<td align="right">Id</td><td align="left">'.$line['id'].'<input type="hidden" name="id" value="'.$line['id'].'"></td>
 				</tr><tr>
-					<td align="right">Time</td><td align="left"><input type="input" name="time" value="'.htmlformat($line[1]).'" maxlength="23" size="23"></td>
+					<td align="right">Time</td><td align="left"><input type="input" name="time" value="'.htmlformat($line['time']).'" maxlength="23" size="23"></td>
 				</tr><tr>
-					<td align="right">'.$lang['IP_ADDRESS'].'</td><td align="left"><input type="input" name="ipaddress" value="'.htmlformat($line[2]).'" maxlength="23" size="23"></td>
+					<td align="right">'.$lang['IP_ADDRESS'].'</td><td align="left"><input type="input" name="ipaddress" value="'.htmlformat($line['ip']).'" maxlength="23" size="23"></td>
 				</tr><tr>
-					<td align="right">'.$lang['USERNAME'].'</td><td align="left"><input type="input" name="login" value="'.htmlformat($line[3]).'" maxlength="23" size="23"></td>
+					<td align="right">'.$lang['USERNAME'].'</td><td align="left"><input type="input" name="login" value="'.htmlformat($line['account_name']).'" maxlength="23" size="23"></td>
 				</tr><tr>
-					<td align="right">Sex</td><td align="left"><input type="input" name="sex" value="'.htmlformat($line[5]).'" maxlength="60" size="23"></td>
+					<td align="right">'.$lang['MAIL'].'</td><td align="left"><input type="input" name="email" value="'.htmlformat($line['email']).'" maxlength="40" size="40"></td>
 				</tr><tr>
-					<td align="right">'.$lang['MAIL'].'</td><td align="left"><input type="input" name="email" value="'.htmlformat($line[6]).'" maxlength="40" size="40"></td>
+					<td align="right">'.$lang['LEVEL'].'</td><td align="left"><input type="input" name="level" value="'.$line['level'].'" maxlength="5" size="6"></td>
 				</tr><tr>
-					<td align="right">'.$lang['LEVEL'].'</td><td align="left"><input type="input" name="level" value="'.$line[7].'" maxlength="5" size="6"></td>
+					<td align="right">'.$lang['BIRTHDAY'].'</td><td align="left"><input type="input" name="birthdate" value="'.htmlformat($line['birthdate']).'" maxlength="8" size="8"></td>
 				</tr><tr>
-					<td align="right">'.$lang['BIRTHDAY'].'</td><td align="left"><input type="input" name="birthdate" value="'.htmlformat($line[8]).'" maxlength="8" size="8"></td>
-				</tr><tr>
-					<td align="right">'.$lang['ABOUT_ME'].'</td><td align="left"><textarea name="aboutme" rows="10" cols="50" >'.$line[9].'</textarea></td>
+					<td align="right">'.$lang['ABOUT_ME'].'</td><td align="left"><textarea name="aboutme" rows="10" cols="50" >'.$line['data'].'</textarea></td>
 				</tr><tr>
 					<td>&nbsp;</td>
 					<td align="left">
