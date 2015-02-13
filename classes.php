@@ -99,7 +99,7 @@ class QueryClass {
 				break;
 		}
 		
-		$q = $query;  // save query
+		$this->q = $query;  // save query
 		
 		if ($this->stmt) {
 			if (func_num_args() >= 4) {  // are there parameters to bind?
@@ -136,7 +136,7 @@ class QueryClass {
 	 * @return string The interpolated query
 	 */
 	function Interpolate() {
-		if (!isset($this->q))
+		if (!isset($this->q) || !isset($this->params))
 			return FALSE;
 		$keys = array();
 

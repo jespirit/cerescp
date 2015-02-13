@@ -364,7 +364,7 @@ function execute_query($stmt, $source = 'none.php', $save_report = 1) {
 }
 
 function add_query_entry($source, $log_query) {
-	global $CONFIG_name, $CONFIG_cp_db, $CONFIG_rag_serv, $CONFIG_rag_user, $CONFIG_rag_pass;
+	global $mysql, $CONFIG_name, $CONFIG_cp_db, $CONFIG_rag_serv, $CONFIG_rag_user, $CONFIG_rag_pass;
 	if (!empty($_SESSION[$CONFIG_name.'account_id'])) 
 		$log_account = $_SESSION[$CONFIG_name.'account_id'];
 	else
@@ -373,7 +373,9 @@ function add_query_entry($source, $log_query) {
 	$log_query = addslashes($log_query);
 	$stmt = prepare_query(ADD_QUERY_ENTRY, 1, 'isss', $log_account, $log_ip, $source, $log_query);
 
-	execute_query($stmt, 'none.php', 0);
+	if (!execute_query($stmt, 'none.php', 0)) {
+        echo 'Error: Failed to save query "' . $mysql->Interpolate() . '"';
+    }
 }
 
 // o retorno eh em compara?o binaria
