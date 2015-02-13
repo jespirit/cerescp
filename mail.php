@@ -41,7 +41,7 @@ function confirm_account($username, $email) {
     $maildef = str_ireplace("#support_mail#",$CONFIG_smtp_mail,$maildef);
     $maildef = nl2br($maildef);
 
-send_email($email, "Account Registration Confirmation", $maildef);
+send_email($email, $CONFIG_name . ": Account Registration Confirmation", $maildef);
 
 }
 
@@ -59,7 +59,7 @@ function deny_account($username, $email) {
     $maildef = str_ireplace("#support_mail#",$CONFIG_smtp_mail,$maildef);
     $maildef = nl2br($maildef);
 
-send_email($email, "Account Registration Denied", $maildef);
+send_email($email, $CONFIG_name . ": Account Registration Denied", $maildef);
 
 }
 
