@@ -1,4 +1,4 @@
-#server_name# Account Info
+#server_name# Account Application Denied
 
 This email is to notify you that your application has been denied.
 
@@ -8,7 +8,7 @@ Your account information is as follows:
 
 #account_info#
 
-Thank you for playing in and support our server
+Thank you for playing in and supporting the server.
 In case of doubt or problem send a mail to #support_mail# for support.
-If you didn't request account information, ignore this message and nothing will happen.
+If you didn't request account information, ignore this message.
 DO NOT REPLY TO THIS MESSAGE

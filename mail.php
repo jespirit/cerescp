@@ -30,16 +30,16 @@ require_once 'PHPMailer/PHPMailerAutoload.php';
 function confirm_account($username, $email) {
 	global $CONFIG_smtp_server, $CONFIG_smtp_port, $CONFIG_smtp_username, $CONFIG_smtp_password, $CONFIG_smtp_mail, $CONFIG_name;
 
-$mensagem = "----------------------------\n";
-if (isset($username))
-	$mensagem.= "Username: ".$username;
-$mensagem.= "\n----------------------------\n";
+    $mensagem = "----------------------------\n";
+    if (isset($username))
+        $mensagem.= "Username: ".$username;
+    $mensagem.= "\n----------------------------\n";
 
-$maildef = read_maildef("confirm_account");
-$maildef = str_ireplace("#account_info#",$mensagem,$maildef);
-$maildef = str_ireplace("#server_name#",$CONFIG_name,$maildef);
-$maildef = str_ireplace("#support_mail#",$CONFIG_smtp_mail,$maildef);
-$maildef = nl2br($maildef);
+    $maildef = read_maildef("confirm_account");
+    $maildef = str_ireplace("#account_info#",$mensagem,$maildef);
+    $maildef = str_ireplace("#server_name#",$CONFIG_name,$maildef);
+    $maildef = str_ireplace("#support_mail#",$CONFIG_smtp_mail,$maildef);
+    $maildef = nl2br($maildef);
 
 send_email($email, "Account Registration Confirmation", $maildef);
 
@@ -48,101 +48,120 @@ send_email($email, "Account Registration Confirmation", $maildef);
 function deny_account($username, $email) {
 	global $CONFIG_smtp_server, $CONFIG_smtp_port, $CONFIG_smtp_username, $CONFIG_smtp_password, $CONFIG_smtp_mail, $CONFIG_name;
 
-$mensagem = "----------------------------\n";
-if (isset($username))
-	$mensagem.= "Username: ".$username;
-$mensagem.= "\n----------------------------\n";
+    $mensagem = "----------------------------\n";
+    if (isset($username))
+        $mensagem.= "Username: ".$username;
+    $mensagem.= "\n----------------------------\n";
 
-$maildef = read_maildef("deny_account");
-$maildef = str_ireplace("#account_info#",$mensagem,$maildef);
-$maildef = str_ireplace("#server_name#",$CONFIG_name,$maildef);
-$maildef = str_ireplace("#support_mail#",$CONFIG_smtp_mail,$maildef);
-$maildef = nl2br($maildef);
+    $maildef = read_maildef("deny_account");
+    $maildef = str_ireplace("#account_info#",$mensagem,$maildef);
+    $maildef = str_ireplace("#server_name#",$CONFIG_name,$maildef);
+    $maildef = str_ireplace("#support_mail#",$CONFIG_smtp_mail,$maildef);
+    $maildef = nl2br($maildef);
 
 send_email($email, "Account Registration Denied", $maildef);
+
+}
+
+function send_activation($username, $email, $link) {
+	global $CONFIG_smtp_server, $CONFIG_smtp_port, $CONFIG_smtp_username, $CONFIG_smtp_password, $CONFIG_smtp_mail, $CONFIG_name;
+
+    $mensagem = "----------------------------\n";
+    if (isset($username))
+        $mensagem.= "Username: ".$username;
+    $mensagem.= "\n----------------------------\n";
+
+    $maildef = read_maildef("send_activation");
+    $maildef = str_ireplace("#account_info#",$mensagem,$maildef);
+    $maildef = str_ireplace("#activation_link#",$link,$maildef);
+    $maildef = str_ireplace("#server_name#",$CONFIG_name,$maildef);
+    $maildef = str_ireplace("#support_mail#",$CONFIG_smtp_mail,$maildef);
+    $maildef = nl2br($maildef);
+
+    send_email($email, $CONFIG_name . ": Game Account Activation", $maildef);
 
 }
 
 function send_email($receiver, $subject, $body) {
 	global $CONFIG_smtp_server, $CONFIG_smtp_port, $CONFIG_smtp_username, $CONFIG_smtp_password, $CONFIG_smtp_mail, $CONFIG_name;
 
-$mail=new PHPMailer();
+    $mail=new PHPMailer();
 
-$mail->isSMTP();
-$mail->SMTPAuth = false;
-$mail->SMTPSecure = 'tls';
+    $mail->isSMTP();
+    $mail->SMTPAuth = false;
+    $mail->SMTPSecure = 'tls';
 
-$mail->Host       = $CONFIG_smtp_server;
-$mail->Port       = $CONFIG_smtp_port;
+    $mail->Host       = $CONFIG_smtp_server;
+    $mail->Port       = $CONFIG_smtp_port;
 
-$mail->Username   = $CONFIG_smtp_username;
-$mail->Password   = $CONFIG_smtp_password;
+    $mail->Username   = $CONFIG_smtp_username;
+    $mail->Password   = $CONFIG_smtp_password;
 
-$mail->From       = $CONFIG_smtp_mail;
-$mail->FromName   = $CONFIG_name;
-$mail->Subject    = $subject;
-$mail->Body       = $body;
+    $mail->From       = $CONFIG_smtp_mail;
+    $mail->FromName   = $CONFIG_name;
+    $mail->Subject    = $subject;
+    $mail->Body       = $body;
 
-$mail->WordWrap   = 50;
+    $mail->WordWrap   = 50;
 
-$mail->AddAddress($receiver, $receiver);
-$mail->AddReplyTo($CONFIG_smtp_mail,$CONFIG_name);
+    $mail->AddAddress($receiver, $receiver);
+    $mail->AddReplyTo($CONFIG_smtp_mail,$CONFIG_name);
 
-$mail->IsHTML(true);
+    $mail->IsHTML(true);
 
-if(!$mail->Send()) {
-  return $mail->ErrorInfo;
-} else {
-  return "Message has been sent";
-}
+    if(!$mail->Send()) {
+      return $mail->ErrorInfo;
+    } else {
+      return "Message has been sent";
+    }
 
 }
 
 function email($contas) {
 	global $CONFIG_smtp_server, $CONFIG_smtp_port, $CONFIG_smtp_username, $CONFIG_smtp_password, $CONFIG_smtp_mail, $CONFIG_name;
 
-$mensagem = "----------------------------\n";
-for ($i = 0; isset($contas[$i][0]); $i++) {
-	$mensagem.= "Username: ".$contas[$i][0];
-	$mensagem.= "\nPassword: ".$contas[$i][1];
-	$mensagem.= "\n----------------------------\n";
-}
+    $mensagem = "----------------------------\n";
+    for ($i = 0; isset($contas[$i][0]); $i++) {
+        $mensagem.= "Username: ".$contas[$i][0];
+        $mensagem.= "\nPassword: ".$contas[$i][1];
+        $mensagem.= "\n----------------------------\n";
+    }
 
-$maildef = read_maildef("recover_password");
-$maildef = str_ireplace("#account_info#",$mensagem,$maildef);
-$maildef = str_ireplace("#server_name#",$CONFIG_name,$maildef);
-$maildef = str_ireplace("#support_mail#",$CONFIG_smtp_mail,$maildef);
-$maildef = nl2br($maildef);
+    $maildef = read_maildef("recover_password");
+    $maildef = str_ireplace("#account_info#",$mensagem,$maildef);
+    $maildef = str_ireplace("#server_name#",$CONFIG_name,$maildef);
+    $maildef = str_ireplace("#support_mail#",$CONFIG_smtp_mail,$maildef);
+    $maildef = nl2br($maildef);
 
-$mail=new PHPMailer();
+    $mail=new PHPMailer();
 
-$mail->isSMTP();
-$mail->SMTPAuth = false;
-$mail->SMTPSecure = 'tls';
+    $mail->isSMTP();
+    $mail->SMTPAuth = false;
+    $mail->SMTPSecure = 'tls';
 
-$mail->Host       = $CONFIG_smtp_server;
-$mail->Port       = $CONFIG_smtp_port;
+    $mail->Host       = $CONFIG_smtp_server;
+    $mail->Port       = $CONFIG_smtp_port;
 
-$mail->Username   = $CONFIG_smtp_username;
-$mail->Password   = $CONFIG_smtp_password;
+    $mail->Username   = $CONFIG_smtp_username;
+    $mail->Password   = $CONFIG_smtp_password;
 
-$mail->From       = $CONFIG_smtp_mail;
-$mail->FromName   = $CONFIG_name;
-$mail->Subject    = "Password Recovery";
-$mail->Body       = $maildef;
+    $mail->From       = $CONFIG_smtp_mail;
+    $mail->FromName   = $CONFIG_name;
+    $mail->Subject    = "Password Recovery";
+    $mail->Body       = $maildef;
 
-$mail->WordWrap   = 50;
+    $mail->WordWrap   = 50;
 
-$mail->addAddress($contas[0][2],$contas[0][2]);
-$mail->addReplyTo($CONFIG_smtp_mail,$CONFIG_name);
+    $mail->addAddress($contas[0][2],$contas[0][2]);
+    $mail->addReplyTo($CONFIG_smtp_mail,$CONFIG_name);
 
-$mail->isHTML(true);
+    $mail->isHTML(true);
 
-if(!$mail->Send()) {
-  return $mail->ErrorInfo;
-} else {
-  return "Message has been sent";
-}
+    if(!$mail->Send()) {
+      return $mail->ErrorInfo;
+    } else {
+      return "Message has been sent";
+    }
 
 }
 
