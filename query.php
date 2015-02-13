@@ -84,6 +84,10 @@ DEFINE('TOTAL_APPLICATIONS', "SELECT COUNT(1) FROM `accregister`");
 DEFINE('ADD_CHECK_USERID', "SELECT `userid` FROM `login` WHERE `userid` = ?");
 DEFINE('ADD_CHECK_USERID2', "SELECT `userid` FROM `register` WHERE `userid` = ?");
 
+//viewaccount.php - View Accounts
+DEFINE('VIEW_GET_ACCOUNT', "SELECT `userid` FROM `login` LEFT JOIN `account` ON `login`.`account_num` = `account`.`account_num`
+WHERE `account`.`account_num` = ?");
+
 //activate.php - Activate In-game accounts
 DEFINE('ACTIVATE_CHECK_USER', "SELECT `id`, `time`, `account_num`, `userid`, `user_pass`, `sex`, `email`, `level`, `birthdate` FROM `register`
 WHERE `userid` = ?");
