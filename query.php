@@ -87,7 +87,8 @@ DEFINE('ADD_CHECK_USERID', "SELECT `userid` FROM `login` WHERE `userid` = ?");
 DEFINE('ADD_CHECK_USERID2', "SELECT `userid` FROM `register` WHERE `userid` = ?");
 
 //viewaccount.php - View Accounts
-DEFINE('VIEW_GET_ACCOUNT', "SELECT `userid` FROM `login` LEFT JOIN `account` ON `login`.`account_num` = `account`.`account_num`
+DEFINE('VIEW_GET_ACCOUNT_ALL', "SELECT `login`.`userid`, `login`.`account_id`, `login`.`lastlogin`, `login`.`last_ip`, `login`.`sex`
+FROM `login` LEFT JOIN `account` ON `login`.`account_num` = `account`.`account_num`
 WHERE `account`.`account_num` = ?");
 
 //activate.php - Activate In-game accounts

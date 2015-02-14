@@ -45,34 +45,30 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 				if ($CONFIG_md5_pass)
 					$POST_login_pass = md5($POST_login_pass);
 
-				$stmt = prepare_query(CHANGE_EMAIL, 0, 'ssi', trim($POST_email), $POST_login_pass, $POST_account_id);
-				$result = execute_query($stmt, 'changemail.php');
+				$stmt = prepare_query(ACC_CHANGE_EMAIL, 0, 'ssi', trim($POST_email), $POST_login_pass, $_SESSION[$CONFIG_name.'account_id']);
+				$result = execute_query($stmt, 'acc_changemail.php');
                 
                 if ($result) {
-                    redir("changemail.php?userid=$POST_userid&account_id=$POST_account_id", "main_div", $lang['EMAIL_CHANGED']);
+                    redir("acc_changemail.php", "main_div", $lang['EMAIL_CHANGED']);
                 } else {
                     alert($lang['INCORRECT_PASSWORD']);
                 }
 			}
 		}
 
-		$stmt = prepare_query(CHECK_EMAIL, 0, 'i', $GET_account_id);
-		$result = execute_query($stmt, 'changemail.php');
+		$stmt = prepare_query(ACC_CHECK_EMAIL, 0, 'i', $_SESSION[$CONFIG_name.'account_id']);
+		$result = execute_query($stmt, 'acc_changemail.php');
 
-		$line = $result->fetch_row();
-		$cur_email[0] = htmlformat($line[0]);
+		$cemail = $result->fetch_row();
+		$cemail[0] = htmlformat($cemail[0]);
 
 		caption($lang['CHANGEMAIL_CHANGEMAIL']);
 			echo '
-		<form id="changemail" onsubmit="return POST_ajax(\'changemail.php\',\'main_div\',\'changemail\')">
+		<form id="changemail" onsubmit="return POST_ajax(\'acc_changemail.php\',\'main_div\',\'changemail\')">
 		<table class="maintable">
-            <tr>
-                <td align=right>'.$lang['USERNAME'].':</td>
-				<td><input type="text" name="userid" value="' . $GET_userid .'" disabled></td>
-            </tr>
 			<tr>
 				<td align="right">'.$lang['CHANGEMAIL_CURRENT_MAIL'].':</td>
-				<td align="left">'.$cur_email[0].'</td>
+				<td align="left">'.$cemail[0].'</td>
 			</tr>
 			<tr>
 				<td align="right">'.$lang['CHANGEMAIL_NEW_MAIL'].':</td>
@@ -83,7 +79,7 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 			<tr>
 				<td align=right>'.$lang['PASSWORD'].':</td>
 				<td align="left">
-					<input type="password" name="login_pass" maxlength="32" size="32" onKeyPress="return force(this.name,this.form.id,event);">
+					<input type="password" name="login_pass" maxlength="32" size="23" onKeyPress="return force(this.name,this.form.id,event);">
 				</td>
 			</tr>
 			<tr>
@@ -94,7 +90,6 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 			</tr>
 		</table>
 		<input type="hidden" name="opt" value="1">
-        <input type="hidden" name="account_id" value="' . $GET_account_id . '">
 		</form>';
 
 		fim();

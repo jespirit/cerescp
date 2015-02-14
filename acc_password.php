@@ -56,18 +56,17 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 					$POST_newpass = md5($POST_newpass);
 				}
 
-                // userid is passed via viewaccount.php
-				$stmt = prepare_query(CHECK_PASSWORD, 0, 'si', trim($POST_login_pass), $POST_account_id);
-				$result = execute_query($stmt, 'password.php');
+				$stmt = prepare_query(ACC_CHECK_PASSWORD, 0, 'si', trim($POST_login_pass), $_SESSION[$CONFIG_name.'account_id']);
+				$result = execute_query($stmt, 'acc_password.php');
 
 				if (!$result->fetch_row())
 					alert($lang['INCORRECT_PASSWORD']);
 
-				$stmt = prepare_query(CHANGE_PASSWORD, 0, 'si', trim($POST_newpass), $POST_account_id);
-				$result = execute_query($stmt, 'password.php');
+				$stmt = prepare_query(ACC_CHANGE_PASSWORD, 0, 'si', trim($POST_newpass), $_SESSION[$CONFIG_name.'account_id']);
+				$result = execute_query($stmt, 'acc_password.php');
 
                 if ($result) {
-                    redir("password.php?userid=$POST_userid&account_id=$POST_account_id", "main_div", $lang['PASSWORD_CHANGED']);
+                    redir("acc_password.php", "main_div", $lang['PASSWORD_CHANGED']);
                 } else {
                     alert($lang['UNKNOWN_ERROR']);
                 }
@@ -76,12 +75,8 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 
 	caption($lang['CHANGE_PASSWORD']);
 		echo '
-		<form id="password" onsubmit="return POST_ajax(\'password.php\',\'main_div\',\'password\')">
+		<form id="password" onsubmit="return POST_ajax(\'acc_password.php\',\'main_div\',\'password\')">
 		<table class="maintable">
-            <tr>
-                <td align=right>'.$lang['USERNAME'].':</td>
-				<td><input type="text" name="userid" value="' . $GET_userid .'" disabled></td>
-            </tr>
 			<tr>
 				<td align=right>'.$lang['PASSWORD'].':</td>
 				<td><input type="password" name="login_pass" maxlength="32" size="23" onKeyPress="return force(this.name,this.form.id,event);"></td>
@@ -92,7 +87,7 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 			</tr>
 			<tr>
 				<td align=right>'.$lang['REPEAT_PASSWORD'].':</td>
-				<td><input type="password" name="confirm" maxlength=32" size="23" onKeyPress="return force(this.name,this.form.id,event);"></td>
+				<td><input type="password" name="confirm" maxlength="32" size="23" onKeyPress="return force(this.name,this.form.id,event);"></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -100,7 +95,6 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 			</tr>
 		</table>
 		<input type="hidden" name="opt" value="1">
-        <input type="hidden" name="account_id" value="' . $GET_account_id . '">
 		</form>
 		';
 		fim();
