@@ -36,7 +36,7 @@ if (isset($GET_frm_name) && isset($GET_id)) {
                 $remove_appl = true;
                 
 				// Send confirmation email
-				confirm_account($line[3], $line[6]);
+				confirm_account($line['account_name'], $line['email']);
 				echo '<script type="text/javascript">alert("Application Accepted");</script>';
 			}
 			else
@@ -46,7 +46,7 @@ if (isset($GET_frm_name) && isset($GET_id)) {
             $remove_appl = true;
             
 			// Send denied email
-			deny_account($line[3], $line[6]);
+			deny_account($line['account_name'], $line['email']);
 			echo '<script type="text/javascript">alert("Application Declined");</script>';
 		}
 		else
