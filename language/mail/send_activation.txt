@@ -4,8 +4,7 @@ You have added the following game account:
 
 #account_info#
 
-Before you can begin using it you must activate the account by clicking on the
-link below:
+Before you can begin using it you must activate the account by clicking on the link below:
 
 #activation_link#
 

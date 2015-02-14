@@ -10,5 +10,5 @@ Your account information is as follows:
 
 Thank you for playing in and supporting the server.
 In case of doubt or problem send a mail to #support_mail# for support.
-If you didn't request account information, ignore this message.
+If you didn't request to create an account, ignore this message.
 DO NOT REPLY TO THIS MESSAGE
