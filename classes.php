@@ -115,15 +115,23 @@ class QueryClass {
 	
 	function Query($stmt) {
 		$ret = $stmt->execute();
-		if ($ret) {
+		if ($ret)
+        {//SQL statement successful
 			$result = $stmt->get_result();
 			if ($result)
+            {//return result set
 				return $result;
-			else
-				return TRUE;  // Non-SELECT statement
+			}
+            else
+            {//must be a non-SELECT statement
+                if ($stmt->affected_rows > 0)
+                    return true;  // success
+                else
+                    return false;
+            }
 		}
 
-		return FALSE;  // FALSE because of failure
+		return false;  // false because of failure
 	}
 	
 	/**

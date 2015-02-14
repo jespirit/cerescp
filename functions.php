@@ -357,10 +357,7 @@ function execute_query($stmt, $source = 'none.php', $save_report = 1) {
 	}
 
 	// TODO: Return TRUE on non-SELECT queries.
-	if ($result = $mysql->Query($stmt)) {
-		return $result;
-	}
-	return FALSE;
+	return $mysql->Query($stmt);
 }
 
 function add_query_entry($source, $log_query) {
