@@ -100,6 +100,14 @@ DEFINE('ACTIVATE_REMOVE_CHAR', "DELETE FROM `register` WHERE `id` = ?");
 //recover.php - Recover Password
 DEFINE('RECOVER_PASSWORD', "SELECT `userid`, `user_pass`, `email` FROM `login` WHERE `email` = ? AND state != '5'");
 
+//acc_password.php - Change Account Password
+DEFINE('ACC_CHANGE_PASSWORD', "UPDATE `account` SET `account_pass` = ? WHERE `account_num` = ?");
+DEFINE('ACC_CHECK_PASSWORD', "SELECT * FROM `account` WHERE `account_pass` = ? AND `account_num` = ?");
+
+//acc_changemail.php - Change Account Email
+DEFINE('ACC_CHANGE_EMAIL', "UPDATE `account` SET `email` = ? WHERE `account_pass` = ? AND `account_num` = ?");
+DEFINE('ACC_CHECK_EMAIL', "SELECT `email` FROM `account` WHERE `account_num` = ?");
+
 //money.php - Money Transfer
 DEFINE('GET_ZENY', "SELECT `char_id`, `char_num`, `name`, `zeny`, `base_level` FROM `char` 
 WHERE `account_id` = ? ORDER BY `char_num`");
