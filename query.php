@@ -88,8 +88,11 @@ DEFINE('ADD_CHECK_USERID2', "SELECT `userid` FROM `register` WHERE `userid` = ?"
 
 //viewaccount.php - View Accounts
 DEFINE('VIEW_GET_ACCOUNT_ALL', "SELECT `login`.`userid`, `login`.`account_id`, `login`.`lastlogin`, `login`.`last_ip`, `login`.`sex`
-FROM `login` LEFT JOIN `account` ON `login`.`account_num` = `account`.`account_num`
-WHERE `account`.`account_num` = ?");
+FROM `login` WHERE `login`.`account_num` = ?");
+DEFINE('VIEW_GET_ACCOUNT_PENDING_ALL', "SELECT `userid`, `sex`
+FROM `register` WHERE `register`.`account_num` = ?");
+DEFINE('VIEW_GET_ACCOUNT_PENDING', "SELECT `time`, `account_num`, `userid`, `user_pass`
+FROM `register` WHERE `register`.`account_num` = ? AND `register`.userid = ?");
 
 //activate.php - Activate In-game accounts
 DEFINE('ACTIVATE_CHECK_USER', "SELECT `id`, `time`, `account_num`, `userid`, `user_pass`, `sex`, `email`, `level`, `birthdate` FROM `register`

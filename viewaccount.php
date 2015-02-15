@@ -15,6 +15,7 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 
         echo '
         <table class="maintable">
+            <caption>Game Accounts</caption>
             <tr>
                 <th align="left">Account Name</th>
                 <th align="left">Last Login</th>
@@ -45,6 +46,35 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
                       // onClick="return LINK_ajax(\'changemail.php?userid=' . $line[0] . '&account_id='. $line[1] . 
                       // '\', \'main_div\');">Change Email</span>
             // </td>
+        }
+        echo '</table>';
+        
+        // read all pending ingame accounts associated with the forum account
+        $stmt = prepare_query(VIEW_GET_ACCOUNT_PENDING_ALL, 0, 'i', $_SESSION[$CONFIG_name.'account_id']);
+        $result = execute_query($stmt, 'viewaccount.php');
+
+        echo '
+        <table class="maintable">
+            <caption>Pending Game Accounts</caption>
+            <tr>
+                <th align="left">Account Name</th>
+                <th align="left">Gender</th>
+                <th>&nbsp</th>
+            </tr>
+            ';
+
+        while ($line = $result->fetch_row()) {
+
+            echo '
+            <tr>
+                <td align="left">'.$line[0].'</td>
+                <td align="left">'.($line[1]=='M'?'Male':'Female').'</td>
+                <td>
+                    <input type="button" id="resend" name="resend" value="Resend Confirmation Email"
+                           onClick="return LINK_ajax(\'resend_activation.php?userid='.$line[0].'\', \'main_div\');">
+                </td>
+            </tr>
+            ';
         }
         echo '</table>';
 
