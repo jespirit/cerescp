@@ -76,7 +76,7 @@ class QueryClass {
 	var $cp_link;
 	var $log_link;
 	var $stmt;
-	var $q, $params;
+	var $query, $params, $myrefs;
 
 	function QueryClass($rag_addr, $rag_username, $rag_password, $rag_db, $cp_addr, $cp_username, $cp_password, $cp_db, $log_db) {
 		global $lang;
@@ -99,7 +99,7 @@ class QueryClass {
 				break;
 		}
 		
-		$this->q = $query;  // save query
+		$this->query = $query;  // save query
 		
 		if ($this->stmt) {
 			if (func_num_args() >= 4) {  // are there parameters to bind?
@@ -112,7 +112,40 @@ class QueryClass {
 		
 		return $this->stmt;
 	}
-	
+    
+    /**
+     * A slightly modified versio of ::Prepare that allows binding to variables
+     * to work as expected.
+     *
+     * @param array $refs contains a list of references for use with mysql_stmt::bind_param
+     */
+    function Prepare_Ex($query, $database, $types, $refs) {
+		switch ($database) {
+			case 0:
+				$this->stmt = $this->rag_link->prepare($query);
+				break;
+			case 1:
+				$this->stmt = $this->cp_link->prepare($query);
+				break;
+			case 2:
+				$this->stmt = $this->log_link->prepare($query);
+				break;
+		}
+		
+		$this->query = $query;  // save query
+		
+		if ($this->stmt) {
+            $this->myrefs = $refs;  // save copy of reference
+            array_unshift($refs, $types);
+            // mysql_stmt->bind_param($types, $refs)
+			call_user_func_array(array($this->stmt, "bind_param"), $refs);
+		}
+		else
+			trigger_error('Failed to prepare statement for ' . $query);
+		
+		return $this->stmt;
+	}
+    
 	function Query($stmt) {
 		$ret = $stmt->execute();
 		if ($ret)
@@ -144,7 +177,7 @@ class QueryClass {
 	 * @return string The interpolated query
 	 */
 	function Interpolate() {
-		if (!isset($this->q) || !isset($this->params))
+		if (!isset($this->query) || !isset($this->params))
 			return FALSE;
 		$keys = array();
 
@@ -158,7 +191,7 @@ class QueryClass {
 		}
 
 		$limit = 1;
-		$query = preg_replace($keys, $this->params, $this->q, $limit, $count);
+		$query = preg_replace($keys, $this->params, $this->query, $limit, $count);
 
 		#trigger_error('replaced '.$count.' keys');
 

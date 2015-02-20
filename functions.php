@@ -346,6 +346,17 @@ function prepare_query($query, $database = 0, $types = '' /*, ...*/) {
 	return $stmt;
 }
 
+function prepare_query_ex($query, $db = 0, $types = '', $refs) {
+	global $mysql;
+    
+    $arr = array();
+    // new array [$query, $db, $types, [&ref1, &ref2, ...]]
+    array_unshift($arr, $query, $db, $types, $refs);
+    // calls $mysql->Prepare_Ex(...[])
+	$stmt = call_user_func_array(array($mysql, "Prepare_Ex"), $arr);
+	return $stmt;
+}
+
 
 function execute_query($stmt, $source = 'none.php', $save_report = 1) {
 	global $mysql;
@@ -356,7 +367,6 @@ function execute_query($stmt, $source = 'none.php', $save_report = 1) {
 		}
 	}
 
-	// TODO: Return TRUE on non-SELECT queries.
 	return $mysql->Query($stmt);
 }
 
