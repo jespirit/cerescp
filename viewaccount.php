@@ -40,12 +40,6 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
                 </td>
             </tr>
             ';
-            // The email is already part of the account's information
-            // <td>
-                // <span title="Change Email" class="link"
-                      // onClick="return LINK_ajax(\'changemail.php?userid=' . $line[0] . '&account_id='. $line[1] . 
-                      // '\', \'main_div\');">Change Email</span>
-            // </td>
         }
         echo '</table>';
         
@@ -78,7 +72,16 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
         }
         echo '</table>';
 
-        echo '<span title="Add account" class="link" onClick="return LINK_ajax(\'addaccount.php\',\'main_div\');">Add Account</span>';
+
+        echo '
+        <table>
+            <tr>
+                <td>
+                    <span title="Add account" class="link"
+                          onClick="return LINK_ajax(\'addaccount.php\',\'main_div\');">Add Account</span>
+                </td>
+            </tr>
+        </table>';
 
         fim();
     }
