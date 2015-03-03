@@ -47,11 +47,11 @@ $_SESSION[$CONFIG_name.'jobs'] = readjobs();
 		</title>
 		<link rel="stylesheet" type="text/css" href="./ceres.css">
 
-		<script type="text/javascript" language="javascript" src="ceres.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>
+		<script type="text/javascript" language="javascript" src="ceres.js" ></script>
 	</head>
 
 	<body>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	
 	<!-- CeresCP Header -->
 	<div id="header"></div>
@@ -94,12 +94,14 @@ $_SESSION[$CONFIG_name.'jobs'] = readjobs();
 			</font>
 	</div>
 	<script type="text/javascript">
-			load_menu();
-			LINK_ajax('motd.php', 'main_div');
-			LINK_ajax('login.php', 'login_div');
-			login_hide(2);
-			server_status()
-			LINK_ajax('selectlang.php', 'selectlang_div');
+        $(function(){
+            load_menu();
+            LINK_ajax('motd.php', 'main_div');
+            LINK_ajax('login.php', 'login_div');
+            login_hide(2);
+            server_status()
+            LINK_ajax('selectlang.php', 'selectlang_div');
+        });
 	</script>
 	</body>
 </html>
