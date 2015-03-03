@@ -25,6 +25,9 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {  // logged in
             'A confirmation email has been sent to your email inbox with instructions
             on how to verify that the account belongs to you.');
         }
+        else {
+            alert($lang['UNKNOWN_ERROR']);
+        }
     }
     
 }

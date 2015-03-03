@@ -119,6 +119,9 @@ if (isset($POST_opt)) {
             'A confirmation email has been sent to your email inbox with instructions
             on how to verify that the account belongs to you.');
         }
+         else {
+            alert($lang['UNKNOWN_ERROR']);
+        }
 
 	}
 }
