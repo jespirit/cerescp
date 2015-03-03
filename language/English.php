@@ -85,6 +85,7 @@ $lang['THURSDAY'] = 'Thursday';
 $lang['FRIDAY'] = 'Friday';
 $lang['SATURDAY'] = 'Saturday';
 $lang['BLOCKED'] = 'You have been blocked, try again in %d min';
+$lang['UNSUPPORTED_FEATURE'] = 'Unsupported Feature';
 // Following entries still need translations
 $lang['LEVEL'] = 'Level';
 $lang['GMLEVEL'] = 'GM Level';
