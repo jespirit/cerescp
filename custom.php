@@ -106,7 +106,7 @@ function writegroup($h1, $group) {
 		for ($x=1; $x<count($line); $x++) {
 			echo '<div class="item" id="item_'.$line[$x].'"></div>';
 		}
-		echo '</ul>';
+		echo '</li></ul>';
 	}
 }
 
