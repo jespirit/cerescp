@@ -103,6 +103,24 @@ function recover_password($username, $password, $email) {
     return send_email($email, $CONFIG_name . ": Account Password Recovery", $maildef);
 }
 
+function reset_password($username, $password, $email) {
+    global $CONFIG_smtp_server, $CONFIG_smtp_port, $CONFIG_smtp_username,
+           $CONFIG_smtp_password, $CONFIG_smtp_mail, $CONFIG_name;
+
+    $message = "----------------------------\n";
+    $message.= "Username: ".$username;
+    $message.= "\nPassword: ".$password;
+    $message.= "\n----------------------------\n";
+
+    $maildef = read_maildef("reset_password");
+    $maildef = str_ireplace("#account_info#", $message, $maildef);
+    $maildef = str_ireplace("#server_name#", $CONFIG_name, $maildef);
+    $maildef = str_ireplace("#support_mail#", $CONFIG_smtp_mail, $maildef);
+    $maildef = nl2br($maildef);
+    
+    return send_email($email, $CONFIG_name . ": Password Reset", $maildef);
+}
+
 function send_email($receiver, $subject, $body) {
 	global $CONFIG_smtp_server, $CONFIG_smtp_port, $CONFIG_smtp_username,
            $CONFIG_smtp_password, $CONFIG_smtp_mail, $CONFIG_name,

@@ -38,6 +38,15 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
                           onClick="return LINK_ajax(\'password.php?userid='. $line[0] . '&account_id='. $line[1] . 
                           '\', \'main_div\');">Edit Password</span>
                 </td>
+                <td>
+                    <span title="Edit Password" class="link"
+                        onClick="
+                        if (window.confirm(\'Reset password?\')==true) {
+                            return LINK_ajax(\'resetpassword.php?userid='. $line[0] . '&account_id='. $line[1] . 
+                            '\', \'main_div\');
+                        }"
+                        >Reset Password</span>
+                </td>
             </tr>
             ';
         }

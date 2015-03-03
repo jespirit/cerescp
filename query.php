@@ -104,6 +104,9 @@ DEFINE('ACTIVATE_REMOVE_CHAR', "DELETE FROM `register` WHERE `id` = ?");
 //recover.php - Recover Password
 DEFINE('RECOVER_PASSWORD', "SELECT `account_name`, `account_pass`, `email` FROM `account` WHERE `email` = ? AND state != '5'");
 
+//resetpassword.php - Reset Password
+DEFINE('RESET_PASSWORD', "UPDATE `login` SET `user_pass` = ? WHERE `userid` = ?");
+
 //acc_password.php - Change Account Password
 DEFINE('ACC_CHANGE_PASSWORD', "UPDATE `account` SET `account_pass` = ? WHERE `account_num` = ?");
 DEFINE('ACC_CHECK_PASSWORD', "SELECT * FROM `account` WHERE `account_pass` = ? AND `account_num` = ?");
