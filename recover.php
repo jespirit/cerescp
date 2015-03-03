@@ -42,19 +42,15 @@ if (!empty($GET_opt)) {
 		$stmt = prepare_query(RECOVER_PASSWORD, 0, 's', $GET_email);
 		$result = execute_query($stmt);
 
-		if (!$result->num_rows)
-			alert($lang['UNKNOWN_MAIL']);
+		if ($result) {
+            $line = $result->fetch_row();
+            $answer = recover_password($line[0], $line[1], $line[2]);
 
-		for ($i = 0; $row = $result->fetch_row(); $i++) {
-			$accounts[$i][0] = $row[0];
-			$accounts[$i][1] = $row[1];
-			$accounts[$i][2] = $row[2];
-		}
-
-		$answer=email($accounts);
-
-		erro_de_login(1);
-		redir('motd.php', 'main_div', $answer);
+            erro_de_login(1);  // rebuild session
+            redir('motd.php', 'main_div', $answer);
+        }
+        else
+            alert($lang['UNKNOWN_MAIL']);
 	}
 }
 

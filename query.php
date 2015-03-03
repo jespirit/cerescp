@@ -102,7 +102,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 DEFINE('ACTIVATE_REMOVE_CHAR', "DELETE FROM `register` WHERE `id` = ?");
 
 //recover.php - Recover Password
-DEFINE('RECOVER_PASSWORD', "SELECT `userid`, `user_pass`, `email` FROM `login` WHERE `email` = ? AND state != '5'");
+DEFINE('RECOVER_PASSWORD', "SELECT `account_name`, `account_pass`, `email` FROM `account` WHERE `email` = ? AND state != '5'");
 
 //acc_password.php - Change Account Password
 DEFINE('ACC_CHANGE_PASSWORD', "UPDATE `account` SET `account_pass` = ? WHERE `account_num` = ?");

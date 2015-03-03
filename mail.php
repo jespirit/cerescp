@@ -85,24 +85,22 @@ function send_activation($username, $email, $link) {
 
 }
 
-function recover_password($username, $email) {
+function recover_password($username, $password, $email) {
     global $CONFIG_smtp_server, $CONFIG_smtp_port, $CONFIG_smtp_username,
            $CONFIG_smtp_password, $CONFIG_smtp_mail, $CONFIG_name;
 
-    $mensagem = "----------------------------\n";
-    for ($i = 0; isset($contas[$i][0]); $i++) {
-        $mensagem.= "Username: ".$contas[$i][0];
-        $mensagem.= "\nPassword: ".$contas[$i][1];
-        $mensagem.= "\n----------------------------\n";
-    }
+    $message = "----------------------------\n";
+    $message.= "Account Name: ".$username;
+    $message.= "\nPassword: ".$password;
+    $message.= "\n----------------------------\n";
 
     $maildef = read_maildef("recover_password");
-    $maildef = str_ireplace("#account_info#", $mensagem, $maildef);
+    $maildef = str_ireplace("#account_info#", $message, $maildef);
     $maildef = str_ireplace("#server_name#", $CONFIG_name, $maildef);
     $maildef = str_ireplace("#support_mail#", $CONFIG_smtp_mail, $maildef);
     $maildef = nl2br($maildef);
     
-    send_email($email, $CONFIG_name . ": Account Password Recovery", $maildef);
+    return send_email($email, $CONFIG_name . ": Account Password Recovery", $maildef);
 }
 
 function send_email($receiver, $subject, $body) {
