@@ -41,12 +41,8 @@ if ($CONFIG_max_accounts) {
 
 if (isset($POST_opt)) {
 	if ($POST_opt == 1 && isset($POST_frm_name) && !strcmp($POST_frm_name, 'account')) {
-		$session = $_SESSION[$CONFIG_name.'sessioncode'];
-		if ($CONFIG_auth_image && function_exists('gd_info')
-			&& strtoupper($POST_code) != substr(strtoupper(md5('Mytext'.$session['account'])), 0,6))
-			alert($lang['INCORRECT_CODE']);
 
-		if (inject($POST_username) || inject($POST_password) || inject($POST_email))
+		if (inject($POST_username) || inject($POST_password))
 			alert($lang['INCORRECT_CHARACTER']);
 
 		if (strlen(trim($POST_username)) < 4 || strlen(trim($POST_username)) > 23)
@@ -66,27 +62,26 @@ if (isset($POST_opt)) {
 
 		if ($CONFIG_safe_pass && thepass(trim($POST_password)))
 			alert($lang['PASSWORD_REJECTED']);
-
-		if (strlen($POST_email) < 7 || !strstr($POST_email, '@') || !strstr($POST_email, '.'))
-			alert($lang['EMAIL_NEEDED']);
 			
 		if (strlen($POST_birthdate) < 8 || notnumber($POST_birthdate))
 			alert($lang['INVALID_BIRTHDAY']);
 
-		// Check if the Username exists in either the `login` or `register` table.
-		
-		$stmt = prepare_query(CHECK_USERID, 0, 's', trim($POST_username));
-		$result = execute_query($stmt, 'account.php');
+		// Check if the Username exists in the `login` table
+		$stmt = prepare_query(ADD_CHECK_USERID, 0, 's', trim($POST_username));
+		$result = execute_query($stmt, 'addaccount.php');
 		
 		$checkuser = 0;
 		$checkuser += $result->num_rows;
 		
-		$stmt = prepare_query(CHECK_USERID2, 0, 's', trim($POST_username));
-		$result = execute_query($stmt, 'account.php');
-		
-		$checkuser += $result->num_rows;
+        if ($checkuser == 0) {
+            // Check if the Username exists in the `register` table
+            $stmt = prepare_query(ADD_CHECK_USERID2, 0, 's', trim($POST_username));
+            $result = execute_query($stmt, 'addaccount.php');
+            
+            $checkuser += $result->num_rows;
+        }
 
-		if ($checkuser)
+		if ($checkuser > 0)
 			alert($lang['USERNAME_IN_USE']);
 
 		if ($POST_sex) 
@@ -100,26 +95,25 @@ if (isset($POST_opt)) {
 		$level = 1;  // Level 1 by default
 
 		// date fields can bind to 's'
-		$stmt = prepare_query(NEW_APPLICATION, 0, 'ssssisss', trim($POST_username), trim($POST_password),
-			$POST_sex, $POST_email, $level, $POST_birthdate, $_SERVER['REMOTE_ADDR'], $POST_aboutme);
-		$result = execute_query($stmt, 'account.php');
+		$stmt = prepare_query(NEW_ACCOUNT, 0, 'issssiss',
+            $_SESSION[$CONFIG_name.'account_id'],
+            trim($POST_username), trim($POST_password),
+			$POST_sex, $_SESSION[$CONFIG_name.'email'], $level, $POST_birthdate, $_SERVER['REMOTE_ADDR']);
+		$result = execute_query($stmt, 'addaccount.php');
+        
+        // Send confirmation link to account's email address
+        //confirm_account($line[3], $line[6]);  // use $_SESSION[$CONFIG_name.'email'],
 
 		redir('motd.php', 'main_div',
-		'Thanks for applying to TestRO.<br/><br/>Your application is being considered and
-		you will receive an email whether your application has been accepted.');
+		'A confirmation email has been sent to your email inbox with instructions
+        on how to verify the account belongs to you before you can begin using it.');
 
 	}
 }
 
-if (isset($_SESSION[$CONFIG_name.'sessioncode']))
-	$session = $_SESSION[$CONFIG_name.'sessioncode'];
-$session['account'] = rand(12345, 99999);
-$_SESSION[$CONFIG_name.'sessioncode'] = $session;
-$var = rand(10, 9999999);
-
 	caption($lang['NEW_ACCOUNT']);
 	echo '
-	<form id="account" onSubmit="return POST_ajax(\'account.php\',\'main_div\',\'account\');">
+	<form id="account" onSubmit="return POST_ajax(\'addaccount.php\',\'main_div\',\'account\');">
 	<table class="maintable">
 		<tr>
 			<td align="right">'.$lang['USERNAME'].':</td>
@@ -143,10 +137,6 @@ $var = rand(10, 9999999);
 		</td>
 	</tr>
 	<tr>
-		<td align="right">'.$lang['MAIL'].':</td>
-		<td align="left"><input type="text" name="email" maxlength="40" size="40" onKeyPress="return force(this.name,this.form.id,event);"></td>
-	</tr>
-	<tr>
 		<td align="right">'.$lang['BIRTHDAY'].':</td>
 		<td align="left">
 			<input type="text" name="birthdate" maxlength="8" size="8" onKeyPress="return force(this.name,this.form.id,event);">
@@ -156,7 +146,7 @@ $var = rand(10, 9999999);
 	echo '
 	<tr>
 		<td>&nbsp;</td>
-		<td><input type="submit" id="register" name="register" value="'.$lang['REGISTER'].'"></td>
+		<td><input type="submit" id="add" name="add" value="'.$lang['ADD_ACCOUNT'].'"></td>
 	</tr>
 	</table>
 	<input type="hidden" name="opt" value="1">

@@ -67,6 +67,7 @@ $lang['DECEMBER'] = 'December';
 $lang['MAIL'] = 'E-Mail';
 $lang['CREATE'] = 'Create';
 $lang['REGISTER'] = 'Register';
+$lang['ADD_ACCOUNT'] = 'Add Account';
 $lang['NEED_TO_LOGIN'] = 'You need to be logged on to use this page.';
 $lang['NEED_TO_LOGIN_F'] = 'You must be logged on to use this function.';
 $lang['DB_ERROR'] = 'Sorry! DB error found, please try again later.';

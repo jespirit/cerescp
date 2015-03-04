@@ -74,11 +74,15 @@ DEFINE('CHECK_USERID', "SELECT `account_name` FROM `account` WHERE `account_name
 DEFINE('CHECK_USERID2', "SELECT `account_name` FROM `accregister` WHERE `account_name` = ?");
 DEFINE('CHECK_ACCOUNTID', "SELECT `account_id` FROM `login` WHERE `userid` = ? AND `user_pass` = ?");
 DEFINE('MAX_ACCOUNTS', "SELECT COUNT(`account_id`) FROM `login` WHERE `sex` != 'S'");
-DEFINE('NEW_APPLICATION', "INSERT INTO `register` (`time`, `userid`, `user_pass`, `sex`, `email`, `level`, `birthdate`, `ip`, `data`) 
+DEFINE('NEW_ACCOUNT', "INSERT INTO `register` (`time`, `account_num`, `userid`, `user_pass`, `sex`, `email`, `level`, `birthdate`, `ip`)
 VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)");
 DEFINE('NEW_APPLICATION', "INSERT INTO `accregister` (`time`, `account_name`, `account_pass`, `email`, `level`, `birthdate`, `ip`)
 VALUES (NOW(), ?, ?, ?, ?, ?, ?)");
 DEFINE('TOTAL_APPLICATIONS', "SELECT COUNT(1) FROM `accregister`");
+
+//addaccount.php - Add in-game account
+DEFINE('ADD_CHECK_USERID', "SELECT `userid` FROM `login` WHERE `userid` = ?");
+DEFINE('ADD_CHECK_USERID2', "SELECT `userid` FROM `register` WHERE `userid` = ?");
 
 //activate.php - Activate In-game accounts
 DEFINE('ACTIVATE_CHECK_USER', "SELECT `id`, `time`, `account_num`, `userid`, `user_pass`, `sex`, `email`, `level`, `birthdate` FROM `register`
