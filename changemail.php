@@ -39,7 +39,7 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 				if (inject($POST_email) || inject($POST_login_pass)) 
 					alert($lang['INCORRECT_CHARACTER']);
 
-				if (strlen($POST_login_pass) < 4 || strlen($POST_login_pass) > 23)
+				if (strlen($POST_login_pass) < 4 || strlen($POST_login_pass) > 32)
 					alert($lang['PASSWORD_LENGTH_OLD']);
 
 				if ($CONFIG_md5_pass)
@@ -73,7 +73,7 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 			<tr>
 				<td align=right>'.$lang['PASSWORD'].':</td>
 				<td align="left">
-					<input type="password" name="login_pass" maxlength="23" size="23" onKeyPress="return force(this.name,this.form.id,event);">
+					<input type="password" name="login_pass" maxlength="32" size="32" onKeyPress="return force(this.name,this.form.id,event);">
 				</td>
 			</tr>
 			<tr>

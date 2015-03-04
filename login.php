@@ -100,7 +100,7 @@ if (!empty($POST_opt)) {
 			alert($lang['USERNAME_LENGTH']);
 		}
 
-		if (strlen($POST_login_pass) > 23 || strlen($POST_login_pass) < 4) {
+		if (strlen($POST_login_pass) > 32 || strlen($POST_login_pass) < 4) {
 			erro_de_login();
 			bf_error(trim($POST_username));
 			alert($lang['PASSWORD_LENGTH_OLD']);
@@ -192,7 +192,7 @@ echo '
 	<tr>
 		<td align=left>
 			'.$lang['PASSWORD'].':<br>
-			<input type="password" name="login_pass" maxlength="23" size="23" onKeyPress="return force(this.name,this.form.id,event);">
+			<input type="password" name="login_pass" maxlength="32" size="23" onKeyPress="return force(this.name,this.form.id,event);">
 		</td>
 	</tr>';
 

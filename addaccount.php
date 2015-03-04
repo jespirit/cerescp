@@ -52,16 +52,16 @@ if (isset($POST_opt)) {
 		if (strlen(trim($POST_username)) < 4 || strlen(trim($POST_username)) > 23)
 			alert($lang['USERNAME_LENGTH']);
 
-		if ($CONFIG_safe_pass && (strlen(trim($POST_password)) < 6 || strlen(trim($POST_password)) > 23))
+		if ($CONFIG_safe_pass && (strlen(trim($POST_password)) < 6 || strlen(trim($POST_password)) > 32))
 			alert($lang['PASSWORD_LENGTH']);
 
-		if (strlen(trim($POST_password)) < 4 || strlen(trim($POST_password)) > 23)
+		if (strlen(trim($POST_password)) < 4 || strlen(trim($POST_password)) > 32)
 			alert($lang['PASSWORD_LENGTH_OLD']);
 
-		if (!strcmp($POST_password, $POST_username)) // passwords e username iguais
+		if (!strcmp($POST_password, $POST_username)) //account name and password cannot be the same
 			alert($lang['PASSWORD_REJECTED']);
 
-		if (strcmp($POST_password, $POST_confirm))
+		if (strcmp($POST_password, $POST_confirm))  //check if the passwords match
 			alert($lang['PASSWORD_NOT_MATCH']);
 
 		if ($CONFIG_safe_pass && thepass(trim($POST_password)))
@@ -127,7 +127,7 @@ $var = rand(10, 9999999);
 	</tr>
 	<tr>
 		<td align="right">'.$lang['PASSWORD'].':</td>
-		<td align="left"><input type=password name="password" maxlength="23" size="23" onKeyPress="return force(this.name,this.form.id,event);"></td>
+		<td align="left"><input type=password name="password" maxlength="32" size="23" onKeyPress="return force(this.name,this.form.id,event);"></td>
 	</tr>
 	<tr>
 		<td align="right">'.$lang['CONFIRM'].':</td>
