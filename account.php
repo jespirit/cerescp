@@ -81,18 +81,20 @@ if (isset($POST_opt)) {
 			redir('motd.php', 'main_div', 'You did not wish to register an account');
 		}
 
-		// Check if the Username exists in either the `login` or `register` table.
-		
+		// Check if the Username exists in either the `account` table.
 		$stmt = prepare_query(CHECK_USERID, 0, 's', trim($POST_username));
 		$result = execute_query($stmt, 'account.php');
 		
 		$checkuser = 0;
 		$checkuser += $result->num_rows;
 		
-		$stmt = prepare_query(CHECK_USERID2, 0, 's', trim($POST_username));
-		$result = execute_query($stmt, 'account.php');
+        if ($checkuser == 0) {
+            // Check if the Username exists in either the `accregister` table.
+            $stmt = prepare_query(CHECK_USERID2, 0, 's', trim($POST_username));
+            $result = execute_query($stmt, 'account.php');
 		
-		$checkuser += $result->num_rows;
+            $checkuser += $result->num_rows;
+        }
 
 		if ($checkuser)
 			alert($lang['USERNAME_IN_USE']);
@@ -108,8 +110,9 @@ if (isset($POST_opt)) {
 		$level = 1;  // Level 1 by default
 
 		// date fields can bind to 's'
-		$stmt = prepare_query(NEW_APPLICATION, 0, 'ssssisss', trim($POST_username), trim($POST_password),
-			$POST_sex, $POST_email, $level, $POST_birthdate, $_SERVER['REMOTE_ADDR'], $POST_aboutme);
+		$stmt = prepare_query(NEW_APPLICATION, 0, 'ssssisss',
+            trim($POST_username), trim($POST_password),
+			$POST_email, $level, $POST_birthdate, $_SERVER['REMOTE_ADDR']);
 		$result = execute_query($stmt, 'account.php');
 
 		redir('motd.php', 'main_div',
@@ -140,15 +143,6 @@ $var = rand(10, 9999999);
 	<tr>
 		<td align="right">'.$lang['CONFIRM'].':</td>
 		<td align="left"><input type=password name="confirm" maxlength="23" size="23" onKeyPress="return force(this.name,this.form.id,event);"></td>
-	</tr>
-	<tr>
-		<td align="right">'.$lang['SEX'].':</td>
-		<td align="left">
-			<select name="sex" onKeyPress="return force(this.name,this.form.id,event);">
-				<option value="0">'.$lang['SEX_MALE'].'
-				<option value="1">'.$lang['SEX_FEMALE'].'
-			</select>
-		</td>
 	</tr>
 	<tr>
 		<td align="right">'.$lang['MAIL'].':</td>
