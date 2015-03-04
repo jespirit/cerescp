@@ -31,38 +31,38 @@ include_once 'bruteforce.php';
 
 if (!isset($_SESSION[$CONFIG_name.'account_id']) && isset($_COOKIE['login_pass']) && isset($_COOKIE['userid'])) {
 
-		$bf_check = bf_check_user(trim($_COOKIE['userid']));
-		if ($bf_check > 0 || inject(trim($_COOKIE['userid']))) { // Based on Rasqual notes I fix it [BeoWulf]
-			setcookie('login_pass', '', time() - 3600);
-			setcookie('userid', '', time() - 3600);
-		} else {
-			$stmt = prepare_query(LOGIN_USER, 0, 'i', trim($_COOKIE['userid']));
-			$result = execute_query($stmt, 'index.php');
+    $bf_check = bf_check_user(trim($_COOKIE['userid']));
+    if ($bf_check > 0 || inject(trim($_COOKIE['userid']))) { // Based on Rasqual notes I fix it [BeoWulf]
+        setcookie('login_pass', '', time() - 3600);
+        setcookie('userid', '', time() - 3600);
+    } else {
+        $stmt = prepare_query(LOGIN_USER, 0, 'i', trim($_COOKIE['userid']));
+        $result = execute_query($stmt, 'index.php');
 
-			if($result->num_rows == 1 && $line = $result->fetch_row()) {
-				if (md5($CONFIG_name.$line[3]) == $_COOKIE['login_pass']) {
-					$_SESSION[$CONFIG_name.'account_id'] = $line[0];
-					$_SESSION[$CONFIG_name.'userid'] = $line[1];
-					$_SESSION[$CONFIG_name.'level'] = $line[2];
-					setcookie('login_pass', $_COOKIE['login_pass'], time() + 3600 * 24 * 30);
-					setcookie('userid', $_COOKIE['userid'], time() + 3600 * 24 * 30);
-				} else {
-					setcookie('login_pass', '', time() - 3600);
-					setcookie('userid', '', time() - 3600);
+        if($result->num_rows == 1 && $line = $result->fetch_row()) {
+            if (md5($CONFIG_name.$line[3]) == $_COOKIE['login_pass']) {
+                $_SESSION[$CONFIG_name.'account_id'] = $line[0];
+                $_SESSION[$CONFIG_name.'userid'] = $line[1];
+                $_SESSION[$CONFIG_name.'level'] = $line[2];
+                setcookie('login_pass', $_COOKIE['login_pass'], time() + 3600 * 24 * 30);
+                setcookie('userid', $_COOKIE['userid'], time() + 3600 * 24 * 30);
+            } else {
+                setcookie('login_pass', '', time() - 3600);
+                setcookie('userid', '', time() - 3600);
 
-					bf_error(trim($_COOKIE['userid']));
-					echo '<script type="text/javascript">LINK_ajax(\'login.php\',\'login_div\');</script>';
-					alert($lang['COOKIE_REJECTED']);
-				}
-			} else {
-				setcookie('login_pass', '', time() - 3600);
-				setcookie('userid', '', time() - 3600);
-	
-				bf_error(trim($_COOKIE['userid']));
-				echo '<script type="text/javascript">LINK_ajax(\'login.php\',\'login_div\');</script>';
-				alert($lang['COOKIE_REJECTED']);
-			}
-		}
+                bf_error(trim($_COOKIE['userid']));
+                echo '<script type="text/javascript">LINK_ajax(\'login.php\',\'login_div\');</script>';
+                alert($lang['COOKIE_REJECTED']);
+            }
+        } else {
+            setcookie('login_pass', '', time() - 3600);
+            setcookie('userid', '', time() - 3600);
+
+            bf_error(trim($_COOKIE['userid']));
+            echo '<script type="text/javascript">LINK_ajax(\'login.php\',\'login_div\');</script>';
+            alert($lang['COOKIE_REJECTED']);
+        }
+    }
 }
 
 if (!empty($POST_opt)) {
@@ -107,7 +107,7 @@ if (!empty($POST_opt)) {
 		}
 
 		$stmt = prepare_query(LOGIN_USER, 0, 's', trim($POST_username));
-		$result = execute_query($stmt, 'index.php');
+		$result = execute_query($stmt, 'login.php');
 
 		if($result->num_rows == 1 && $line = $result->fetch_row()) {
 			if ($CONFIG_md5_pass)
@@ -118,6 +118,10 @@ if (!empty($POST_opt)) {
 				$_SESSION[$CONFIG_name.'userid'] = $line[1];
 				$_SESSION[$CONFIG_name.'level'] = $line[2];
                 $_SESSION[$CONFIG_name.'email'] = $line[4];
+                
+                // update account's last IP
+                $stmt = prepare_query(UPDATE_LAST_IP, 0, 'si', $_SERVER['REMOTE_ADDR'], $line[0]);
+                $result = execute_query($stmt, 'login.php');
 
 				if ($POST_remember_me) {
 					setcookie('login_pass', md5($CONFIG_name.$line[3]), time() + 3600 * 24 * 30);

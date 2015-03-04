@@ -47,6 +47,8 @@ DEFINE('LOGIN_USER', "SELECT `account_id`, `userid`, `group_id`, `user_pass` FRO
 }elseif ($config['servermode'] == 1){
 DEFINE('LOGIN_USER', "SELECT `account_num`, `account_name`, `level`, `account_pass`, `email` FROM `account` WHERE `account_name` = ? AND `state` != '5'");
 }
+DEFINE('UPDATE_LAST_IP', "UPDATE `account` SET `last_ip` = ? WHERE `account_num` = ?");
+
 //password.php - Change Password
 DEFINE('CHANGE_PASSWORD', "UPDATE `login` SET `user_pass` = ? WHERE `account_id` = ?");
 DEFINE('CHECK_PASSWORD', "SELECT * FROM `login` WHERE `user_pass` = ? AND `account_id` = ?");
