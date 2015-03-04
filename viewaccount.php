@@ -81,13 +81,18 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
         }
         echo '</table>';
 
-
         echo '
         <table>
             <tr>
                 <td>
                     <span title="Add account" class="link"
                           onClick="return LINK_ajax(\'addaccount.php\',\'main_div\');">Add Account</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span title="Add existing account" class="link"
+                          onClick="return LINK_ajax(\'addexisting.php\',\'main_div\');">Add Existing Account</span>
                 </td>
             </tr>
         </table>';

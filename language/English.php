@@ -256,6 +256,13 @@ $lang['INTERNAL_STATISTIC'] = '(for internal statistics)';
 $lang['BIRTHDAY'] = 'Birthday (YYYYMMDD)';
 $lang['ACCOUNT_MAX_REACHED'] = 'There are too many accounts registered, please try again later.';
 
+//addexisting.php
+$lang['ADD_EXISTING_ACCOUNT'] = 'Add Existing Account';
+$lang['ADD_EXISTING_NOMATCH'] = 'There is no account matching the information you provided.';
+$lang['ADD_EXISTING_VERIFY_FAILURE'] = 'Failed to verify the account';
+$lang['ADD_EXISTING_ACCOUNT_SUCCESS'] = 'You have successfully added the account.';
+$lang['ADD_EXISTING_ACCOUNT_FAILURE'] = 'Failed to add the account.';
+
 //index.php
 $lang['NEW_ACCOUNT'] = 'New Account';
 $lang['RECOVER_PASSWORD'] = 'Recover your password';

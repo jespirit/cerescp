@@ -91,6 +91,11 @@ DEFINE('TOTAL_APPLICATIONS', "SELECT COUNT(1) FROM `accregister`");
 DEFINE('ADD_CHECK_USERID', "SELECT `userid` FROM `login` WHERE `userid` = ?");
 DEFINE('ADD_CHECK_USERID2', "SELECT `userid` FROM `register` WHERE `userid` = ?");
 
+//addexisting.php - Attach an in-game account to your forum account
+DEFINE('ADD_VERIFY_ACCOUNT', "SELECT `userid`, `user_pass`, `email` FROM `login`
+WHERE `userid` = ? AND `user_pass` = ? AND `email` = ? AND `account_num` = 0");
+DEFINE('ADD_EXISTING_ACCOUNT', "UPDATE `login` SET `account_num` = ? WHERE `userid` = ?");
+
 //viewaccount.php - View Accounts
 DEFINE('VIEW_GET_ACCOUNT_ALL', "SELECT `login`.`userid`, `login`.`account_id`, `login`.`lastlogin`, `login`.`last_ip`, `login`.`sex`
 FROM `login` WHERE `login`.`account_num` = ?");
