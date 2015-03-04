@@ -101,8 +101,13 @@ DEFINE('ACTIVATE_INSERT_CHAR', "INSERT INTO `login` (`userid`, `user_pass`, `sex
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 DEFINE('ACTIVATE_REMOVE_CHAR', "DELETE FROM `register` WHERE `id` = ?");
 
-//recover.php - Recover Password
-DEFINE('RECOVER_PASSWORD', "SELECT `account_name`, `account_pass`, `email` FROM `account` WHERE `email` = ? AND state != '5'");
+//recover.php - Recover Forum Account Password
+DEFINE('RECOVER_PASSWORD', "SELECT `account_name`, `account_pass`, `email` FROM `account` WHERE `email` = ? AND `state` != '5'");
+
+//recover_ingame.php - Recover In-Game Account Password
+// in-game account must not be attached to any forum account
+DEFINE('RECOVER_INGAME_PASSWORD', "SELECT `user_pass`, `email` FROM `login`
+WHERE `userid` = ? AND `account_num` = 0 AND `state` != '5'");
 
 //resetpassword.php - Reset Password
 DEFINE('RESET_PASSWORD', "UPDATE `login` SET `user_pass` = ? WHERE `userid` = ?");

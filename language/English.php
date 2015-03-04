@@ -106,6 +106,7 @@ $lang['MENU_MESSAGE'] = 'Message';
 $lang['MENU_CHANGEPASS'] = 'Change Password';
 $lang['MENU_CHANGEMAIL'] = 'Change e-mail';
 $lang['MENU_VIEWACCOUNT'] = 'View Accounts';
+$lang['MENU_PASSWORD_RECOVERY'] = 'Password Recovery';
 $lang['MENU_TRANFMONEY'] = 'Transfer Money';
 $lang['MENU_CHANGESLOT'] = 'Change Slot';
 $lang['MENU_MARRIAGE'] = 'Marriage';
@@ -170,8 +171,12 @@ $lang['RESETLOOK_RESETLOOK'] = 'Reset Look';
 //recover.php
 $lang['RECOVER_RECOVER'] = 'Recover Password';
 
+//recover_ingame.php
+$lang['PASSWORD_RECOVERY'] = 'Password Recovery';
+$lang['PASSWORD_UNKNOWN_ACCOUNT'] = 'Unknown Game Account';
+
 //position.php
-$lang['POSITION_RESET'] = 'Reset Position Failed.';
+$lang['POSITION_RESET_FAIL'] = 'Reset Position Failed.';
 $lang['POSITION_NO_ZENY'] = 'Not enough zeny.';
 $lang['POSITION_OK'] = 'Position has been reset.';
 $lang['POSITION_TITLE'] = 'Reset Position';

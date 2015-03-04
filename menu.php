@@ -43,6 +43,7 @@ $submenu[] = array($lang['MENU_MESSAGE'],		'motd.php',				0);
 $submenu[] = array($lang['MENU_CHANGEPASS'],	'acc_password.php',		1);
 $submenu[] = array($lang['MENU_CHANGEMAIL'],	'acc_changemail.php',	1);
 $submenu[] = array($lang['MENU_VIEWACCOUNT'],	'viewaccount.php',		1);
+$submenu[] = array($lang['MENU_PASSWORD_RECOVERY'],	'recover_ingame.php',	1);
 $submenu[] = array($lang['MENU_TRANFMONEY'],	'money.php',			$CONFIG_money_transfer?2:-1);
 $submenu[] = array($lang['MENU_CHANGESLOT'],	'changeslot.php',		$CONFIG_set_slot?2:-1);
 $submenu[] = array($lang['MENU_MARRIAGE'],		'marriage.php',			2);
