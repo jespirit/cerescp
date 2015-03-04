@@ -70,6 +70,11 @@ WHERE `char_id` = ?
 AND `online` = '0'
 ");
 
+//removegear.php - Remove all gear
+DEFINE('REMOVE_GEAR', "UPDATE `inventory` SET `equip` = 0 WHERE `equip` > 0 AND `char_id` = ?");
+DEFINE('REMOVE_GEAR_CHAR', "UPDATE `char` SET `weapon` = 0, `shield` = 0, `head_top` = 0, `head_mid` = 0, `head_bottom` = 0
+WHERE `char_id` = ?");
+
 //account.php - Account Creation
 DEFINE('INSERT_CHAR', "INSERT INTO `login` (`userid`, `user_pass`, `sex`, `email`, `birthdate`, `last_ip`, `state`, `level`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 DEFINE('CHECK_USERID', "SELECT `account_name` FROM `account` WHERE `account_name` = ?");

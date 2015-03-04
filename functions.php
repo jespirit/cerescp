@@ -265,15 +265,13 @@ function truedate($day, $month, $year) {
 	return mktime(0, 0, 0, $month, $day, $year);
 }
 
-function is_online() {
+function is_online($account_id) {
 	global $CONFIG_name, $lang;
 
 	if (empty($_SESSION[$CONFIG_name.'account_id'])) 
 		redir('motd.php', 'main_div', htmlformat($lang['NEED_TO_LOGIN_F']));
 
-	$log_account = $_SESSION[$CONFIG_name.'account_id'];
-
-	$stmt = prepare_query(IS_ONLINE, 0, 'i', $log_account);
+	$stmt = prepare_query(IS_ONLINE, 0, 'i', $account_id);
 	$result = execute_query($stmt, 'is_online');
 
 	$row = $result->fetch_row();

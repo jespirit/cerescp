@@ -117,6 +117,7 @@ $lang['MENU_WHOSONLINE'] = 'Who Is Online';
 $lang['MENU_ABOUT'] = 'About';
 $lang['MENU_RESETPOS'] = 'Reset Position';
 $lang['MENU_RESETLOOK'] = 'Reset look';
+$lang['MENU_REMOVEGEAR'] = 'Remove Gear';
 $lang['MENU_OTHER'] = 'Other';
 $lang['MENU_LINKS'] = 'Links';
 
@@ -185,6 +186,9 @@ $lang['POSITION_SELECT'] = 'Select';
 $lang['POSITION_RESET'] = 'Reset';
 $lang['POSITION_PS1'] = '*There will be a cost of %d zenys to use this service';
 $lang['POSITION_JAIL'] = 'You may not use this while in jail.';
+
+//removegear.php
+$lang['REMOVE_GEAR'] = 'Remove';
 
 //motd.php
 $lang['NEWS_MESSAGE'] = 'Message';

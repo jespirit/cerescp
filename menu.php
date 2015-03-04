@@ -56,6 +56,7 @@ $submenu[] = array('Customizations',			'custom.php',			4);
 //$submenu[] = array($lang['MENU_ABOUT'],			'about.php',			4);
 $submenu[] = array($lang['MENU_RESETPOS'],		'position.php',			$CONFIG_reset_enable?5:-1);
 $submenu[] = array($lang['MENU_RESETLOOK'],		'resetlook.php',		$CONFIG_reset_look?5:-1);
+$submenu[] = array($lang['MENU_REMOVEGEAR'],	'removegear.php',		5);
 //$submenu[] = array($lang['MENU_LINKS'],			'links.php',			0);
 $submenu[] = array('Downloads',					'downloads.php',		0);
 $submenu[] = array('Atcommand Logs',			'logatcommand.php',		6);
