@@ -32,14 +32,6 @@ include_once 'mail.php';
 if ($CONFIG_disable_account || check_ban())
 	redir('motd.php', 'main_div', 'Disabled');
 
-if ($CONFIG_max_accounts) {
-	$stmt = prepare_query(MAX_ACCOUNTS);
-	$result = execute_query($stmt, 'addexisting.php');
-	$maxaccounts = $result->fetch_row();
-	if ($maxaccounts[0] >= $CONFIG_max_accounts)
-		redir('motd.php', 'main_div', $lang['ACCOUNT_MAX_REACHED']);
-}
-
 if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 	if ($_SESSION[$CONFIG_name.'account_id'] > 0) {
 

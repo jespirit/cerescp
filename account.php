@@ -31,14 +31,6 @@ include_once 'functions.php';
 if ($CONFIG_disable_account || check_ban())
 	redir('motd.php', 'main_div', 'Disabled');
 
-if ($CONFIG_max_accounts) {
-	$stmt = prepare_query(MAX_ACCOUNTS);
-	$result = execute_query($stmt, 'account.php');
-	$maxaccounts = $result->fetch_row();
-	if ($maxaccounts[0] >= $CONFIG_max_accounts)
-		redir('motd.php', 'main_div', $lang['ACCOUNT_MAX_REACHED']);
-}
-
 if (isset($POST_opt)) {
 	if ($POST_opt == 1 && isset($POST_frm_name) && !strcmp($POST_frm_name, 'account')) {
 		$session = $_SESSION[$CONFIG_name.'sessioncode'];

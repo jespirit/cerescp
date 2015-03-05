@@ -80,7 +80,7 @@ DEFINE('INSERT_CHAR', "INSERT INTO `login` (`userid`, `user_pass`, `sex`, `email
 DEFINE('CHECK_USERID', "SELECT `account_name` FROM `account` WHERE `account_name` = ?");
 DEFINE('CHECK_USERID2', "SELECT `account_name` FROM `accregister` WHERE `account_name` = ?");
 DEFINE('CHECK_ACCOUNTID', "SELECT `account_id` FROM `login` WHERE `userid` = ? AND `user_pass` = ?");
-DEFINE('MAX_ACCOUNTS', "SELECT COUNT(`account_id`) FROM `login` WHERE `sex` != 'S'");
+DEFINE('MAX_ACCOUNTS', "SELECT COUNT(`account_num`) FROM `login` WHERE `account_num` = ?");
 DEFINE('NEW_ACCOUNT', "INSERT INTO `register` (`time`, `account_num`, `userid`, `user_pass`, `sex`, `email`, `level`, `birthdate`, `ip`)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 DEFINE('NEW_APPLICATION', "INSERT INTO `accregister` (`time`, `account_name`, `account_pass`, `email`, `level`, `birthdate`, `ip`, `data`) 
