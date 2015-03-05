@@ -80,7 +80,7 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 		<table class="maintable">
             <tr>
                 <td align=right>'.$lang['USERNAME'].':</td>
-				<td><input type="text" name="userid" value="' . $GET_userid .'" disabled></td>
+				<td><input type="text" name="userid_txt" value="' . $GET_userid .'" disabled></td>
             </tr>
 			<tr>
 				<td align=right>'.$lang['PASSWORD'].':</td>
@@ -100,6 +100,7 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 			</tr>
 		</table>
 		<input type="hidden" name="opt" value="1">
+        <input type="hidden" name="userid" value="' . $GET_userid . '">
         <input type="hidden" name="account_id" value="' . $GET_account_id . '">
 		</form>
 		';
