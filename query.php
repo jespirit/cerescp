@@ -43,9 +43,9 @@ DEFINE('CHECK_IPBAN', "SELECT COUNT(*) FROM `ipbanlist` WHERE `list` = ?");
 
 //login.php - User Login
 if ($config['servermode'] == 0){
-DEFINE('LOGIN_USER', "SELECT `account_id`, `userid`, `group_id`, `user_pass` FROM `login` WHERE userid = ? AND state != '5'");
+DEFINE('LOGIN_USER', "SELECT `account_id`, `userid`, `group_id`, `user_pass` FROM `login` WHERE `userid` = ? AND `state` != '5'");
 }elseif ($config['servermode'] == 1){
-DEFINE('LOGIN_USER', "SELECT `account_id`, `userid`, `level`, `user_pass` FROM `login` WHERE userid = ? AND state != '5'");
+DEFINE('LOGIN_USER', "SELECT `account_num`, `account_name`, `level`, `account_pass`, `email` FROM `account` WHERE `account_name` = ? AND `state` != '5'");
 }
 //password.php - Change Password
 DEFINE('CHANGE_PASSWORD', "UPDATE `login` SET `user_pass` = ? WHERE `account_id` = ?");
