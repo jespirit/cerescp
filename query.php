@@ -77,7 +77,7 @@ DEFINE('CHECK_USERID2', "SELECT `account_name` FROM `accregister` WHERE `account
 DEFINE('CHECK_ACCOUNTID', "SELECT `account_id` FROM `login` WHERE `userid` = ? AND `user_pass` = ?");
 DEFINE('MAX_ACCOUNTS', "SELECT COUNT(`account_id`) FROM `login` WHERE `sex` != 'S'");
 DEFINE('NEW_ACCOUNT', "INSERT INTO `register` (`time`, `account_num`, `userid`, `user_pass`, `sex`, `email`, `level`, `birthdate`, `ip`)
-VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)");
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 DEFINE('NEW_APPLICATION', "INSERT INTO `accregister` (`time`, `account_name`, `account_pass`, `email`, `level`, `birthdate`, `ip`, `data`) 
 VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?)");
 DEFINE('TOTAL_APPLICATIONS', "SELECT COUNT(1) FROM `accregister`");

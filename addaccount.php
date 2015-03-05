@@ -27,6 +27,7 @@ session_start();
 include_once 'config.php'; // loads config variables
 include_once 'query.php'; // imports queries
 include_once 'functions.php';
+include_once 'mail.php';
 
 if ($CONFIG_disable_account || check_ban())
 	redir('motd.php', 'main_div', 'Disabled');
@@ -93,20 +94,31 @@ if (isset($POST_opt)) {
 			$POST_password = md5($POST_password);
 
 		$level = 1;  // Level 1 by default
+        $userid = trim($POST_username);
+        $user_pass = trim($POST_password);
+        $account_num = $_SESSION[$CONFIG_name.'account_id'];
+        $email = $_SESSION[$CONFIG_name.'email'];
+        $now = date("Y-m-d H:i:s");
 
 		// date fields can bind to 's'
-		$stmt = prepare_query(NEW_ACCOUNT, 0, 'issssiss',
-            $_SESSION[$CONFIG_name.'account_id'],
-            trim($POST_username), trim($POST_password),
-			$POST_sex, $_SESSION[$CONFIG_name.'email'], $level, $POST_birthdate, $_SERVER['REMOTE_ADDR']);
+		$stmt = prepare_query(NEW_ACCOUNT, 0, 'sissssiss',
+            $now,
+            $account_num, $userid, $user_pass,
+			$POST_sex, $email, $level, $POST_birthdate, $_SERVER['REMOTE_ADDR']);
 		$result = execute_query($stmt, 'addaccount.php');
         
-        // Send confirmation link to account's email address
-        //confirm_account($line[3], $line[6]);  // use $_SESSION[$CONFIG_name.'email'],
+        if ($result) {
+            $hash = md5($now . $account_num . $userid . $user_pass);
+            //$link = "http://54.187.100.97/activate.php?userid=".$userid."&code=".$hash;
+            $link = "http://localhost/cerescp-svn/activate.php?userid=".$userid."&code=".$hash;
+            
+            // Send confirmation link to account's email address
+            send_activation($userid, $email, $link);
 
-		redir('motd.php', 'main_div',
-		'A confirmation email has been sent to your email inbox with instructions
-        on how to verify the account belongs to you before you can begin using it.');
+            redir('motd.php', 'main_div',
+            'A confirmation email has been sent to your email inbox with instructions
+            on how to verify that the account belongs to you.');
+        }
 
 	}
 }
