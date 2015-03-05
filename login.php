@@ -122,6 +122,10 @@ if (!empty($POST_opt)) {
                 // update account's last IP
                 $stmt = prepare_query(UPDATE_LAST_IP, 0, 'si', $_SERVER['REMOTE_ADDR'], $line[0]);
                 $result = execute_query($stmt, 'login.php');
+                
+                // update account's last login time
+                $stmt = prepare_query(UPDATE_LAST_LOGIN, 0, 'i', $line[0]);
+                $result = execute_query($stmt, 'login.php');
 
 				if ($POST_remember_me) {
 					setcookie('login_pass', md5($CONFIG_name.$line[3]), time() + 3600 * 24 * 30);
