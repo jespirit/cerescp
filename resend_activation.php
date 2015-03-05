@@ -17,7 +17,10 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {  // logged in
         if ($result) {
             $line = $result->fetch_row();
             $hash = md5($line[0] . $line[1] . $line[2] . $line[3]);
-            $link = "http://localhost/cerescp-svn/activate.php?userid=".$line[2]."&code=".$hash;
+            if ($CONFIG_local_machine)
+                $link = "http://localhost/cerescp-svn/activate.php?userid=".$line[2]."&code=".$hash;
+            else
+                $link = "http://54.187.100.97/activate.php?userid=".$line[2]."&code=".$hash;
             
             send_activation($line[2], $_SESSION[$CONFIG_name.'email'], $link);
             

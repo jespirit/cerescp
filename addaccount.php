@@ -112,8 +112,11 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
                 
                 if ($result) {
                     $hash = md5($now . $account_num . $userid . $user_pass);
-                    //$link = "http://54.187.100.97/activate.php?userid=".$userid."&code=".$hash;
-                    $link = "http://localhost/cerescp-svn/activate.php?userid=".$userid."&code=".$hash;
+                    
+                    if ($CONFIG_local_machine)
+                        $link = "http://localhost/cerescp-svn/activate.php?userid=".$userid."&code=".$hash;
+                    else
+                        $link = "http://54.187.100.97/activate.php?userid=".$userid."&code=".$hash;
                     
                     // Send confirmation link to account's email address
                     send_activation($userid, $email, $link);
