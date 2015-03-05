@@ -45,7 +45,7 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {
 				if ($CONFIG_md5_pass)
 					$POST_login_pass = md5($POST_login_pass);
 
-				$stmt = prepare_query(CHANGE_EMAIL, 0, 'ssi', $POST_email, $POST_login_pass, $_SESSION[$CONFIG_name.'account_id']);
+				$stmt = prepare_query(CHANGE_EMAIL, 0, 'ssi', trim($POST_email), $POST_login_pass, $_SESSION[$CONFIG_name.'account_id']);
 				$result = execute_query($stmt, 'changemail.php');
 			}
 		}
