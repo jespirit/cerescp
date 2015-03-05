@@ -38,6 +38,93 @@ caption($lang['NEWS_MESSAGE']);
 	<p>To start playing please go here and download the necessary files: <span title="Download" class="link active" onClick="return LINK_ajax('downloads.php', 'main_div');">Downloads</span></p>
 </div>
 <div id="update">
+    <div class="entry">
+		<h1>Updates <span class="date">03/05/2015</span></h1>
+		
+		<h2>New Account Management System</h2>
+		<p>You no longer have to submit an application for each in-game account.</p>
+        
+        <p>
+        Instead, you submit an application to create an online <span style="color: blue;">Control Panel</span> account
+		from which you can manage all your in-game accounts. This way you can create
+        new game accounts with ease, without myself having to review each in-game account application.
+        </p>
+        
+        <h3>Existing Users</h3>
+        <p>For existing users who already have 1 or more in-game accounts, you must first
+        submit an application for an online Control Panel account. And once the application has been
+        accepted, you can attach an existing in-game account to your Control Panel account.
+        You may have to do a Password Recovery if you forget what the password was for that particular
+        game account.</p>
+        
+        <h2>Asura Strike Soft Cap</h2>
+        <p>Based on the output damage results for Asura Strike, I've implemented a similiar diminishing returns
+        formula for Asura Strike to emulate the soft cap of 200K damage.</p>
+        
+        <p>Exponential decay formula (positively increasing): <span style="color: green">y = C * (1 - e<sup>-kx</sup>)</span>, where
+        <br>x = asura damage
+        <br>C = maximum output
+        <br>k = constant growth rate
+        </p>
+        
+        <p>Code:</p>
+<pre class="code">
+<code>soft_cap = 200000;
+C = 250000;  // max damage becomes 450k (200k+250k)
+k = 1.98E-6  // growth rate of 0.000198%
+x = damage - soft_cap;
+
+if (damage > soft_cap)  // apply diminishing returns?
+    damage = soft_cap + C * (1 - exp(-k*x);
+</code>
+</pre>
+        <table>
+            <tr>
+                <th>Input</th>
+                <th>Output</th>
+                <th>Expected Output</th>
+            </tr><tr>
+                <td>200k</td>
+                <td>200,000</td>
+                <td>200k</td>
+            </tr><tr>
+                <td>210k</td>
+                <td>204,901 (-99)</td>
+                <td>205k</td>
+            </tr><tr>
+                <td>300k</td>
+                <td>244,907 (-5093)</td>
+                <td>250k</td>
+            </tr><tr>
+                <td>500k</td>
+                <td>311,971 (-29)</td>
+                <td>312k</td>
+            </tr><tr>
+                <td>750k</td>
+                <td>365,861 (+8861)</td>
+                <td>357k</td>
+            </tr><tr>
+        </table>
+
+		<h2>Other Updates</h2>
+		<ul>
+			<li>Added Kris[1] enchantment NPC by Hollegren (Armor Refining NPC)</li>
+            <li>Added <span class="rocmd">@gospelbuffs</span> to enable/disable gospel buffs as you wish
+                <div>
+                    Usage: @gospelbuffs -1:14 7-9 10(Disable all buffs, but enable buffs 7 to 9 and the 10th buff)
+                </div>
+            </li>
+            <li>Fixed Telekinetic Orb and Alchemy Glove[1] to be wearable and also includes their new bonus scripts</li>
+		</ul>
+        <p>Added the following new headgears:</p>
+        <ul>
+            <li>Fancy Phantom Mask[1]</li>
+            <li>Bone Hat[1]</li>
+            <li>Ribbon Magician Hat[1]</li>
+            <li>Entweihen Hairband[1]</li>
+            <li>Angeling Fur Hat[1]</li>
+        </li>
+	</div>
 	<div class="entry">
 		<h1>Updates <span class="date">10/5/2014</span></h1>
 		
