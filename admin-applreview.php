@@ -25,7 +25,6 @@ if (isset($GET_frm_name) && isset($GET_id)) {
 	
 	if ($line = $result->fetch_array()) {
 		if (!strcasecmp($GET_decide, "accept")) {
-			var_dump($line);
 			$stmt = prepare_query(INSERT_NEW_APPLICANT, 0, 'sssiiss',
                 $line['account_name'], $line['account_pass'],
 				$line['email'], $line['level'], $state,
@@ -54,7 +53,7 @@ if (isset($GET_frm_name) && isset($GET_id)) {
             
         // Remove the application
         if ($remove_appl) {
-            $stmt = prepare_query(REMOVE_APPLICATION, 0, 'i', trim($line[0]));
+            $stmt = prepare_query(REMOVE_APPLICATION, 0, 'i', $line['id']);
             $result = execute_query($stmt, 'admin-applreview.php');
             
             if (!$result)

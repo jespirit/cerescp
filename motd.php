@@ -108,10 +108,10 @@ if (damage > soft_cap)  // apply diminishing returns?
 
 		<h2>Other Updates</h2>
 		<ul>
-			<li>Added Kris[1] enchantment NPC by Hollegren (Armor Refining NPC)</li>
+			<li>Added Kris[1] enchantment NPC named <span class="npcname">Kris Enchanter</span> in Prontera</li>
             <li>Added <span class="rocmd">@gospelbuffs</span> to enable/disable gospel buffs as you wish
                 <div>
-                    Usage: @gospelbuffs -1:14 7-9 10(Disable all buffs, but enable buffs 7 to 9 and the 10th buff)
+                    Usage: @gospelbuffs -1:14 7-9 10 (Disable all buffs, but enable buffs 7 to 9 and the 10th buff)
                 </div>
             </li>
             <li>Fixed Telekinetic Orb and Alchemy Glove[1] to be wearable and also includes their new bonus scripts</li>

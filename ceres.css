@@ -265,6 +265,10 @@ li {
 	color: #3366ff;
 }
 
+span.npcname {
+    color: blue;
+}
+
 span.code {
 	font-family: Courier New;
 	font-size: 1.1em;
