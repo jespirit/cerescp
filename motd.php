@@ -115,6 +115,7 @@ if (damage > soft_cap)  // apply diminishing returns?
                 </div>
             </li>
             <li>Fixed Telekinetic Orb and Alchemy Glove[1] to be wearable and also includes their new bonus scripts</li>
+            <li>Also added new armor: Tidung[1]</li>
 		</ul>
         <p>Added the following new headgears:</p>
         <ul>
@@ -123,7 +124,9 @@ if (damage > soft_cap)  // apply diminishing returns?
             <li>Ribbon Magician Hat[1]</li>
             <li>Entweihen Hairband[1]</li>
             <li>Angeling Fur Hat[1]</li>
-        </li>
+            <li>Preschool Hat[1]</li>
+            <li>Bandit Hat[1]</li>
+        </ul>
 	</div>
 	<div class="entry">
 		<h1>Updates <span class="date">10/5/2014</span></h1>
