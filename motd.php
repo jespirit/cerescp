@@ -39,6 +39,40 @@ caption($lang['NEWS_MESSAGE']);
 </div>
 <div id="update">
     <div class="entry">
+        <h1>Updates <span class="date">03/21/2015</span></h1>
+        
+        <h2>Poem of Bragi - Damage Reduction</h2>
+        <p>Implemented damage reduction while in Poem of Bragi</p>
+        
+        <p>Formula:</p>
+<pre class="code">
+<code>skilllvb = skill level of Bragi
+skilllvm = skill level of Musical Lesson
+int = int stat of the character
+input_damage = damage after everything has been applied (card modifiers, etc.)
+
+final_damage = (200-((3*skilllvb+int/5)+2*skilllvm))*input_damage/200;
+</code>
+</pre>
+
+        <h2>New Commands</h2>
+        <ul>
+            <li>Added <span class="rocmd">@getranked</span> command for obtaining ranked potions</li>
+            <li>Added <span class="rocmd">@getweapon</span> command for obtaining ranked weapons</li>
+            <li>Added <span class="rocmd">@linkme</span> command for linking yourself</li>
+        </ul>
+        
+        <h2>Other Updates</h2>
+        <ul>
+            <li>Added two GvG Maps accessible through the Warper for GvG testing</li>
+            <li>Fixed Soul Linker NPC not linking certain classes</li>
+            <li>Added third slot to Djinn SQI</li>
+            <li>Updated <span class="rocmd">@item</span> to allow spaces in item names for ease of use</li>
+            <li>Fixed character deletion</li>
+        </ul>
+    </div>
+    
+    <div class="entry">
 		<h1>Updates <span class="date">03/05/2015</span></h1>
 		
 		<h2>New Account Management System</h2>
