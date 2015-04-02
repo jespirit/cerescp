@@ -39,6 +39,31 @@ caption($lang['NEWS_MESSAGE']);
 </div>
 <div id="update">
     <div class="entry">
+        <h1>Updates <span class="date">04/01/2015</span></h1>
+        
+        <h2>@Monster Command Modifications</h2>
+        <p><span class="rocmd">@monster</span> accepts as a parameter how much HP% to spawn with</p>
+        <p>Syntax: <span class="rocmd">@monster</span> &lt;mob id&gt; &lt;count&gt; &lt;hp%&gt;</p>
+        <p>eg. <span class="rocmd">@monster</span> 1832 1 50 - spawn one Ifrit with 50% HP</p>
+        
+        <p>Additionally, you can spawn a monster with minmax enabled for that particular monster
+        to test the monster's minimum/average/maximum damage against yourself.</p>
+        <p>Syntax: <span class="rocmd">@monster</span> &lt;mob id&gt; &lt;count&gt; &lt;hp%&gt; &lt;minmax&gt;<br>where minmax can be 0=normal, 1=minimum, 2=average, 4=maximum.</p>
+        <p>eg. <span class="rocmd">@monster</span> 1832 1 100 4 - spawn one Ifrit with 100% HP and always does MAX damage</p>
+        
+        <h2>Fixes</h2>
+        <ul>
+            <li>Modified the minmax damage calculation to include the Vit Def random component for
+            precise damage testing</li>
+            <li>Fixed Poem of Bragi to have 50% after cast delay reduction at level 10 for PvP maps</li>
+        </ul>
+        
+        <h2>Items</h2>
+        <ul>
+            <li>Added Unique Glasses[0]/[1]</li>
+        </ul>
+    </div>
+    <div class="entry">
         <h1>Updates <span class="date">03/21/2015</span></h1>
         
         <h2>Poem of Bragi - Damage Reduction</h2>
