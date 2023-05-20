@@ -40,7 +40,7 @@ if (!is_file("./language/".$load) || strpos($load, "..") !== false || inject($lo
 
 include($load);
 
-while (list($key, $val) = each($lang)) {  
+foreach ($lang as $key => $val) {
 	$lang[$key] = htmlentities($val);
 }
 
