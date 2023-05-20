@@ -16,6 +16,8 @@ $NAME = file_get_contents($name_file);
 
 $desc = "";
 $matches = array();
+// modifier s (PCRE_DOTALL)
+// the dot matches all characeters including newlines
 $desc_re = "/$GET_id#(.*?)\b[a-zA-Z]+\s*:/s";
 
 $item_types = array(
