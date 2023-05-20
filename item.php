@@ -116,7 +116,7 @@ echo '
 }
 echo '
 		<td class="attribute">Sell:</td>
-		<td>'.$line['price_sell'].'</td>
+		<td>'. ($line['price_sell'] === NULL ? $line['price_buy']/2 : $line['price_sell']) .'</td>
 		<td class="attribute">Buy:</td>
 		<td>'.$line['price_buy'].'</td>
 		<td class="attribute">Weight:</td>
