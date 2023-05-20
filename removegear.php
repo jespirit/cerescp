@@ -57,7 +57,7 @@ if (!empty($_SESSION[$CONFIG_name.'account_id'])) {  // logged in
                     <tr>
                         <td>'.$char['char_id'].'</td>
                         <td>'.$char['name'].'</td>
-                        <td>'.$char['char_num'].'</td>
+                        <td>'.($char['char_num']+1).'</td>
                         <td>
                             <form id="removegear'.$index.'" onsubmit="return GET_ajax(\'removegear.php\',\'main_div\',\'removegear'.$index.'\')">
                                 <input type="submit" value="'.$lang['REMOVE_GEAR'].'" onclick="return window.confirm(\'Remove Gear?\');">
