@@ -18,44 +18,54 @@ $desc = "";
 $matches = array();
 $desc_re = "/$GET_id#(.*?)\b[a-zA-Z]+\s*:/s";
 
-$item_types = array("Healing", "Unknown", "Usable", "ETC", "Weapon", 
-					"Armor", "Card", "Pet Egg", "Pet Armor", "Unknown2",
-					"Ammo", "Delay Consume", "Cash");
+$item_types = array(
+    "0"=>"Healing",
+    "2"=>"Usable",
+    "3"=>"ETC",
+    "4"=>"Weapon", 
+    "5"=>"Armor",
+    "6"=>"Card",
+    "7"=>"Pet Egg",
+    "8"=>"Pet Armor",
+    "10"=>"Ammo",
+    "11"=>"Delay Consume",
+    "18"=>"Cash");
 $equip_locations = array(1, 2, 4, 8, 16, 32, 64, 128, 256, 512);
-$equip_position = array("1"=>"Lower Headgear", 
-						"2"=>"Weapon", 
-						"4"=>"Garment", 
-						"8"=>"Accessory", 
-						"16"=>"Armor", 
-						"32"=>"Shield",
-						"34"=>"Two Handed",
-						"64"=>"Shoes", 
-						"128"=>"Accessory",
-						"136"=>"Accessory",
-						"256"=>"Upper Headgear", 
-						"257"=>"Upper and Lower",
-						"512"=>"Middle",
-						"513"=>"Middle and Lower",
-						"768"=>"Upper and Middle",
-						"769"=>"Upper, Middle, and Lower"
-					);
+$equip_position = array(
+    "1"=>"Lower Headgear", 
+    "2"=>"Weapon", 
+    "4"=>"Garment", 
+    "8"=>"Accessory", 
+    "16"=>"Armor", 
+    "32"=>"Shield",
+    "34"=>"Two Handed",
+    "64"=>"Shoes", 
+    "128"=>"Accessory",
+    "136"=>"Accessory",
+    "256"=>"Upper Headgear", 
+    "257"=>"Upper and Lower",
+    "512"=>"Middle",
+    "513"=>"Middle and Lower",
+    "768"=>"Upper and Middle",
+    "769"=>"Upper, Middle, and Lower");
 					
-$weapon_types = array("Bare Hands", // 0
-					  "Dagger", // 1
-					  "One-Handed Sword", "Two-Handed Sword", "One-Handed Spear", "Two-Handed Spear",  // 2-5
-					  "One-Handed Axe", "Two-Handed Axe",  // 6, 7
-					  "Mace", "Two-Handed Mace",  // 8, 9
-					  "Staff",  // 10
-					  "Bow", // 11
-					  "Knuckle",  // 12
-					  "Musical Instrument",  // 13
-					  "Whip",  // 14
-					  "Book",  // 15
-					  "Katar",  // 16
-					  "Revolver", "Rifle", "Gatling", "Shotgun", "Grenade",  // 17-21
-					  "Huuma",  // 22
-					  "Two-Handed Staff"  // 23
-					);
+$weapon_types = array(
+    "Bare Hands", // 0
+    "Dagger", // 1
+    "One-Handed Sword", "Two-Handed Sword", "One-Handed Spear", "Two-Handed Spear",  // 2-5
+    "One-Handed Axe", "Two-Handed Axe",  // 6, 7
+    "Mace", "Two-Handed Mace",  // 8, 9
+    "Staff",  // 10
+    "Bow", // 11
+    "Knuckle",  // 12
+    "Musical Instrument",  // 13
+    "Whip",  // 14
+    "Book",  // 15
+    "Katar",  // 16
+    "Revolver", "Rifle", "Gatling", "Shotgun", "Grenade",  // 17-21
+    "Huuma",  // 22
+    "Two-Handed Staff"  // 23
+);
 
 if ($DESC) {
 	// retrieve description for item
@@ -76,7 +86,7 @@ $result = execute_query($stmt, 'item.php');
 
 $line = $result->fetch_assoc();
 
-$slot = $line['slots']!==NULL?'['.$line['slots'].']':'';
+$slot = $line['slots'] !== NULL ? '['.$line['slots'].']' : '';
 
 echo '
 <table class="item">
