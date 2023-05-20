@@ -204,6 +204,14 @@ DEFINE('PARTNER_NULL', "UPDATE `char` SET `partner_id` = '0' WHERE `char_id` = ?
 DEFINE('PARTNER_RING', "DELETE FROM `inventory` WHERE (`nameid` = '2634' OR `nameid` = '2635') AND `char_id` = ?");
 DEFINE('PARTNER_BAN', "UPDATE `login` SET `unban_time` = NOW() + ? WHERE `account_id` = ? AND `unban_time` = '0'");
 
+//addnewchar.php
+DEFINE('ADDCHAR_GENDER', "SELECT `sex` FROM `login` WHERE `account_id` = ? LIMIT 1");
+DEFINE('ADDCHAR_INSERT', "INSERT INTO `char` (`account_id`, `char_num`, `name`, `class`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,
+`max_sp`, `sp`, `status_point`, `skill_point`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`)
+VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+DEFINE('ADDCHAR_CHECKSLOT', "SELECT `char_id` FROM `char` WHERE `account_id` = ? AND `char_num` = ? LIMIT 1");
+DEFINE('ADDCHAR_CHECKNAME', "SELECT `name` FROM `char` WHERE `name` = ? LIMIT 1");
+
 //ladder.php - Player Ladders
 if ($config['servermode'] == 0){
 DEFINE('LADDER_ALL', "SELECT `char`.`name`, `char`.`class`, `char`.`base_level`, `char`.`job_level`, `char`.`online`,

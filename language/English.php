@@ -110,6 +110,7 @@ $lang['MENU_PASSWORD_RECOVERY'] = 'Password Recovery';
 $lang['MENU_TRANFMONEY'] = 'Transfer Money';
 $lang['MENU_CHANGESLOT'] = 'Change Slot';
 $lang['MENU_MARRIAGE'] = 'Marriage';
+$lang['MENU_ADDCHAR'] = 'Add New Char';
 $lang['MENU_PLAYERLADDER'] = 'Player Ladder';
 $lang['MENU_GUILDLADDER'] = 'Guild Ladder';
 $lang['MENU_ZENYLADDER'] = 'Zeny Ladder';
@@ -218,6 +219,9 @@ $lang['MARRIAGE_SINGLE'] = 'Single';
 $lang['MARRIAGE_PS1'] = '*Check and confirm to divorce, both must be offline to do it';
 $lang['MARRIAGE_PS2'] = '*You can only change one char at time';
 $lang['MARRIAGE_PS3'] = '*You will be banned for 2 minutes to save the changes';
+
+//addnewchar.php
+$lang['CREATE_NEW_CHAR'] = 'Create New Char';
 
 //ladder.php
 $lang['LADDER_TOP100'] = 'Top 100 Player Ladder';

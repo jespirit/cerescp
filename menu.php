@@ -47,6 +47,7 @@ $submenu[] = array($lang['MENU_PASSWORD_RECOVERY'],	'recover_ingame.php',	1);
 $submenu[] = array($lang['MENU_TRANFMONEY'],	'money.php',			$CONFIG_money_transfer?2:-1);
 $submenu[] = array($lang['MENU_CHANGESLOT'],	'changeslot.php',		$CONFIG_set_slot?2:-1);
 $submenu[] = array($lang['MENU_MARRIAGE'],		'marriage.php',			2);
+$submenu[] = array($lang['MENU_ADDCHAR'],		'addnewchar.php',			2);
 $submenu[] = array($lang['MENU_PLAYERLADDER'],	'ladder.php',			3);
 $submenu[] = array($lang['MENU_GUILDLADDER'],	'guild.php',			3);
 $submenu[] = array($lang['MENU_ZENYLADDER'],	'top100zeny.php',		3);
