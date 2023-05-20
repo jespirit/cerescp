@@ -29,7 +29,7 @@ class ResultClass {
 	var $result;
 	var $row;
 
-	function ResultClass($arg1) {
+	function __construct($arg1) {
 		$this->row = FALSE;
 		$this->result = $arg1;
 	}
@@ -78,7 +78,7 @@ class QueryClass {
 	var $stmt;
 	var $query, $params, $myrefs;
 
-	function QueryClass($rag_addr, $rag_username, $rag_password, $rag_db, $cp_addr, $cp_username, $cp_password, $cp_db, $log_db) {
+	function __construct($rag_addr, $rag_username, $rag_password, $rag_db, $cp_addr, $cp_username, $cp_password, $cp_db, $log_db) {
 		global $lang;
 
 		$this->rag_link = mysqli_connect($rag_addr,$rag_username,$rag_password,$rag_db) or die($lang['DB_ERROR']);
