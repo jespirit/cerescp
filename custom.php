@@ -71,12 +71,16 @@ function expand($ids) {
 	<span
 		class='link expand'
 		onClick=\"this.style.visibility='hidden'; $(this).siblings('span.hide').css('visibility', 'visible');
-			$(this).siblings('div').css('display', 'block');";
+			$(this).siblings('div').css('display', 'block'); ";
+    //  if (fetch_from_itemdb[id] === undefined) {
+    //      fetch_from_itemdb[id] = 1; // set
+    //      link_ajax(id, div);
+    //  }
+    $span .= "if (fetch_from_itemdb[". $ids[1] ."] === undefined) { fetch_from_itemdb[". $ids[1] ."] = 1; ";
 	for ($x=1; $x<count($ids); $x++) {
 		$span .= "LINK_ajax('item.php?id=".$ids[$x]."', 'item_".$ids[$x]."');";
 	}
-	$span .= "
-	\">
+	$span .= "}\">
 		&gt;&gt;
 	</span>";
 	return $span;
@@ -111,7 +115,11 @@ function writegroup($h1, $group) {
 }
 
 echo '
-<div>';
+<div>
+<script type="text/javascript">
+// TODO: Alternative to using a global variable.
+var fetch_from_itemdb = new Array();
+</script>';
 
 foreach ($items as $key=>$arr) {
 	writegroup($key, $arr);
