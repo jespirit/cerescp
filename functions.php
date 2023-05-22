@@ -193,7 +193,7 @@ function moneyformat($string) {
 }
 
 function inject($string) {
-	$permitido = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.@$&-_/§*°ºª'; //dicionario de palavras permitidas
+	$permitido = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.@$&-_/ï¿½*ï¿½ï¿½ï¿½'; //dicionario de palavras permitidas
 	for ($i=0; $i<strlen($string); $i++) {
 		if (strpos($permitido, substr($string, $i, 1)) === FALSE) return TRUE;
 	}
@@ -344,7 +344,7 @@ function prepare_query($query, $database = 0, $types = '' /*, ...*/) {
 	return $stmt;
 }
 
-function prepare_query_ex($query, $db = 0, $types = '', $refs) {
+function prepare_query_ex($query, $db = 0, $types = '', array $refs = null) {
 	global $mysql;
     
     $arr = array();
