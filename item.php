@@ -75,8 +75,8 @@ if ($DESC) {
 		$desc = $matches[1];
 		// remove hidden underscore _
 		$desc = preg_replace('/\^[f]{6}_\^[0]{6}/', '',  $desc);
-		$desc = preg_replace('/^(\r\n|\n)*|(\r\n|\n)*$/', '', $desc);  // remove leading and trailing newlines
-		$desc = preg_replace('/\r\n|\n|$/', '<br/><br/>', $desc);  // replace newlines with <br/>
+		$desc = preg_replace('/^(\r?\n)+|(\r?\n)+$/', '', $desc);  // remove leading and trailing line endings
+		$desc = preg_replace('/\r?\n|$/', '<br/><br/>', $desc);  // replace line endings with <br/>, including the end of the string
 		// replace color syntax with css
 		$desc = preg_replace('/\^([0-9a-fA-F]{6})(.*?)\^[0]{6}/', '<span style="color:#$1;">$2</span>', $desc);
 	}
