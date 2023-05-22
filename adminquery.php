@@ -93,7 +93,7 @@ DEFINE('CHARS_TOTAL', "SELECT COUNT(1) FROM `char` WHERE `account_id` > '0'");
 //admin-application
 DEFINE('BROWSE_APPLICATIONS', "SELECT * FROM `accregister` ORDER BY `accregister`.`time` ASC LIMIT ?, ?");
 DEFINE('GET_APPLICATION', "SELECT * FROM `accregister` WHERE `accregister`.`id` = ?");
-DEFINE('INSERT_NEW_APPLICANT', "INSERT INTO `account` (`account_name`, `account_pass`, `email`, `level`, `state`, `lastlogin`, `birthdate`, `last_ip`) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?)");
+DEFINE('INSERT_NEW_APPLICANT', "INSERT INTO `web_account` (`account_name`, `account_pass`, `email`, `level`, `state`, `lastlogin`, `birthdate`, `last_ip`) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?)");
 DEFINE('REMOVE_APPLICATION', "DELETE FROM `accregister` WHERE `accregister`.`id` = ?");
 //DEFINE('REMOVE_ACCOUNT_ID', "DELETE FROM `login` WHERE `login`.`account_id` = ?");
 

@@ -73,7 +73,7 @@ if (isset($POST_opt)) {
 			redir('motd.php', 'main_div', 'You did not wish to register an account');
 		}
 
-		// Check if the Username exists in either the `account` table.
+		// Check if the Username exists in either the `web_account` table.
 		$stmt = prepare_query(CHECK_USERID, 0, 's', trim($POST_username));
 		$result = execute_query($stmt, 'account.php');
 		

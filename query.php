@@ -33,7 +33,7 @@ DEFINE('UPDATE_STATUS', "UPDATE `cp_server_status` SET last_checked = NOW(), sta
 DEFINE('INSERT_STATUS', "INSERT INTO `cp_server_status` VALUES(NOW(), '0')");
 DEFINE('ABOUT_RATES', "SELECT exp, jexp, `drop` FROM `ragsrvinfo` WHERE `name` = ?");
 DEFINE('RATES_AGIT', "SELECT exp, jexp, `drop`, agit_status FROM `ragsrvinfo` WHERE `name` = ?");
-DEFINE('CHECK_BAN', "SELECT UNIX_TIMESTAMP(`lastlogin`), `unban_time`, `state` FROM `account` WHERE `last_ip` = ?");
+DEFINE('CHECK_BAN', "SELECT UNIX_TIMESTAMP(`lastlogin`), `unban_time`, `state` FROM `web_account` WHERE `last_ip` = ?");
 //Online Status 
 DEFINE('IS_ONLINE', "SELECT COUNT(1) FROM `char` WHERE online = '1' AND account_id = ?");
 DEFINE('GET_ONLINE', "SELECT COUNT(1) FROM `char` WHERE online = '1'");
@@ -45,10 +45,10 @@ DEFINE('CHECK_IPBAN', "SELECT COUNT(*) FROM `ipbanlist` WHERE `list` = ?");
 if ($config['servermode'] == 0){
 DEFINE('LOGIN_USER', "SELECT `account_id`, `userid`, `group_id`, `user_pass` FROM `login` WHERE `userid` = ? AND `state` != '5'");
 }elseif ($config['servermode'] == 1){
-DEFINE('LOGIN_USER', "SELECT `account_num`, `account_name`, `level`, `account_pass`, `email` FROM `account` WHERE `account_name` = ? AND `state` != '5'");
+DEFINE('LOGIN_USER', "SELECT `web_account_id`, `account_name`, `level`, `account_pass`, `email` FROM `web_account` WHERE `account_name` = ? AND `state` != '5'");
 }
-DEFINE('UPDATE_LAST_IP', "UPDATE `account` SET `last_ip` = ? WHERE `account_num` = ?");
-DEFINE('UPDATE_LAST_LOGIN', "UPDATE `account` SET `lastlogin` = NOW() WHERE `account_num` = ?");
+DEFINE('UPDATE_LAST_IP', "UPDATE `web_account` SET `last_ip` = ? WHERE `web_account_id` = ?");
+DEFINE('UPDATE_LAST_LOGIN', "UPDATE `web_account` SET `lastlogin` = NOW() WHERE `web_account_id` = ?");
 
 //password.php - Change Password
 DEFINE('CHANGE_PASSWORD', "UPDATE `login` SET `user_pass` = ? WHERE `account_id` = ?");
@@ -78,11 +78,11 @@ WHERE `char_id` = ?");
 
 //account.php - Account Creation
 DEFINE('INSERT_CHAR', "INSERT INTO `login` (`userid`, `user_pass`, `sex`, `email`, `birthdate`, `last_ip`, `state`, `level`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-DEFINE('CHECK_USERID', "SELECT `account_name` FROM `account` WHERE `account_name` = ?");
+DEFINE('CHECK_USERID', "SELECT `account_name` FROM `web_account` WHERE `account_name` = ?");
 DEFINE('CHECK_USERID2', "SELECT `account_name` FROM `accregister` WHERE `account_name` = ?");
 DEFINE('CHECK_ACCOUNTID', "SELECT `account_id` FROM `login` WHERE `userid` = ? AND `user_pass` = ?");
-DEFINE('MAX_ACCOUNTS', "SELECT COUNT(`account_num`) FROM `login` WHERE `account_num` = ?");
-DEFINE('NEW_ACCOUNT', "INSERT INTO `register` (`time`, `account_num`, `userid`, `user_pass`, `sex`, `email`, `level`, `birthdate`, `ip`)
+DEFINE('MAX_ACCOUNTS', "SELECT COUNT(`web_account_id`) FROM `login` WHERE `web_account_id` = ?");
+DEFINE('NEW_ACCOUNT', "INSERT INTO `register` (`time`, `web_account_id`, `userid`, `user_pass`, `sex`, `email`, `level`, `birthdate`, `ip`)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 DEFINE('NEW_APPLICATION', "INSERT INTO `accregister` (`time`, `account_name`, `account_pass`, `email`, `level`, `birthdate`, `ip`, `data`) 
 VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?)");
@@ -94,42 +94,42 @@ DEFINE('ADD_CHECK_USERID2', "SELECT `userid` FROM `register` WHERE `userid` = ?"
 
 //addexisting.php - Attach an in-game account to your forum account
 DEFINE('ADD_VERIFY_ACCOUNT', "SELECT `userid`, `user_pass`, `email` FROM `login`
-WHERE `userid` = ? AND `user_pass` = ? AND `email` = ? AND `account_num` = 0");
-DEFINE('ADD_EXISTING_ACCOUNT', "UPDATE `login` SET `account_num` = ? WHERE `userid` = ?");
+WHERE `userid` = ? AND `user_pass` = ? AND `email` = ? AND `web_account_id` = 0");
+DEFINE('ADD_EXISTING_ACCOUNT', "UPDATE `login` SET `web_account_id` = ? WHERE `userid` = ?");
 
 //viewaccount.php - View Accounts
 DEFINE('VIEW_GET_ACCOUNT_ALL', "SELECT `login`.`userid`, `login`.`account_id`, `login`.`lastlogin`, `login`.`last_ip`, `login`.`sex`
-FROM `login` WHERE `login`.`account_num` = ?");
+FROM `login` WHERE `login`.`web_account_id` = ?");
 DEFINE('VIEW_GET_ACCOUNT_PENDING_ALL', "SELECT `userid`, `sex`
-FROM `register` WHERE `register`.`account_num` = ?");
-DEFINE('VIEW_GET_ACCOUNT_PENDING', "SELECT `time`, `account_num`, `userid`, `user_pass`
-FROM `register` WHERE `register`.`account_num` = ? AND `register`.userid = ?");
+FROM `register` WHERE `register`.`web_account_id` = ?");
+DEFINE('VIEW_GET_ACCOUNT_PENDING', "SELECT `time`, `web_account_id`, `userid`, `user_pass`
+FROM `register` WHERE `register`.`web_account_id` = ? AND `register`.userid = ?");
 
 //activate.php - Activate In-game accounts
-DEFINE('ACTIVATE_CHECK_USER', "SELECT `id`, `time`, `account_num`, `userid`, `user_pass`, `sex`, `email`, `level`, `birthdate` FROM `register`
+DEFINE('ACTIVATE_CHECK_USER', "SELECT `id`, `time`, `web_account_id`, `userid`, `user_pass`, `sex`, `email`, `level`, `birthdate` FROM `register`
 WHERE `userid` = ?");
-DEFINE('ACTIVATE_INSERT_CHAR', "INSERT INTO `login` (`userid`, `user_pass`, `sex`, `email`, `birthdate`, `last_ip`, `state`, `level`, `account_num`)
+DEFINE('ACTIVATE_INSERT_CHAR', "INSERT INTO `login` (`userid`, `user_pass`, `sex`, `email`, `birthdate`, `last_ip`, `state`, `level`, `web_account_id`)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 DEFINE('ACTIVATE_REMOVE_CHAR', "DELETE FROM `register` WHERE `id` = ?");
 
 //recover.php - Recover Forum Account Password
-DEFINE('RECOVER_PASSWORD', "SELECT `account_name`, `account_pass`, `email` FROM `account` WHERE `email` = ? AND `state` != '5'");
+DEFINE('RECOVER_PASSWORD', "SELECT `account_name`, `account_pass`, `email` FROM `web_account` WHERE `email` = ? AND `state` != '5'");
 
 //recover_ingame.php - Recover In-Game Account Password
 // in-game account must not be attached to any forum account
 DEFINE('RECOVER_INGAME_PASSWORD', "SELECT `user_pass`, `email` FROM `login`
-WHERE `userid` = ? AND `account_num` = 0 AND `state` != '5'");
+WHERE `userid` = ? AND `web_account_id` = 0 AND `state` != '5'");
 
 //resetpassword.php - Reset Password
 DEFINE('RESET_PASSWORD', "UPDATE `login` SET `user_pass` = ? WHERE `userid` = ?");
 
 //acc_password.php - Change Account Password
-DEFINE('ACC_CHANGE_PASSWORD', "UPDATE `account` SET `account_pass` = ? WHERE `account_num` = ?");
-DEFINE('ACC_CHECK_PASSWORD', "SELECT * FROM `account` WHERE `account_pass` = ? AND `account_num` = ?");
+DEFINE('ACC_CHANGE_PASSWORD', "UPDATE `web_account` SET `account_pass` = ? WHERE `web_account_id` = ?");
+DEFINE('ACC_CHECK_PASSWORD', "SELECT * FROM `web_account` WHERE `account_pass` = ? AND `web_account_id` = ?");
 
 //acc_changemail.php - Change Account Email
-DEFINE('ACC_CHANGE_EMAIL', "UPDATE `account` SET `email` = ? WHERE `account_pass` = ? AND `account_num` = ?");
-DEFINE('ACC_CHECK_EMAIL', "SELECT `email` FROM `account` WHERE `account_num` = ?");
+DEFINE('ACC_CHANGE_EMAIL', "UPDATE `web_account` SET `email` = ? WHERE `account_pass` = ? AND `web_account_id` = ?");
+DEFINE('ACC_CHECK_EMAIL', "SELECT `email` FROM `web_account` WHERE `web_account_id` = ?");
 
 //money.php - Money Transfer
 DEFINE('GET_ZENY', "SELECT `char_id`, `char_num`, `name`, `zeny`, `base_level` FROM `char` 
