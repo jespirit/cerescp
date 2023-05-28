@@ -47,7 +47,7 @@ $_SESSION[$CONFIG_name.'jobs'] = readjobs();
 		</title>
 		<link rel="stylesheet" type="text/css" href="./ceres.css">
 
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>
 		<script type="text/javascript" language="javascript" src="ceres.js" ></script>
 	</head>
 
@@ -81,7 +81,7 @@ $_SESSION[$CONFIG_name.'jobs'] = readjobs();
 	<!-- CeresCP Footer -->
 	<div id="footer">
 			<font color="#FFFFFF">
-				Copyright © 2005-2012
+				Copyright ï¿½ 2005-2012
 				<span style="cursor:pointer" class="copyright_link" onClick="window.open('http://cerescp.sourceforge.net/');">
 					Ceres Control Panel</span> by Beowulf and Dekamaster
 					<BR>
