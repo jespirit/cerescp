@@ -890,7 +890,9 @@ class PHPMailer2 {
     if ($this->Priority !== 0) {
       $hdr .= 'X-Priority: ' . $this->Priority . self::EOL;
     }
-    $hdr .= 'X-Originating-IP: '.$_SERVER['SERVER_ADDR'] . self::EOL;
+    // Use LOCAL_ADDR
+    // Doesn't exist for IIS
+    $hdr .= 'X-Originating-IP: '.$_SERVER['LOCAL_ADDR'] . self::EOL;
     $hdr .= 'Date: ' . date('r O') . self::EOL;
     if ($this->MessageID != '') {
       $hdr .= 'Message-Id: <' . $this->MessageID . '>' . self::EOL;
