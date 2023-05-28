@@ -25,7 +25,7 @@ an e-mail to cerescp@gmail.com
 
 include_once 'config.php'; // loads config variables
 include_once 'functions.php';
-require_once 'PHPMailer/PHPMailerAutoload.php';
+require_once 'PHPMailer2.php';
 
 function confirm_account($username, $email) {
 	global $CONFIG_smtp_server, $CONFIG_smtp_port, $CONFIG_smtp_username,
@@ -126,41 +126,32 @@ function send_email($receiver, $subject, $body) {
            $CONFIG_smtp_password, $CONFIG_smtp_mail, $CONFIG_name,
            $CONFIG_smtp_auth, $CONFIG_debug;
 
-    $mail=new PHPMailer();
+    $mail = new codeworxtech\PHPMailer2();
 
-    $mail->isSMTP();
-    if ($CONFIG_debug) {
-        $mail->SMTPDebug = 3;
-        //Ask for HTML-friendly debug output
-        $mail->Debugoutput = 'html';
+    try {
+        $mail->useSMTP();
+
+        $mail->SMTP_Host       = $CONFIG_smtp_server;
+        $mail->SetSMTPAccount( [ $CONFIG_smtp_username => $CONFIG_smtp_password ] );
+
+        //$mail->From       = $CONFIG_smtp_mail;
+        //$mail->FromName   = $CONFIG_name;
+        $mail->SetSender( [ $CONFIG_smtp_mail => $CONFIG_name ] );
+        $mail->Subject    = $subject;
+        $mail->MessageHTML       = $body;
+
+        $mail->WordWrap   = 50;
+
+        $mail->AddRecipient( [$receiver] );
+
+        if(!$mail->Send()) {
+            return $mail->ErrorInfo;
+        } else {
+            return "Message has been sent";
+        }
     }
-    
-    $mail->SMTPAuth = $CONFIG_smtp_auth;
-    $mail->SMTPSecure = 'tls';
-
-    $mail->Host       = $CONFIG_smtp_server;
-    $mail->Port       = $CONFIG_smtp_port;
-
-    $mail->Username   = $CONFIG_smtp_username;
-    $mail->Password   = $CONFIG_smtp_password;
-
-    //$mail->From       = $CONFIG_smtp_mail;
-    //$mail->FromName   = $CONFIG_name;
-    $mail->setFrom($CONFIG_smtp_mail, $CONFIG_name);
-    $mail->Subject    = $subject;
-    $mail->Body       = $body;
-
-    $mail->WordWrap   = 50;
-
-    $mail->addAddress($receiver, $receiver);
-    $mail->addReplyTo($CONFIG_smtp_mail, $CONFIG_name);
-
-    $mail->isHTML(true);
-
-    if(!$mail->Send()) {
-        return $mail->ErrorInfo;
-    } else {
-        return "Message has been sent";
+    catch (Exception $e) {
+        echo $e->getMessage();
     }
 }
 
