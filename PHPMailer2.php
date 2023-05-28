@@ -1836,9 +1836,12 @@ class PHPMailer2 {
    */
   protected function TransportBySMTP($hdr, $body) {
     // if any of the header email addresses fail IsShellSafe, treat as malicious and exit
-    if ( !self::IsShellSafe($this->SenderEmail) ||
-         (!empty($this->ReplyTo) && !self::IsShellSafe($this->ReplyTo)) ||
-         (!empty($this->ReturnPath) && !self::IsShellSafe($this->ReturnPath))
+    if ( !self::IsShellSafe($this->SenderEmail) 
+    // TODO: Fix IsShellSafe expects a string, not array
+    // Both ReplyTo and ReturnPath is an array
+    // ||
+    //      (!empty($this->ReplyTo) && !self::IsShellSafe($this->ReplyTo)) ||
+    //      (!empty($this->ReturnPath) && !self::IsShellSafe($this->ReturnPath))
        ) {
       throw new Exception(self::Lang('smtp_connect_failed') . '<br>' . self::EOL, PHPMailer2::ERR_CRITICAL);
     }
